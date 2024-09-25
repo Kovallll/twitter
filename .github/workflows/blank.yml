@@ -1,0 +1,26 @@
+name: CI
+
+on:
+    push:
+        branches: ['master']
+    pull_request:
+        types: [opened, synchronize, reopened]
+jobs:
+    init:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [22.x]
+        steps:
+            - uses: actions/checkout@v4
+            - name: Starting Node.js ${{matrix.node-version}}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{matrix.node-version}}
+
+            - name: install modules
+              run: yarn install
+            - name: lint code
+              run: yarn lint
+            - name: check tests
+              run: yarn test --runInBand
