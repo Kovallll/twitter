@@ -1,19 +1,20 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
-import { Auth, getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
-import { getStorage } from 'firebase/storage'
+import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
+import { connectStorageEmulator, getStorage } from 'firebase/storage'
 
 let firebaseApp: FirebaseApp
+const getEmulator = () => import.meta.env.VITE_USE_FIREBASE_EMULATOR
 
 export const setupFirebase = () => {
     try {
         firebaseApp = initializeApp({
-            apiKey: 'AIzaSyCCsCK2-2LSvDHHgoH4hXCOOI8klIYxcHE',
-            authDomain: 'twitter-32fe8.firebaseapp.com',
-            projectId: 'twitter-32fe8',
-            storageBucket: 'twitter-32fe8.appspot.com',
-            messagingSenderId: '215593552373',
-            appId: '1:215593552373:web:d8685f9a16a8488fdcb8bc',
+            apiKey: 'AIzaSyAGirT2KwYFIXh69X2NSxQrFoBWXDXAUD4',
+            authDomain: 'test-25a1a.firebaseapp.com',
+            projectId: 'test-25a1a',
+            storageBucket: 'test-25a1a.appspot.com',
+            messagingSenderId: '935175610545',
+            appId: '1:935175610545:web:00ac1a30a743b153b20290',
         })
     } catch (error) {
         console.error({ error })
@@ -26,15 +27,28 @@ let storage: ReturnType<typeof getStorage>
 
 export const useAuth = () => {
     auth = getAuth(firebaseApp)
+    if (getEmulator()) {
+        connectAuthEmulator(auth, 'http://localhost:9099')
+    }
     return auth
 }
 
 export const useFirestore = () => {
-    firestore = getFirestore()
+    if (!firestore) {
+        firestore = getFirestore()
+        if (getEmulator()) {
+            connectFirestoreEmulator(firestore, 'localhost', 8080)
+        }
+    }
     return firestore
 }
 
 export const useStorage = () => {
-    storage = getStorage()
+    if (!storage) {
+        storage = getStorage()
+        if (getEmulator()) {
+            connectStorageEmulator(storage, 'localhost', 9199)
+        }
+    }
     return storage
 }

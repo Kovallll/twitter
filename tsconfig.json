@@ -24,14 +24,13 @@
             "@components/*": ["src/components/*"],
             "@assets/*": ["src/assets/*"],
             "@constants": ["src/constants"],
-            "@providers/*": ["src/providers/*"],
             "@styles/*": ["src/styles/*"],
             "@utils": ["src/utils"],
             "@hooks": ["src/hooks"],
-            "@decorators": ["src/decorators"],
+            "@pages/*": ["src/pages/*"],
             "@service": ["src/service"],
-            "@context": ["src/context"]
+            "@store": ["src/store"]
         }
     },
-    "include": ["src", "declare.d.ts"]
+    "include": ["src", "declare.d.ts", "firebase.config.ts"]
 }
