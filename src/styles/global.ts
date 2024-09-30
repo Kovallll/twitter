@@ -56,7 +56,7 @@ export const ModalTitle = styled.h1`
     ${({ theme }) => {
         return css`
             font-size: ${theme.fontSizes.xl + 'px'};
-            margin-top: ${theme.spaces.xxl + 'px'};
+            margin-top: ${theme.spaces.xxxl + 'px'};
 
             @media (${theme.media.xl}) {
                 font-size: ${theme.fontSizes.lg + 'px'};

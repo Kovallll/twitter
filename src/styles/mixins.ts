@@ -11,6 +11,11 @@ export default {
         justify-content: end;
         align-items: center;
     `,
+    flexRowStart: () => css`
+        display: flex;
+        justify-content: start;
+        align-items: center;
+    `,
     flexRowSB: () => css`
         display: flex;
         justify-content: space-between;

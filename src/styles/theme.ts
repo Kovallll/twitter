@@ -8,7 +8,7 @@ export const theme: Theme = {
         },
         blue: '#1D9BF0',
         lightBlue: '#1DA1F2',
-        gray: '#536471',
+        gray: '#B3B8BB',
         red: '#ef1c5c',
         errorColor: '#ff0000',
     },
@@ -34,6 +34,21 @@ export const theme: Theme = {
         },
         sm: {
             width: '360',
+        },
+    },
+    sidebarStyles: {
+        profileImageBorderRadius: '50',
+        lg: {
+            width: '230',
+            profileImagesize: '48',
+        },
+        md: {
+            width: '200',
+            profileImagesize: '40',
+        },
+        sm: {
+            width: '160',
+            profileImagesize: '32',
         },
     },
     signUpStyles: {
@@ -173,7 +188,8 @@ export const theme: Theme = {
         md: '12',
         lg: '16',
         xl: '24',
-        xxl: '48',
+        xxl: '32',
+        xxxl: '48',
     },
     fontSizes: {
         xxs: '14',

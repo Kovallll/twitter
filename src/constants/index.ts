@@ -1,4 +1,12 @@
+import bookmarksIcon from '@assets/icons/bookmarks.svg'
 import closeIcon from '@assets/icons/close.svg'
+import exploreIcon from '@assets/icons/explore.svg'
+import homeIcon from '@assets/icons/homeOutline.svg'
+import listsIcon from '@assets/icons/lists.svg'
+import messagesIcon from '@assets/icons/messages.svg'
+import moreIcon from '@assets/icons/more.svg'
+import notificationIcon from '@assets/icons/notification.svg'
+import profileIcon from '@assets/icons/profileOutline.svg'
 import { getSelectDays, getSelectYears } from '@utils'
 
 export enum Paths {
@@ -90,3 +98,14 @@ export const icons = {
 export const notifyTimeout = 4000
 
 export const usersCollection = 'users'
+
+export const sidebarLinks = [
+    { icon: homeIcon, title: 'Home' },
+    { icon: exploreIcon, title: 'Explore' },
+    { icon: notificationIcon, title: 'Notification' },
+    { icon: messagesIcon, title: 'Messages' },
+    { icon: bookmarksIcon, title: 'Bookmarks' },
+    { icon: listsIcon, title: 'Lists' },
+    { icon: profileIcon, title: 'Profile' },
+    { icon: moreIcon, title: 'More' },
+]

@@ -1,26 +1,11 @@
-import { useEffect, useState } from 'react'
-import { useAuth } from 'firebase.config'
-import { onAuthStateChanged, User } from 'firebase/auth'
-
 import { Container } from './styled'
 
-const Profile = () => {
-    const [user, setUser] = useState<User>()
-    const auth = useAuth()
-    useEffect(() => {
-        const listener = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUser(user)
-            }
-        })
+import { Sidebar } from '@components/Sidebar'
 
-        return () => listener()
-    }, [auth])
+const Profile = () => {
     return (
         <Container>
-            <>Profile</>
-            <br></br>
-            <>{user?.email}</>
+            <Sidebar />
         </Container>
     )
 }

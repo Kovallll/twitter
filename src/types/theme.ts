@@ -45,6 +45,21 @@ export interface Theme {
             paddingLR: string
         }
     }
+    sidebarStyles: {
+        profileImageBorderRadius: string
+        lg: {
+            width: string
+            profileImagesize: string
+        }
+        md: {
+            width: string
+            profileImagesize: string
+        }
+        sm: {
+            width: string
+            profileImagesize: string
+        }
+    }
     modalStyles: {
         wrapWidth: string
         borderRadius: string
@@ -172,6 +187,7 @@ export interface Theme {
         lg: string
         xl: string
         xxl: string
+        xxxl: string
     }
     fontSizes: {
         xxs: string
