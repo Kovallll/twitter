@@ -10,6 +10,7 @@ export interface Theme {
         red: string
         errorColor: string
     }
+    boldFont: string
     fullSize: string
     noneBorder: string
     maxWidthContent: string

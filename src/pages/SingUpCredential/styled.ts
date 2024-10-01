@@ -65,7 +65,7 @@ export const Subtitle = styled.p`
         return css`
             font-size: ${theme.fontSizes.md + 'px'};
             margin: ${theme.spaces.xl + 'px' + ' 0px'};
-            font-weight: 700;
+            font-weight: ${theme.boldFont};
 
             @media (${theme.media.xl}) {
                 font-size: ${theme.fontSizes.sm + 'px'};
@@ -101,8 +101,10 @@ export const DateBlock = styled.div`
         return css`
             ${mixins.flexRowSB}
 
-            width: ${theme.fullSize + '%'};
             margin-bottom: ${theme.spaces.xl + 'px'};
+            :first-child {
+                width: ${theme.fullSize + '%'};
+            }
 
             @media (${theme.media.md}) {
                 margin-bottom: ${theme.fontSizes.sm + 'px'};

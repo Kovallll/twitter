@@ -1,12 +1,4 @@
 export const loginTitleText = 'Log in to Twitter'
 export const loginButtonText = 'Log in'
 export const logoAltText = 'logo'
-export const phonePlaceholder = 'Phone number'
 export const signUpText = 'Sign up to Twitter'
-export const phoneLabel = 'phone'
-export const phoneValidError =
-    'Incorrect number. It should be +375 (XX) XX-XX-XXX'
-export const recaptchaId = 'sign-in-button'
-export const modalTitle = 'Write code'
-export const codePlaceholder = 'Code'
-export const modalButtonText = 'Send'

@@ -31,12 +31,12 @@ export const updateLoginData = (
     action: LoginAction
 ) => {
     switch (action.type) {
-        case ActionTypes.LoginPhone:
-            return { ...state, phone: action.payload }
+        case ActionTypes.LoginEmail:
+            return { ...state, email: action.payload }
+        case ActionTypes.LoginPassword:
+            return { ...state, password: action.payload }
         case ActionTypes.LoginError:
             return { ...state, error: action.payload }
-        case ActionTypes.LoginCode:
-            return { ...state, code: action.payload }
         default:
             return state
     }

@@ -13,6 +13,7 @@ export const theme: Theme = {
         errorColor: '#ff0000',
     },
     fullSize: '100',
+    boldFont: '700',
     maxWidthContent: '1920',
     noneBorder: '0',
     buttonStyles: {

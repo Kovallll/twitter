@@ -1,14 +1,14 @@
-import { useRef } from 'react'
+import { memo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import { closeAltText } from './config'
 import { CloseButton, Container, Image, Window } from './styled'
 import { ModalProps } from './types'
 
-import { icons } from '@constants'
+import { images } from '@constants'
 import { useClickOutside } from '@hooks'
 
-export const Modal = ({ onCloseModal, children }: ModalProps) => {
+const Modal = ({ onCloseModal, children }: ModalProps) => {
     const modalRef = useRef(null)
     useClickOutside(modalRef, () => onCloseModal())
 
@@ -16,7 +16,7 @@ export const Modal = ({ onCloseModal, children }: ModalProps) => {
         <Container>
             <Window ref={modalRef}>
                 <CloseButton onClick={onCloseModal}>
-                    <Image src={icons.closeIcon} alt={closeAltText} />
+                    <Image src={images.closeIcon} alt={closeAltText} />
                 </CloseButton>
                 {children}
             </Window>
@@ -24,3 +24,5 @@ export const Modal = ({ onCloseModal, children }: ModalProps) => {
         document.body
     )
 }
+
+export default memo(Modal)

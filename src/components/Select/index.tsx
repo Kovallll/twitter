@@ -1,11 +1,16 @@
-import { Option, Placeholder, SelectModule } from './styled'
+import { memo } from 'react'
 
-import { SelectProps } from '@types'
+import { Option, Placeholder, SelectModule, Wrap } from './styled'
 
-export const Select = ({ data, type, onChangeDate, value }: SelectProps) => {
+import { ErrorText } from '@styles/global'
+import { DateLabel, SelectProps } from '@types'
+
+const Select = (props: SelectProps) => {
+    const { data, type, error, register, onChangeDate, value } = props
+
     const placeholder = type[0].toUpperCase() + type.slice(1).toLowerCase()
     let selectValue = value
-    const isMonth = type === 'month'
+
     if (value === '') {
         selectValue = placeholder
     }
@@ -13,18 +18,24 @@ export const Select = ({ data, type, onChangeDate, value }: SelectProps) => {
         const { value } = e.target
         onChangeDate(value, type)
     }
+    const label = ('date.' + type) as DateLabel
+    const validRegister =
+        !!register && !!type ? register(label, { onChange: handleChange }) : []
     return (
-        <SelectModule
-            $isMonth={isMonth}
-            value={selectValue}
-            onChange={handleChange}
-        >
-            <Placeholder disabled selected hidden>
-                {placeholder}
-            </Placeholder>
-            {data.map((item) => (
-                <Option value={item}>{item}</Option>
-            ))}
-        </SelectModule>
+        <Wrap>
+            <ErrorText>{error}</ErrorText>
+            <SelectModule {...validRegister} value={selectValue}>
+                <Placeholder disabled selected hidden>
+                    {placeholder}
+                </Placeholder>
+                {data.map((item, index) => (
+                    <Option key={index} value={item}>
+                        {item}
+                    </Option>
+                ))}
+            </SelectModule>
+        </Wrap>
     )
 }
+
+export default memo(Select)

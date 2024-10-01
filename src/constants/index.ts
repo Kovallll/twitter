@@ -1,4 +1,7 @@
 import closeIcon from '@assets/icons/close.svg'
+import googleIcon from '@assets/icons/googleIcon.svg'
+import logoIcon from '@assets/icons/twitterLogo.svg'
+import twitterImage from '@assets/images/signupTwitter.png'
 import { getSelectDays, getSelectYears } from '@utils'
 
 export enum Paths {
@@ -12,7 +15,8 @@ export enum Paths {
 
 export const currentDate = new Date()
 export const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/
-export const phoneRegex = /^\+375 \(\d{2}\) \d{2}-\d{2}-\d{3}$/
+export const phoneRegex = /^\+375 \(\d{2}\) \d{2}-\d{2}-\d{3,}$/
+export const codeRegex = /\d/g
 export const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
 export enum Month {
@@ -45,29 +49,24 @@ export const months = [
     Month.December,
 ]
 
-export const countYears = 120
-
-export const years = getSelectYears()
-
-export const days = getSelectDays()
-
 export enum ActionTypes {
     SignUpEmail = 'singUp/email',
     SignUpPhone = 'singUp/phone',
     SignUpName = 'singUp/name',
     SignUpPassword = 'singUp/password',
     SignUpConfrimPassword = 'singUp/confrimPassword',
+    SignUpUserId = 'singUp/userId',
     SignUpDate = 'singUp/date',
     SignUpError = 'singUp/error',
-    LoginPhone = 'login/phone',
+    LoginEmail = 'login/email',
+    LoginPassword = 'login/password',
     LoginError = 'login/error',
-    LoginOpenModal = 'login/modal',
-    LoginCode = 'login/code',
 }
+export const basePhoneCode = '+375'
 
 export const signUpDefaultData = {
     name: '',
-    phone: '',
+    phone: basePhoneCode,
     email: '',
     password: '',
     confirmPassword: '',
@@ -75,18 +74,27 @@ export const signUpDefaultData = {
     date: { day: '', month: '', year: '' },
 }
 
-export const basePhoneCode = '+375'
-
 export const loginDefaultData = {
-    phone: basePhoneCode,
+    email: '',
+    password: '',
     error: '',
-    code: '',
 }
 
-export const icons = {
+export const images = {
     closeIcon,
+    googleIcon,
+    logoIcon,
+    twitterImage,
 }
 
 export const notifyTimeout = 4000
 
+export const countDays = 31
+
 export const usersCollection = 'users'
+
+export const countYears = 120
+
+export const years = getSelectYears()
+
+export const days = getSelectDays()

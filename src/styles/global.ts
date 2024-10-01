@@ -76,8 +76,8 @@ export const Button = styled.button<ButtonProps>`
     ${({
         theme,
         $withBorder = false,
-        $backgroundColor = '#fff',
-        $color = '#000',
+        $backgroundColor = theme.palette.common.white,
+        $color = theme.palette.common.black,
     }) => {
         return css`
             ${mixins.flexRowCenter}
@@ -92,7 +92,7 @@ export const Button = styled.button<ButtonProps>`
             padding: ${theme.spaces.lg + 'px' + ' 0px'};
             margin-bottom: ${theme.spaces.xl + 'px'};
             font-size: ${theme.fontSizes.md + 'px'};
-            font-weight: 700;
+            font-weight: ${theme.boldFont};
             color: ${$color};
 
             @media (${theme.media.lg}) {
@@ -105,6 +105,16 @@ export const Button = styled.button<ButtonProps>`
                 margin-bottom: ${theme.spaces.md + 'px'};
                 font-size: ${theme.fontSizes.xs + 'px'};
             }
+        `
+    }}
+`
+
+export const ErrorText = styled.p`
+    ${({ theme }) => {
+        return css`
+            width: ${theme.fullSize + '%'};
+            color: ${theme.palette.errorColor};
+            height: 20px;
         `
     }}
 `

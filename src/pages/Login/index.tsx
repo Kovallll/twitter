@@ -1,157 +1,99 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth, useFirestore } from 'firebase.config'
-import {
-    ConfirmationResult,
-    RecaptchaVerifier,
-    signInWithPhoneNumber,
-} from 'firebase/auth'
-import { collection, getDocs } from 'firebase/firestore'
-import * as yup from 'yup'
 
 import {
-    codePlaceholder,
     loginButtonText,
     loginTitleText,
     logoAltText,
-    modalButtonText,
-    modalTitle,
-    phoneLabel,
-    phonePlaceholder,
-    phoneValidError,
-    recaptchaId,
     signUpText,
 } from './config'
-import { Container, ModalBlock, SignUpLink, Title, Wrap } from './styled'
+import { loginSchema } from './schema'
+import { Container, SignUpLink, Title, Wrap } from './styled'
 
-import logo from '@assets/icons/twitterLogo.svg'
 import { Input } from '@components/Input'
-import { Modal } from '@components/Modal'
-import { Notify } from '@components/Notify'
-import { notifyTimeout, Paths, phoneRegex, usersCollection } from '@constants'
+import Notify from '@components/Notify'
+import { images, notifyTimeout, Paths } from '@constants'
+import { loginWithEmailAndPassword } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { updateLoginCode, updateLoginError, updateLoginPhone } from '@store'
-import { Button, Form, LinkStyle, Logo, ModalTitle } from '@styles/global'
+import {
+    emailLabel,
+    emailPlaceholder,
+    passwordLabel,
+    passwordPlaceholder,
+} from '@pages/SingUpCredential/config'
+import { updateLoginEmail, updateLoginError, updateLoginPassword } from '@store'
+import { Button, Form, LinkStyle, Logo } from '@styles/global'
 import { theme } from '@styles/theme'
 import { LoginFormInput } from '@types'
-
-const loginSchema = yup
-    .object({
-        phone: yup.string().required().matches(phoneRegex, phoneValidError),
-    })
-    .required()
+import { getNotifyError } from '@utils'
 
 const Login = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [confirmationResult, setConfirmationResult] =
-        useState<ConfirmationResult | null>(null)
-
     const {
         register,
         formState: { errors },
         handleSubmit,
-    } = useForm<LoginFormInput>({ resolver: yupResolver(loginSchema) })
-
-    const navigate = useNavigate()
-    const auth = useAuth()
-    const database = useFirestore()
-    const dispatch = useAppDispatch()
-    const { phone, error, code } = useAppSelector((state) => state.login)
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, recaptchaId, {
-        size: 'invisible',
+    } = useForm<LoginFormInput>({
+        resolver: yupResolver(loginSchema),
+        mode: 'onChange',
     })
 
-    const loginWithPhone = ({ phone }: LoginFormInput) => {
-        const appVerifier = window.recaptchaVerifier
-        signInWithPhoneNumber(auth, phone, appVerifier)
-            .then((confirmationResult) => {
-                setIsModalOpen(true)
-                setConfirmationResult(confirmationResult)
-            })
-            .catch((error) => {
-                const errorCode = error.code
-                dispatch(updateLoginError(errorCode))
-                const timeout = setTimeout(() => {
-                    dispatch(updateLoginError(''))
-                    clearTimeout(timeout)
-                }, notifyTimeout)
-            })
-    }
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+    const { email, password, error } = useAppSelector((state) => state.login)
 
-    const handleSubmitButtonModal = () => {
-        handleSubmitCode()
-        setIsModalOpen(false)
-    }
-
-    const handleSubmitCode = () => {
-        if (code !== '' && confirmationResult) {
-            confirmationResult
-                .confirm(code)
-                .then(async () => {
-                    const users = await getDocs(
-                        collection(database, usersCollection)
-                    )
-                    let currentUser
-                    users?.forEach((user) => {
-                        if (user.data().phone === phone) {
-                            currentUser = user.data()
-                        }
-                    })
-                    if (currentUser) {
-                        navigate(Paths.Profile)
-                    } else {
-                        dispatch(updateLoginError('user not found'))
-                        const timeout = setTimeout(() => {
-                            dispatch(updateLoginError(''))
-                            clearTimeout(timeout)
-                        }, notifyTimeout)
-                    }
-                })
-                .catch((error) => {
-                    const errorCode = error.code
-                    dispatch(updateLoginError(errorCode))
-                    const timeout = setTimeout(() => {
-                        dispatch(updateLoginError(''))
-                        clearTimeout(timeout)
-                    }, notifyTimeout)
-                    window.recaptchaVerifier.reset()
-                })
+    useEffect(() => {
+        let timeout: NodeJS.Timeout
+        if (error) {
+            timeout = setTimeout(() => {
+                dispatch(updateLoginError(''))
+            }, notifyTimeout)
         }
-    }
+
+        return () => clearTimeout(timeout)
+    }, [dispatch, error])
 
     const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
-        loginWithPhone(data)
+        loginWithEmailAndPassword(data.email, data.password, dispatch, navigate)
     }
 
-    const handleChangePhoneInput = (value: string) => {
-        dispatch(updateLoginPhone(value))
-    }
-    const handleCloseModal = () => {
-        setIsModalOpen(false)
-    }
-    const handleChangeCode = (value: string) => {
-        dispatch(updateLoginCode(value))
+    const handleChangeEmailInput = (value: string) => {
+        dispatch(updateLoginEmail(value))
     }
 
-    const { phone: phoneError } = errors
+    const handleChangePasswordInput = (value: string) => {
+        dispatch(updateLoginPassword(value))
+    }
+
+    const { email: emailError, password: passwordError } = errors
+    const notifyError = getNotifyError(error)
+
     return (
         <Container>
             <Wrap>
-                <Logo src={logo} alt={logoAltText} />
+                <Logo src={images.logoIcon} alt={logoAltText} />
                 <Title>{loginTitleText}</Title>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Input
                         type="text"
-                        placeholder={phonePlaceholder}
-                        error={phoneError?.message}
-                        value={phone}
-                        onChangeInput={handleChangePhoneInput}
+                        placeholder={emailPlaceholder}
+                        value={email}
+                        onChangeInput={handleChangeEmailInput}
                         register={register}
-                        label={phoneLabel}
-                        aria-invalid={errors.phone ? 'true' : 'false'}
-                        maxLength={19}
+                        label={emailLabel}
+                        error={emailError?.message}
+                        aria-invalid={errors.email ? 'true' : 'false'}
+                    />
+                    <Input
+                        type="password"
+                        placeholder={passwordPlaceholder}
+                        value={password}
+                        onChangeInput={handleChangePasswordInput}
+                        register={register}
+                        label={passwordLabel}
+                        error={passwordError?.message}
+                        aria-invalid={passwordError ? 'true' : 'false'}
                     />
                     <Button
                         $backgroundColor={theme.palette.blue}
@@ -167,27 +109,7 @@ const Login = () => {
                     </Link>
                 </SignUpLink>
             </Wrap>
-            {error !== '' && <Notify error={error} />}
-            {isModalOpen && (
-                <Modal onCloseModal={handleCloseModal}>
-                    <ModalBlock>
-                        <ModalTitle>{modalTitle}</ModalTitle>
-                        <Input
-                            type="text"
-                            placeholder={codePlaceholder}
-                            value={code}
-                            onChangeInput={handleChangeCode}
-                        />
-                        <Button
-                            $backgroundColor={theme.palette.blue}
-                            $color={theme.palette.common.white}
-                            onClick={handleSubmitButtonModal}
-                        >
-                            {modalButtonText}
-                        </Button>
-                    </ModalBlock>
-                </Modal>
-            )}
+            {error !== '' && <Notify error={notifyError} />}
         </Container>
     )
 }

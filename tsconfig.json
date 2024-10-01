@@ -29,7 +29,8 @@
             "@hooks": ["src/hooks"],
             "@pages/*": ["src/pages/*"],
             "@service": ["src/service"],
-            "@store": ["src/store"]
+            "@store": ["src/store"],
+            "@firebase": ["src/firebase"]
         }
     },
     "include": ["src", "declare.d.ts", "firebase.config.ts"]

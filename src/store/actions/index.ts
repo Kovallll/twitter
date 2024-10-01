@@ -1,7 +1,7 @@
 import {
-    UpdateLoginCode,
+    UpdateLoginEmailAction,
     UpdateLoginError,
-    UpdateLoginPhoneAction,
+    UpdateLoginPasswordAction,
     UpdateSignUpConfrimPasswordAction,
     UpdateSignUpDate,
     UpdateSignUpEmailAction,
@@ -67,9 +67,18 @@ export const updateSignUpDate = (data: SignUpDate): UpdateSignUpDate => {
     }
 }
 
-export const updateLoginPhone = (data: string): UpdateLoginPhoneAction => {
+export const updateLoginEmail = (data: string): UpdateLoginEmailAction => {
     return {
-        type: ActionTypes.LoginPhone,
+        type: ActionTypes.LoginEmail,
+        payload: data,
+    }
+}
+
+export const updateLoginPassword = (
+    data: string
+): UpdateLoginPasswordAction => {
+    return {
+        type: ActionTypes.LoginPassword,
         payload: data,
     }
 }
@@ -77,13 +86,6 @@ export const updateLoginPhone = (data: string): UpdateLoginPhoneAction => {
 export const updateLoginError = (data: string): UpdateLoginError => {
     return {
         type: ActionTypes.LoginError,
-        payload: data,
-    }
-}
-
-export const updateLoginCode = (data: string): UpdateLoginCode => {
-    return {
-        type: ActionTypes.LoginCode,
         payload: data,
     }
 }

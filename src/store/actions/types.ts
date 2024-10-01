@@ -35,17 +35,17 @@ export type UpdateSignUpDate = ActionInterface<
     SignUpDate
 >
 
-export type UpdateLoginPhoneAction = ActionInterface<
-    typeof ActionTypes.LoginPhone,
+export type UpdateLoginEmailAction = ActionInterface<
+    typeof ActionTypes.LoginEmail,
+    string
+>
+
+export type UpdateLoginPasswordAction = ActionInterface<
+    typeof ActionTypes.LoginPassword,
     string
 >
 
 export type UpdateLoginError = ActionInterface<
     typeof ActionTypes.LoginError,
-    string
->
-
-export type UpdateLoginCode = ActionInterface<
-    typeof ActionTypes.LoginCode,
     string
 >

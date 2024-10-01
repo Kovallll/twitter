@@ -34,7 +34,7 @@ export const Image = styled.img`
         return css`
             object-fit: cover;
             height: ${theme.logoImageStyles.maxHeight + 'px'};
-            width: ${theme.logoImageStyles.width + 'vw'};
+            width: ${theme.logoImageStyles.width + '%'};
             margin-right: ${theme.logoImageStyles.lg.marginLeft + 'px'};
             flex: 1.5;
 

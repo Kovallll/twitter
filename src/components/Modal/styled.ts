@@ -8,22 +8,20 @@ export const Container = styled.div`
             ${mixins.flexColumnCenter}
 
             top: ${theme.modalStyles.lg.top + 'px'};
-            right: calc(
-                50vw - ${Number(theme.modalStyles.lg.width) / 2 + 'px'}
-            );
+            right: calc(50% - ${Number(theme.modalStyles.lg.width) / 2 + 'px'});
             position: absolute;
             z-index: 10;
 
             @media (${theme.media.sm}) {
                 top: ${theme.modalStyles.md.top + 'px'};
                 right: calc(
-                    50vw - ${Number(theme.modalStyles.md.width) / 2 + 'px'}
+                    50% - ${Number(theme.modalStyles.md.width) / 2 + 'px'}
                 );
             }
             @media (${theme.media.xs}) {
                 top: ${theme.modalStyles.sm.top + 'px'};
                 right: calc(
-                    50vw - ${Number(theme.modalStyles.sm.width) / 2 + 'px'}
+                    50% - ${Number(theme.modalStyles.sm.width) / 2 + 'px'}
                 );
             }
         `

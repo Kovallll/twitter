@@ -1,6 +1,5 @@
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from 'firebase.config'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 import {
     bottomLinks,
@@ -9,7 +8,12 @@ import {
     loginLinkText,
     loginText,
     logoAltText,
-    policyText,
+    policyTextPart1,
+    policyTextPart2,
+    policyTextPart3,
+    policyTextPart4,
+    policyTextPart5,
+    policyTextPart6,
     subtitle,
     title,
     twitterImageAltText,
@@ -24,55 +28,51 @@ import {
     Login,
     Policy,
     SignUpInfo,
+    SingUpLink,
     Subtitle,
     Title,
     TopContent,
 } from './styled'
 
-import googleIcon from '@assets/icons/googleIcon.svg'
-import logo from '@assets/icons/twitterLogo.svg'
-import twitterImage from '@assets/images/signupTwitter.png'
-import { Notify } from '@components/Notify'
-import { notifyTimeout, Paths } from '@constants'
+import Notify from '@components/Notify'
+import { images, notifyTimeout, Paths } from '@constants'
+import { goggleAuth } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import { updateSignUpError } from '@store'
 import { Button, LinkStyle, Logo } from '@styles/global'
+import { getNotifyError } from '@utils'
 
 const SignUp = () => {
-    const provider = new GoogleAuthProvider()
-    const auth = useAuth()
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { error } = useAppSelector((state) => state.signUp)
 
     const handleGoggleAuthClick = () => {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const user = result.user
-                if (user.emailVerified) {
-                    navigate(Paths.Profile)
-                }
-            })
-            .catch((error) => {
-                const errorCode = error.code
-                dispatch(updateSignUpError(errorCode))
-                const timeout = setTimeout(() => {
-                    dispatch(updateSignUpError(''))
-                    clearTimeout(timeout)
-                }, notifyTimeout)
-            })
+        goggleAuth(dispatch, navigate)
     }
+
+    useEffect(() => {
+        let timeout: NodeJS.Timeout
+        if (error) {
+            timeout = setTimeout(() => {
+                dispatch(updateSignUpError(''))
+            }, notifyTimeout)
+        }
+
+        return () => clearTimeout(timeout)
+    }, [dispatch, error])
 
     const handleEmailAndPasswordAuthClick = () => {
         navigate(Paths.SingUpCredential)
     }
 
+    const notifyError = getNotifyError(error)
     return (
         <Container>
             <TopContent>
-                <Image src={twitterImage} alt={twitterImageAltText} />
+                <Image src={images.twitterImage} alt={twitterImageAltText} />
                 <SignUpInfo>
-                    <Logo src={logo} alt={logoAltText} />
+                    <Logo src={images.logoIcon} alt={logoAltText} />
                     <Title>{title}</Title>
                     <Subtitle>{subtitle}</Subtitle>
                     <ButtonsBlock>
@@ -80,7 +80,7 @@ const SignUp = () => {
                             $withBorder={true}
                             onClick={handleGoggleAuthClick}
                         >
-                            <GoogleIcon src={googleIcon} />
+                            <GoogleIcon src={images.googleIcon} />
                             {googleSignUpText}
                         </Button>
                         <Button
@@ -90,7 +90,14 @@ const SignUp = () => {
                             {emailSignUpText}
                         </Button>
                     </ButtonsBlock>
-                    <Policy>{policyText.map((item) => item)}</Policy>
+                    <Policy>
+                        {policyTextPart1}
+                        <SingUpLink> {policyTextPart2} </SingUpLink>
+                        {policyTextPart3}
+                        <SingUpLink>{policyTextPart4}</SingUpLink>
+                        {policyTextPart5}
+                        <SingUpLink> {policyTextPart6}</SingUpLink>
+                    </Policy>
                     <Login>
                         {loginText}
                         <Link style={LinkStyle} to={Paths.Login}>
@@ -104,7 +111,7 @@ const SignUp = () => {
                     <BottomLink key={index}>{link}</BottomLink>
                 ))}
             </BottomContent>
-            {error !== '' && <Notify error={error} />}
+            {error !== '' && <Notify error={notifyError} />}
         </Container>
     )
 }

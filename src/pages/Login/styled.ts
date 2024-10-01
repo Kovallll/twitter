@@ -59,13 +59,3 @@ export const SignUpLink = styled.div`
         `
     }}
 `
-
-export const ModalBlock = styled.div`
-    ${({ theme }) => {
-        return css`
-            ${mixins.flexColumnCenter}
-
-            width: ${theme.modalStyles.wrapWidth + '%'};
-        `
-    }}
-`
