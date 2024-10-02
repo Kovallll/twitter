@@ -39,7 +39,7 @@ import { Input } from '@components/Input'
 import Notify from '@components/Notify'
 import { PhoneInput } from '@components/PhoneInput'
 import Select from '@components/Select'
-import { days, images, months, notifyTimeout, Paths, years } from '@constants'
+import { images, months, notifyTimeout, Paths } from '@constants'
 import { emailAndPasswordAuth } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAppDispatch, useAppSelector } from '@hooks'
@@ -55,7 +55,12 @@ import {
 import { Button, Form, LinkStyle, Logo } from '@styles/global'
 import { theme } from '@styles/theme'
 import { DateType, SignUpFormInput } from '@types'
-import { getIsValidDate, getNotifyError } from '@utils'
+import {
+    getIsValidDate,
+    getNotifyError,
+    getSelectDays,
+    getSelectYears,
+} from '@utils'
 
 const SingUpCredential = () => {
     const {
@@ -144,6 +149,8 @@ const SingUpCredential = () => {
     } = errors
 
     const notifyError = getNotifyError(error)
+    const years = getSelectYears()
+    const days = getSelectDays()
 
     return (
         <Container>

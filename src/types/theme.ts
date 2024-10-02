@@ -109,12 +109,15 @@ export interface Theme {
         marginTop: string
         lg: {
             width: string
+            signEmailPadding: string
         }
         md: {
             width: string
+            signEmailPadding: string
         }
         sm: {
             width: string
+            signEmailPadding: string
         }
     }
     buttonsBlock: {

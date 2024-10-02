@@ -21,11 +21,13 @@ import {
     updateSignUpError,
 } from '@store'
 import { SignUpDate, SignUpFormInput } from '@types'
+import { LocalStorage } from '@utils'
 
 setupFirebase()
 const database = getFirebaseStore()
 const auth = getFirebaseAuth()
 const provider = new GoogleAuthProvider()
+const localStorage = new LocalStorage()
 
 export const goggleAuth = (
     dispatch: Dispatch<SingUpAction | LoginAction>,
@@ -34,6 +36,7 @@ export const goggleAuth = (
     signInWithPopup(auth, provider)
         .then((result) => {
             const user = result.user
+            localStorage.setItem('isSignedIn', true)
             if (user.emailVerified) {
                 navigate(Paths.Profile)
             }
@@ -41,6 +44,7 @@ export const goggleAuth = (
         .catch((error) => {
             const errorCode = error.code
             dispatch(updateSignUpError(errorCode))
+            console.error(error.code + error.message)
         })
 }
 
@@ -63,12 +67,14 @@ export const emailAndPasswordAuth = (
                 dateBirthday: `${date.day} ${date.month} ${date.year}`,
                 loginTime: Date.now(),
             }
+            localStorage.setItem('isSignedIn', true)
             await addDoc(collection(database, usersCollection), userInfo)
             navigate(Paths.Profile)
         })
         .catch((error) => {
             const errorCode = error.code
             dispatch(updateSignUpError(errorCode))
+            console.error(error.code + error.message)
         })
 }
 
@@ -80,10 +86,12 @@ export const loginWithEmailAndPassword = (
 ) => {
     signInWithEmailAndPassword(auth, email, password)
         .then(() => {
+            localStorage.setItem('isSignedIn', true)
             navigate(Paths.Profile)
         })
         .catch((error) => {
             const errorCode = error.code
             dispatch(updateLoginError(errorCode))
+            console.error(error.code + error.message)
         })
 }

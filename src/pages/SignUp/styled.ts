@@ -42,10 +42,12 @@ export const Image = styled.img`
                 height: ${theme.logoImageStyles.defaultHeigth};
                 margin-right: ${theme.logoImageStyles.md.marginLeft + 'px'};
             }
+
             @media (${theme.media.md}) {
                 height: ${theme.logoImageStyles.defaultHeigth};
                 margin-right: ${theme.logoImageStyles.sm.marginLeft + 'px'};
             }
+
             @media (${theme.media.xs}) {
                 display: none;
             }
@@ -63,9 +65,11 @@ export const Title = styled.h1`
                 font-size: ${theme.fontSizes.xl + 'px'};
                 margin: ${theme.spaces.xl + 'px' + ' 0px'};
             }
+
             @media (${theme.media.lg}) {
                 margin: ${theme.spaces.lg + 'px' + ' 0px'};
             }
+
             @media (${theme.media.sm}) {
                 font-size: ${theme.fontSizes.lg + 'px'};
             }
@@ -83,6 +87,7 @@ export const Subtitle = styled.h3`
                 font-size: ${theme.fontSizes.lg + 'px'};
                 margin: ${theme.spaces.lg + 'px' + ' 0px'};
             }
+
             @media (${theme.media.sm}) {
                 font-size: ${theme.fontSizes.sm + 'px'};
             }
@@ -100,6 +105,7 @@ export const ButtonsBlock = styled.div`
             @media (${theme.media.md}) {
                 width: ${theme.buttonsBlock.md.width + 'px'};
             }
+
             @media (${theme.media.sm}) {
                 width: ${theme.buttonsBlock.sm.width + 'px'};
             }
@@ -127,6 +133,7 @@ export const Policy = styled.p`
                 margin: ${theme.spaces.md + 'px' + ' 0px'};
                 width: ${theme.policyStyles.md.width + 'px'};
             }
+
             @media (${theme.media.md}) {
                 margin: ${theme.spaces.sm + 'px' + ' 0px'};
                 width: ${theme.policyStyles.sm.width + 'px'};
@@ -174,9 +181,11 @@ export const BottomContent = styled.div`
             @media (${theme.media.lg}) {
                 width: ${theme.bottomLinksStyle.md.maxWidth + 'px'};
             }
+
             @media (${theme.media.md}) {
                 width: ${theme.bottomLinksStyle.sm.maxWidth + 'px'};
             }
+
             @media (${theme.media.xs}) {
                 display: none;
             }
@@ -203,6 +212,21 @@ export const BottomLink = styled.a`
             @media (${theme.media.lg}) {
                 font-size: ${theme.fontSizes.xxs + 'px'};
                 margin-right: ${theme.spaces.xs + 'px'};
+            }
+        `
+    }}
+`
+
+export const SignEmailText = styled.p`
+    ${({ theme }) => {
+        return css`
+            padding: ${theme.signUpStyles.lg.signEmailPadding + 'px 0px'};
+
+            @media (${theme.media.lg}) {
+                padding: ${theme.signUpStyles.md.signEmailPadding + 'px 0px'};
+            }
+            @media (${theme.media.md}) {
+                padding: ${theme.signUpStyles.sm.signEmailPadding + 'px 0px'};
             }
         `
     }}

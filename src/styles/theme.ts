@@ -42,12 +42,15 @@ export const theme: Theme = {
         margin: '20',
         lg: {
             width: '960',
+            signEmailPadding: '4.4',
         },
         md: {
             width: '760',
+            signEmailPadding: '5.6',
         },
         sm: {
             width: '460',
+            signEmailPadding: '6.8',
         },
     },
     modalStyles: {

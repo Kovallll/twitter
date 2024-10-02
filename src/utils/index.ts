@@ -47,6 +47,10 @@ export const getNotifyError = (error: string) => {
             text = 'Wrong password'
             break
         }
+        case 'auth/invalid-credential': {
+            text = 'Invalid credential'
+            break
+        }
     }
 
     return text
@@ -68,4 +72,19 @@ export const getIsValidDate = (date: SignUpDate) => {
         dateObj.getDate() === Number(day)
 
     return isValidDate
+}
+
+export class LocalStorage {
+    getItem = (
+        key: string,
+        undefinedItem: object | null | [] = null
+    ): boolean => {
+        return JSON.parse(
+            window.localStorage.getItem(key) ?? JSON.stringify(undefinedItem)
+        )
+    }
+
+    setItem = (key: string, value: boolean) => {
+        window.localStorage.setItem(key, JSON.stringify(value))
+    }
 }

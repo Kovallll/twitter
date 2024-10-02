@@ -1,10 +1,9 @@
 import { FieldValues, Path } from 'react-hook-form'
 
-import { InputModule } from './styled'
 import { PhoneInputProps } from './types'
 
+import { Input } from '@components/Input'
 import { basePhoneCode } from '@constants'
-import { ErrorText } from '@styles/global'
 
 const startBracket = 3
 const endBracket = 5
@@ -15,7 +14,7 @@ const endLine = 12
 export const PhoneInput = <T extends FieldValues>(
     props: PhoneInputProps<T>
 ) => {
-    const { value, register, error, onChangeInput, ...otherProps } = props
+    const { value, register, error, onChangeInput } = props
 
     const handleChangePhoneInput = (value: string) => {
         const input = value.replace(/\D/g, '')
@@ -38,27 +37,19 @@ export const PhoneInput = <T extends FieldValues>(
         e.target.setSelectionRange(startBracket + 1, startBracket + 1)
     }
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target
-
+    const handleInputChange = (value: string) => {
         const phoneValue = handleChangePhoneInput(value)
         onChangeInput(phoneValue)
     }
-    const validRegister = !!register
-        ? register('phone' as Path<T>, {
-              onChange: handleInputChange,
-          })
-        : []
 
     return (
-        <>
-            <ErrorText role="alert">{error}</ErrorText>
-            <InputModule
-                {...validRegister}
-                {...otherProps}
-                value={value}
-                onFocus={handleFocus}
-            />
-        </>
+        <Input
+            onChangeInput={handleInputChange}
+            label={'phone' as Path<T>}
+            register={register}
+            value={value}
+            error={error}
+            onFocus={handleFocus}
+        />
     )
 }

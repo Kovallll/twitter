@@ -18,6 +18,7 @@ export const Container = styled.div`
                     50% - ${Number(theme.modalStyles.md.width) / 2 + 'px'}
                 );
             }
+
             @media (${theme.media.xs}) {
                 top: ${theme.modalStyles.sm.top + 'px'};
                 right: calc(
@@ -43,6 +44,7 @@ export const Window = styled.div`
             @media (${theme.media.sm}) {
                 width: ${theme.modalStyles.md.width + 'px'};
             }
+
             @media (${theme.media.xs}) {
                 width: ${theme.modalStyles.sm.width + 'px'};
             }
@@ -74,6 +76,7 @@ export const CloseButton = styled.button`
                     height: ${theme.modalStyles.md.sizeCloseButton + 'px'};
                 }
             }
+
             @media (${theme.media.xs}) {
                 top: ${theme.modalStyles.sm.topCloseButton + 'px'};
                 right: ${theme.modalStyles.sm.rightCloseButton + 'px'};

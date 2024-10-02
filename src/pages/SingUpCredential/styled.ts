@@ -23,6 +23,7 @@ export const Wrap = styled.div`
             @media (${theme.media.xl}) {
                 width: ${theme.signUpStyles.md.width + 'px'};
             }
+
             @media (${theme.media.xs}) {
                 width: ${theme.signUpStyles.sm.width + 'px'};
             }
@@ -50,9 +51,11 @@ export const Title = styled.h1`
                 font-size: ${theme.fontSizes.lg + 'px'};
                 margin: ${theme.spaces.xl + 'px' + ' 0px'};
             }
+
             @media (${theme.media.lg}) {
                 margin: ${theme.spaces.lg + 'px' + ' 0px'};
             }
+
             @media (${theme.media.sm}) {
                 font-size: ${theme.fontSizes.md + 'px'};
             }
@@ -70,9 +73,11 @@ export const Subtitle = styled.p`
             @media (${theme.media.xl}) {
                 font-size: ${theme.fontSizes.sm + 'px'};
             }
+
             @media (${theme.media.lg}) {
                 margin: ${theme.spaces.lg + 'px' + ' 0px'};
             }
+
             @media (${theme.media.sm}) {
                 font-size: ${theme.fontSizes.xs + 'px'};
             }
@@ -89,6 +94,7 @@ export const Text = styled.p`
             @media (${theme.media.md}) {
                 margin: ${theme.spaces.md + 'px' + ' 0px'};
             }
+
             @media (${theme.media.xs}) {
                 font-size: ${theme.fontSizes.xxs + 'px'};
             }
@@ -109,6 +115,7 @@ export const DateBlock = styled.div`
             @media (${theme.media.md}) {
                 margin-bottom: ${theme.fontSizes.sm + 'px'};
             }
+
             @media (${theme.media.xs}) {
                 margin-bottom: ${theme.fontSizes.xs + 'px'};
             }

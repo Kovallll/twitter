@@ -16,6 +16,7 @@ export const Wrap = styled.div`
             @media (${theme.media.md}) {
                 margin-right: ${theme.selectStyles.md.marginRight + 'px'};
             }
+
             @media (${theme.media.xs}) {
                 margin-right: ${theme.selectStyles.sm.marginRight + 'px'};
             }
@@ -38,6 +39,7 @@ export const SelectModule = styled.select`
                 padding: ${theme.selectStyles.md.padding + 'px'};
                 font-size: ${theme.fontSizes.md + 'px'};
             }
+
             @media (${theme.media.xs}) {
                 padding: ${theme.selectStyles.sm.padding + 'px'};
                 font-size: ${theme.fontSizes.sm + 'px'};

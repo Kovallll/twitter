@@ -2,7 +2,6 @@ import closeIcon from '@assets/icons/close.svg'
 import googleIcon from '@assets/icons/googleIcon.svg'
 import logoIcon from '@assets/icons/twitterLogo.svg'
 import twitterImage from '@assets/images/signupTwitter.png'
-import { getSelectDays, getSelectYears } from '@utils'
 
 export enum Paths {
     SignUp = '/',
@@ -94,7 +93,3 @@ export const countDays = 31
 export const usersCollection = 'users'
 
 export const countYears = 120
-
-export const years = getSelectYears()
-
-export const days = getSelectDays()

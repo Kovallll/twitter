@@ -62,9 +62,11 @@ export const ModalTitle = styled.h1`
                 font-size: ${theme.fontSizes.lg + 'px'};
                 margin-top: ${theme.spaces.xl + 'px'};
             }
+
             @media (${theme.media.lg}) {
                 margin-top: ${theme.spaces.lg + 'px'};
             }
+
             @media (${theme.media.sm}) {
                 font-size: ${theme.fontSizes.md + 'px'};
             }
@@ -100,6 +102,7 @@ export const Button = styled.button<ButtonProps>`
                 margin-bottom: ${theme.spaces.lg + 'px'};
                 font-size: ${theme.fontSizes.sm + 'px'};
             }
+
             @media (${theme.media.md}) {
                 padding: ${theme.spaces.sm + 'px' + ' 0px'};
                 margin-bottom: ${theme.spaces.md + 'px'};

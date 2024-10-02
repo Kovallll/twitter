@@ -27,6 +27,7 @@ import {
     Image,
     Login,
     Policy,
+    SignEmailText,
     SignUpInfo,
     SingUpLink,
     Subtitle,
@@ -87,7 +88,7 @@ const SignUp = () => {
                             onClick={handleEmailAndPasswordAuthClick}
                             $withBorder={true}
                         >
-                            {emailSignUpText}
+                            <SignEmailText>{emailSignUpText}</SignEmailText>
                         </Button>
                     </ButtonsBlock>
                     <Policy>
