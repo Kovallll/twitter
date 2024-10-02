@@ -1,19 +1,27 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
-import { Auth, getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
-import { getStorage } from 'firebase/storage'
+import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
 
 let firebaseApp: FirebaseApp
+
+const {
+    VITE_FIREBASE_APIKEY,
+    VITE_FIREBASE_AUTHDOMAIN,
+    VITE_FIREBASE_PROJECTID,
+    VITE_FIREBASE_STORAGEBUCKET,
+    VITE_FIREBASE_MESSAGINGSENDERID,
+    VITE_FIREBASE_APPID,
+} = import.meta.env
 
 export const setupFirebase = () => {
     try {
         firebaseApp = initializeApp({
-            apiKey: 'AIzaSyCCsCK2-2LSvDHHgoH4hXCOOI8klIYxcHE',
-            authDomain: 'twitter-32fe8.firebaseapp.com',
-            projectId: 'twitter-32fe8',
-            storageBucket: 'twitter-32fe8.appspot.com',
-            messagingSenderId: '215593552373',
-            appId: '1:215593552373:web:d8685f9a16a8488fdcb8bc',
+            apiKey: VITE_FIREBASE_APIKEY,
+            authDomain: VITE_FIREBASE_AUTHDOMAIN,
+            projectId: VITE_FIREBASE_PROJECTID,
+            storageBucket: VITE_FIREBASE_STORAGEBUCKET,
+            messagingSenderId: VITE_FIREBASE_MESSAGINGSENDERID,
+            appId: VITE_FIREBASE_APPID,
         })
     } catch (error) {
         console.error({ error })
@@ -22,19 +30,30 @@ export const setupFirebase = () => {
 
 let auth: Auth
 let firestore: ReturnType<typeof getFirestore>
-let storage: ReturnType<typeof getStorage>
 
-export const useAuth = () => {
+async function setupAuthEmulator(auth: Auth) {
+    const authUrl = 'http://localhost:9099'
+    await fetch(authUrl)
+    connectAuthEmulator(auth, 'http://localhost:9099')
+}
+
+export const getFirebaseAuth = () => {
     auth = getAuth(firebaseApp)
+
+    if (window.location.hostname === 'localhost') {
+        setupAuthEmulator(auth)
+    }
     return auth
 }
 
-export const useFirestore = () => {
-    firestore = getFirestore()
-    return firestore
-}
+export const getFirebaseStore = () => {
+    if (!firestore) {
+        firestore = getFirestore()
 
-export const useStorage = () => {
-    storage = getStorage()
-    return storage
+        if (window.location.hostname === 'localhost') {
+            connectFirestoreEmulator(firestore, 'localhost', 8080)
+        }
+    }
+
+    return firestore
 }
