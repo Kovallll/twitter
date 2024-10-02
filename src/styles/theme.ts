@@ -53,6 +53,15 @@ export const theme: Theme = {
             signEmailPadding: '6.8',
         },
     },
+    spinnerStyles: {
+        size: '64',
+        borderRadius: '50',
+        border: '6px solid',
+        borderColor: 'currentColor transparent currentColor transparent',
+        animation: 'spinner 1.4s linear infinite',
+        startRotate: '0deg',
+        endRotate: '360deg',
+    },
     modalStyles: {
         wrapWidth: '80',
         borderRadius: '16',

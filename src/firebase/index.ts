@@ -52,7 +52,8 @@ export const emailAndPasswordAuth = (
     dispatch: Dispatch<SingUpAction | LoginAction>,
     navigate: NavigateFunction,
     data: SignUpFormInput,
-    date: SignUpDate
+    date: SignUpDate,
+    handleChangeIsLoading: (isLoading: boolean) => void
 ) => {
     const { email, name, phone } = data
 
@@ -73,6 +74,7 @@ export const emailAndPasswordAuth = (
         })
         .catch((error) => {
             const errorCode = error.code
+            handleChangeIsLoading(false)
             dispatch(updateSignUpError(errorCode))
             console.error(error.code + error.message)
         })

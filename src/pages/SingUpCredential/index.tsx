@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -29,6 +29,7 @@ import {
     Container,
     DateBlock,
     LogoWrap,
+    Spinner,
     Subtitle,
     Text,
     Title,
@@ -63,11 +64,11 @@ import {
 } from '@utils'
 
 const SingUpCredential = () => {
+    const [isLoading, setIsLoading] = useState(false)
     const {
         register,
         formState: { errors },
         handleSubmit,
-        reset,
     } = useForm<SignUpFormInput>({
         resolver: yupResolver(signUpSchema),
         mode: 'onChange',
@@ -89,10 +90,20 @@ const SingUpCredential = () => {
         return () => clearTimeout(timeout)
     }, [dispatch, error])
 
+    const handleChangeIsLoading = (isLoading: boolean) => {
+        setIsLoading(isLoading)
+    }
+
     const onSubmit: SubmitHandler<SignUpFormInput> = (data) => {
+        setIsLoading(true)
         if (!error) {
-            emailAndPasswordAuth(dispatch, navigate, data, date)
-            reset()
+            emailAndPasswordAuth(
+                dispatch,
+                navigate,
+                data,
+                date,
+                handleChangeIsLoading
+            )
         }
     }
 
@@ -116,7 +127,6 @@ const SingUpCredential = () => {
     const handleChangeDate = useCallback(
         (value: string, type: DateType) => {
             let resultDate = date
-
             if (type === 'day') {
                 resultDate = { ...date, day: value }
             }
@@ -133,7 +143,9 @@ const SingUpCredential = () => {
                 dispatch(updateSignUpError(''))
             } else {
                 dispatch(updateSignUpError(dateDayError))
-                dispatch(updateSignUpDate({ ...date, day: defaultValueDay }))
+                dispatch(
+                    updateSignUpDate({ ...resultDate, day: defaultValueDay })
+                )
             }
         },
         [date, dispatch]
@@ -151,6 +163,10 @@ const SingUpCredential = () => {
     const notifyError = getNotifyError(error)
     const years = getSelectYears()
     const days = getSelectDays()
+
+    if (isLoading) {
+        return <Spinner />
+    }
 
     return (
         <Container>

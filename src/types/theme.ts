@@ -120,6 +120,15 @@ export interface Theme {
             signEmailPadding: string
         }
     }
+    spinnerStyles: {
+        size: string
+        borderRadius: string
+        border: string
+        borderColor: string
+        animation: string
+        startRotate: string
+        endRotate: string
+    }
     buttonsBlock: {
         lg: {
             width: string

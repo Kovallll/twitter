@@ -122,3 +122,33 @@ export const DateBlock = styled.div`
         `
     }}
 `
+export const Spinner = styled.div`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexRowCenter}
+            height: ${theme.fullSize + 'vh'};
+            width: ${theme.fullSize + '%'};
+            color: ${theme.palette.common.black};
+
+            &:after {
+                content: ' ';
+                width: ${theme.spinnerStyles.size + 'px'};
+                height: ${theme.spinnerStyles.size + 'px'};
+                border-radius: ${theme.spinnerStyles.borderRadius + '%'};
+                border: ${theme.spinnerStyles.border +
+                theme.palette.common.black};
+                border-color: ${theme.spinnerStyles.borderColor};
+                animation: ${theme.spinnerStyles.animation};
+            }
+
+            @keyframes spinner {
+                0% {
+                    transform: rotate(${theme.spinnerStyles.startRotate});
+                }
+                100% {
+                    transform: rotate(${theme.spinnerStyles.endRotate});
+                }
+            }
+        `
+    }}
+`
