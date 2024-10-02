@@ -63,6 +63,8 @@ export enum ActionTypes {
 }
 export const basePhoneCode = '+375'
 
+export const defaultDate = { year: '', month: '', day: '' }
+
 export const signUpDefaultData = {
     name: '',
     phone: basePhoneCode,
@@ -70,7 +72,7 @@ export const signUpDefaultData = {
     password: '',
     confirmPassword: '',
     error: '',
-    date: { day: '', month: '', year: '' },
+    date: defaultDate,
 }
 
 export const loginDefaultData = {

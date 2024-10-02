@@ -53,7 +53,8 @@ export const emailAndPasswordAuth = (
     navigate: NavigateFunction,
     data: SignUpFormInput,
     date: SignUpDate,
-    handleChangeIsLoading: (isLoading: boolean) => void
+    handleChangeIsLoading: (isLoading: boolean) => void,
+    handleResetForm: () => void
 ) => {
     const { email, name, phone } = data
 
@@ -68,6 +69,7 @@ export const emailAndPasswordAuth = (
                 dateBirthday: `${date.day} ${date.month} ${date.year}`,
                 loginTime: Date.now(),
             }
+            handleResetForm()
             localStorage.setItem('isSignedIn', true)
             await addDoc(collection(database, usersCollection), userInfo)
             navigate(Paths.Profile)

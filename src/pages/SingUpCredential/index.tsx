@@ -40,7 +40,14 @@ import { Input } from '@components/Input'
 import Notify from '@components/Notify'
 import { PhoneInput } from '@components/PhoneInput'
 import Select from '@components/Select'
-import { images, months, notifyTimeout, Paths } from '@constants'
+import {
+    basePhoneCode,
+    defaultDate,
+    images,
+    months,
+    notifyTimeout,
+    Paths,
+} from '@constants'
 import { emailAndPasswordAuth } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAppDispatch, useAppSelector } from '@hooks'
@@ -94,19 +101,6 @@ const SingUpCredential = () => {
         setIsLoading(isLoading)
     }
 
-    const onSubmit: SubmitHandler<SignUpFormInput> = (data) => {
-        setIsLoading(true)
-        if (!error) {
-            emailAndPasswordAuth(
-                dispatch,
-                navigate,
-                data,
-                date,
-                handleChangeIsLoading
-            )
-        }
-    }
-
     const handleChangeEmailInput = (value: string) => {
         dispatch(updateSignUpEmail(value))
     }
@@ -122,6 +116,15 @@ const SingUpCredential = () => {
 
     const handleChangeConfrimPasswordInput = (value: string) => {
         dispatch(updateSignUpConfrimPassword(value))
+    }
+
+    const handleResetForm = () => {
+        dispatch(updateSignUpConfrimPassword(''))
+        dispatch(updateSignUpPassword(''))
+        dispatch(updateSignUpPhone(basePhoneCode))
+        dispatch(updateSignUpName(''))
+        dispatch(updateSignUpEmail(''))
+        dispatch(updateSignUpDate(defaultDate))
     }
 
     const handleChangeDate = useCallback(
@@ -150,6 +153,20 @@ const SingUpCredential = () => {
         },
         [date, dispatch]
     )
+
+    const onSubmit: SubmitHandler<SignUpFormInput> = (data) => {
+        setIsLoading(true)
+        if (!error) {
+            emailAndPasswordAuth(
+                dispatch,
+                navigate,
+                data,
+                date,
+                handleChangeIsLoading,
+                handleResetForm
+            )
+        }
+    }
 
     const {
         name: nameError,
