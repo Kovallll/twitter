@@ -1,15 +1,17 @@
 import bookmarksIcon from '@assets/icons/bookmarks.svg'
 import closeIcon from '@assets/icons/close.svg'
 import exploreIcon from '@assets/icons/explore.svg'
+import googleIcon from '@assets/icons/googleIcon.svg'
 import homeIcon from '@assets/icons/homeOutline.svg'
 import listsIcon from '@assets/icons/lists.svg'
 import messagesIcon from '@assets/icons/messages.svg'
 import moreIcon from '@assets/icons/more.svg'
 import notificationIcon from '@assets/icons/notification.svg'
 import profileIcon from '@assets/icons/profileOutline.svg'
+import logoIcon from '@assets/icons/twitterLogo.svg'
 import profileBackground from '@assets/images/profileBackground.png'
 import profileImage from '@assets/images/profileImage.svg'
-import { getSelectDays, getSelectYears } from '@utils'
+import twitterImage from '@assets/images/signupTwitter.png'
 
 export enum Paths {
     SignUp = '/',
@@ -22,7 +24,8 @@ export enum Paths {
 
 export const currentDate = new Date()
 export const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/
-export const phoneRegex = /^\+375 \(\d{2}\) \d{2}-\d{2}-\d{3}$/
+export const phoneRegex = /^\+375 \(\d{2}\) \d{2}-\d{2}-\d{3,}$/
+export const codeRegex = /\d/g
 export const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
 export enum Month {
@@ -55,51 +58,51 @@ export const months = [
     Month.December,
 ]
 
-export const countYears = 120
-
-export const years = getSelectYears()
-
-export const days = getSelectDays()
-
 export enum ActionTypes {
     SignUpEmail = 'singUp/email',
     SignUpPhone = 'singUp/phone',
     SignUpName = 'singUp/name',
     SignUpPassword = 'singUp/password',
     SignUpConfrimPassword = 'singUp/confrimPassword',
+    SignUpUserId = 'singUp/userId',
     SignUpDate = 'singUp/date',
     SignUpError = 'singUp/error',
-    LoginPhone = 'login/phone',
+    LoginEmail = 'login/email',
+    LoginPassword = 'login/password',
     LoginError = 'login/error',
-    LoginOpenModal = 'login/modal',
-    LoginCode = 'login/code',
 }
+export const basePhoneCode = '+375'
+
+export const defaultDate = { year: '', month: '', day: '' }
 
 export const signUpDefaultData = {
     name: '',
-    phone: '',
+    phone: basePhoneCode,
     email: '',
     password: '',
     confirmPassword: '',
     error: '',
-    date: { day: '', month: '', year: '' },
+    date: defaultDate,
 }
 
-export const basePhoneCode = '+375'
-
 export const loginDefaultData = {
-    phone: basePhoneCode,
+    email: '',
+    password: '',
     error: '',
-    code: '',
 }
 
 export const images = {
     closeIcon,
     profileBackground,
     profileImage,
+    googleIcon,
+    logoIcon,
+    twitterImage,
 }
 
 export const notifyTimeout = 4000
+
+export const countDays = 31
 
 export const usersCollection = 'users'
 
@@ -113,3 +116,4 @@ export const sidebarLinks = [
     { icon: profileIcon, title: 'Profile' },
     { icon: moreIcon, title: 'More' },
 ]
+export const countYears = 120

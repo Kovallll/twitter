@@ -14,9 +14,9 @@ export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
 
 export {
-    updateLoginCode,
     updateLoginError,
-    updateLoginPhone,
+    updateLoginEmail,
+    updateLoginPassword,
     updateSignUpConfrimPassword,
     updateSignUpDate,
     updateSignUpEmail,
@@ -25,3 +25,5 @@ export {
     updateSignUpPassword,
     updateSignUpPhone,
 } from './actions'
+
+export { type LoginAction, type SingUpAction } from './redusers/types'

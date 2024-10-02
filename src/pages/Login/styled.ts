@@ -23,6 +23,7 @@ export const Wrap = styled.div`
             @media (${theme.media.xl}) {
                 width: ${theme.loginStyles.md.width + 'px'};
             }
+
             @media (${theme.media.xs}) {
                 width: ${theme.loginStyles.sm.width + 'px'};
             }
@@ -40,9 +41,11 @@ export const Title = styled.h1`
                 font-size: ${theme.fontSizes.xl + 'px'};
                 margin: ${theme.spaces.xl + 'px' + ' 0px'};
             }
+
             @media (${theme.media.lg}) {
                 margin: ${theme.spaces.lg + 'px' + ' 0px'};
             }
+
             @media (${theme.media.sm}) {
                 font-size: ${theme.fontSizes.lg + 'px'};
             }
@@ -56,16 +59,6 @@ export const SignUpLink = styled.div`
             ${mixins.flexRowEnd}
 
             width: ${theme.fullSize + '%'};
-        `
-    }}
-`
-
-export const ModalBlock = styled.div`
-    ${({ theme }) => {
-        return css`
-            ${mixins.flexColumnCenter}
-
-            width: ${theme.modalStyles.wrapWidth + '%'};
         `
     }}
 `

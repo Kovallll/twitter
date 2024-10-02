@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { memo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import { closeAltText } from './config'
@@ -8,7 +8,7 @@ import { ModalProps } from './types'
 import { images } from '@constants'
 import { useClickOutside } from '@hooks'
 
-export const Modal = ({ onCloseModal, children }: ModalProps) => {
+const Modal = ({ onCloseModal, children }: ModalProps) => {
     const modalRef = useRef(null)
     useClickOutside(modalRef, () => onCloseModal())
 
@@ -24,3 +24,5 @@ export const Modal = ({ onCloseModal, children }: ModalProps) => {
         document.body
     )
 }
+
+export default memo(Modal)

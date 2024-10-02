@@ -1,55 +1,54 @@
+import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth, useFirestore } from 'firebase.config'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { addDoc, collection } from 'firebase/firestore'
-import * as yup from 'yup'
 
 import {
-    confirmPasswordError,
     confirmPasswordLabel,
     confirmPasswordPlaceholder,
+    dateDayError,
     dateSubtitle,
     dateText,
-    emailError,
+    dayType,
+    defaultValueDay,
     emailLabel,
     emailPlaceholder,
     linkText,
     logoAltText,
+    monthType,
     nameLabel,
     namePlaceholder,
-    passwordError,
     passwordLabel,
     passwordPlaceholder,
-    phoneLabel,
     phonePlaceholder,
     signUpSubmitText,
     singUpTitleText,
+    yearType,
 } from './config'
+import { signUpSchema } from './schema'
 import {
     Container,
     DateBlock,
     LogoWrap,
+    Spinner,
     Subtitle,
     Text,
     Title,
     Wrap,
 } from './styled'
 
-import logo from '@assets/icons/twitterLogo.svg'
 import { Input } from '@components/Input'
-import { Notify } from '@components/Notify'
-import { Select } from '@components/Select'
+import Notify from '@components/Notify'
+import { PhoneInput } from '@components/PhoneInput'
+import Select from '@components/Select'
 import {
-    days,
-    emailRegex,
+    basePhoneCode,
+    defaultDate,
+    images,
     months,
     notifyTimeout,
-    passwordRules,
     Paths,
-    usersCollection,
-    years,
 } from '@constants'
+import { emailAndPasswordAuth } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import {
@@ -64,64 +63,42 @@ import {
 import { Button, Form, LinkStyle, Logo } from '@styles/global'
 import { theme } from '@styles/theme'
 import { DateType, SignUpFormInput } from '@types'
-
-const signUpSchema = yup
-    .object({
-        name: yup.string().required(),
-        phone: yup.string().required(),
-        email: yup
-            .string()
-            .required()
-            .email()
-            .test('', emailError, (value) => emailRegex.test(value)),
-        password: yup.string().required().matches(passwordRules, {
-            message: passwordError,
-        }),
-        confirmPassword: yup
-            .string()
-            .required()
-            .test('', confirmPasswordError, function (value) {
-                return this.parent.password === value
-            }),
-    })
-    .required()
+import {
+    getIsValidDate,
+    getNotifyError,
+    getSelectDays,
+    getSelectYears,
+} from '@utils'
 
 const SingUpCredential = () => {
+    const [isLoading, setIsLoading] = useState(false)
     const {
         register,
         formState: { errors },
         handleSubmit,
-    } = useForm<SignUpFormInput>({ resolver: yupResolver(signUpSchema) })
+    } = useForm<SignUpFormInput>({
+        resolver: yupResolver(signUpSchema),
+        mode: 'onChange',
+    })
 
     const navigate = useNavigate()
-    const database = useFirestore()
-    const auth = useAuth()
     const dispatch = useAppDispatch()
     const { name, email, phone, password, confirmPassword, error, date } =
         useAppSelector((state) => state.signUp)
 
-    const onSubmit: SubmitHandler<SignUpFormInput> = (data) => {
-        createUserWithEmailAndPassword(auth, data.email, data.password)
-            .then(async (userCredential) => {
-                const uid = userCredential.user.uid
-                const userInfo = {
-                    userId: uid,
-                    name,
-                    email,
-                    phone,
-                    dateBirthday: `${date.day} ${date.month} ${date.year}`,
-                }
-                await addDoc(collection(database, usersCollection), userInfo)
-                navigate(Paths.Profile)
-            })
-            .catch((error) => {
-                const errorCode = error.code
-                dispatch(updateSignUpError(errorCode))
-                const timeout = setTimeout(() => {
-                    dispatch(updateSignUpError(''))
-                    clearTimeout(timeout)
-                }, notifyTimeout)
-            })
+    useEffect(() => {
+        let timeout: NodeJS.Timeout
+        if (error) {
+            timeout = setTimeout(() => {
+                dispatch(updateSignUpError(''))
+            }, notifyTimeout)
+        }
+
+        return () => clearTimeout(timeout)
+    }, [dispatch, error])
+
+    const handleChangeIsLoading = (isLoading: boolean) => {
+        setIsLoading(isLoading)
     }
 
     const handleChangeEmailInput = (value: string) => {
@@ -141,18 +118,54 @@ const SingUpCredential = () => {
         dispatch(updateSignUpConfrimPassword(value))
     }
 
-    const handleChangeDate = (value: string, type: DateType) => {
-        let resultDate = date
-        if (type === 'day') {
-            resultDate = { ...date, day: value }
+    const handleResetForm = () => {
+        dispatch(updateSignUpConfrimPassword(''))
+        dispatch(updateSignUpPassword(''))
+        dispatch(updateSignUpPhone(basePhoneCode))
+        dispatch(updateSignUpName(''))
+        dispatch(updateSignUpEmail(''))
+        dispatch(updateSignUpDate(defaultDate))
+    }
+
+    const handleChangeDate = useCallback(
+        (value: string, type: DateType) => {
+            let resultDate = date
+            if (type === 'day') {
+                resultDate = { ...date, day: value }
+            }
+            if (type === 'month') {
+                resultDate = { ...date, month: value }
+            }
+            if (type === 'year') {
+                resultDate = { ...date, year: value }
+            }
+
+            const isValidDate = getIsValidDate(resultDate)
+            if (isValidDate) {
+                dispatch(updateSignUpDate(resultDate))
+                dispatch(updateSignUpError(''))
+            } else {
+                dispatch(updateSignUpError(dateDayError))
+                dispatch(
+                    updateSignUpDate({ ...resultDate, day: defaultValueDay })
+                )
+            }
+        },
+        [date, dispatch]
+    )
+
+    const onSubmit: SubmitHandler<SignUpFormInput> = (data) => {
+        setIsLoading(true)
+        if (!error) {
+            emailAndPasswordAuth(
+                dispatch,
+                navigate,
+                data,
+                date,
+                handleChangeIsLoading,
+                handleResetForm
+            )
         }
-        if (type === 'month') {
-            resultDate = { ...date, month: value }
-        }
-        if (type === 'year') {
-            resultDate = { ...date, year: value }
-        }
-        dispatch(updateSignUpDate(resultDate))
     }
 
     const {
@@ -161,13 +174,22 @@ const SingUpCredential = () => {
         email: emailError,
         password: passwordError,
         confirmPassword: confirmPasswordError,
+        date: dateError,
     } = errors
+
+    const notifyError = getNotifyError(error)
+    const years = getSelectYears()
+    const days = getSelectDays()
+
+    if (isLoading) {
+        return <Spinner />
+    }
 
     return (
         <Container>
             <Wrap>
                 <LogoWrap>
-                    <Logo src={logo} alt={logoAltText} />
+                    <Logo src={images.logoIcon} alt={logoAltText} />
                 </LogoWrap>
                 <Title>{singUpTitleText}</Title>
                 <Form onSubmit={handleSubmit(onSubmit)}>
@@ -181,13 +203,12 @@ const SingUpCredential = () => {
                         error={nameError?.message}
                         aria-invalid={errors.name ? 'true' : 'false'}
                     />
-                    <Input
+                    <PhoneInput
                         type="text"
                         placeholder={phonePlaceholder}
                         value={phone}
                         onChangeInput={handleChangePhoneInput}
                         register={register}
-                        label={phoneLabel}
                         error={phoneError?.message}
                         aria-invalid={errors.phone ? 'true' : 'false'}
                     />
@@ -221,7 +242,7 @@ const SingUpCredential = () => {
                         error={confirmPasswordError?.message}
                         aria-invalid={confirmPasswordError ? 'true' : 'false'}
                     />
-                    <Link to="" style={LinkStyle}>
+                    <Link to={Paths.SignUp} style={LinkStyle}>
                         {linkText}
                     </Link>
                     <Subtitle>{dateSubtitle}</Subtitle>
@@ -230,19 +251,25 @@ const SingUpCredential = () => {
                         <Select
                             value={date.month}
                             data={months}
-                            type="month"
+                            type={monthType}
+                            register={register}
+                            error={dateError?.month?.message}
                             onChangeDate={handleChangeDate}
                         />
                         <Select
                             value={date.year}
                             data={years}
-                            type="year"
+                            type={yearType}
+                            register={register}
+                            error={dateError?.year?.message}
                             onChangeDate={handleChangeDate}
                         />
                         <Select
                             value={date.day}
                             data={days}
-                            type="day"
+                            type={dayType}
+                            register={register}
+                            error={dateError?.day?.message}
                             onChangeDate={handleChangeDate}
                         />
                     </DateBlock>
@@ -255,7 +282,7 @@ const SingUpCredential = () => {
                     </Button>
                 </Form>
             </Wrap>
-            {error !== '' && <Notify error={error} />}
+            {error !== '' && <Notify error={notifyError} />}
         </Container>
     )
 }

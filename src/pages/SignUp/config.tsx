@@ -1,5 +1,3 @@
-import { SingUpLink } from './styled'
-
 import { currentDate } from '@constants'
 
 export const twitterImageAltText = 'twitter image'
@@ -10,19 +8,6 @@ export const googleSignUpText = 'Sign up with Google'
 export const emailSignUpText = 'Sign up with email'
 export const loginText = `Already have an account? `
 export const loginLinkText = 'Log in'
-
-export const policyTerms = <SingUpLink>Terms of Service</SingUpLink>
-export const policyPrivacy = <SingUpLink>Privacy Policy</SingUpLink>
-export const policyCookie = <SingUpLink>Cookie Use</SingUpLink>
-export const policyText = [
-    'By singing up you agree to the ',
-    policyTerms,
-    ' and ',
-    policyPrivacy,
-    ', including ',
-    policyCookie,
-    '.',
-]
 export const bottomLinks = [
     'About',
     'Help Center',
@@ -40,3 +25,9 @@ export const bottomLinks = [
     'Settings',
     `© ${currentDate.getFullYear()} Twitter, Inc.`,
 ]
+export const policyTextPart1 = 'By singing up you agree to the'
+export const policyTextPart2 = 'Terms of Service'
+export const policyTextPart3 = 'and'
+export const policyTextPart4 = ' Privacy Policy'
+export const policyTextPart5 = ', including'
+export const policyTextPart6 = 'Cookie Use.'

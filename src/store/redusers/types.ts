@@ -1,7 +1,7 @@
 import {
-    UpdateLoginCode,
+    UpdateLoginEmailAction,
     UpdateLoginError,
-    UpdateLoginPhoneAction,
+    UpdateLoginPasswordAction,
     UpdateSignUpConfrimPasswordAction,
     UpdateSignUpDate,
     UpdateSignUpEmailAction,
@@ -21,6 +21,6 @@ export type SingUpAction =
     | UpdateSignUpDate
 
 export type LoginAction =
-    | UpdateLoginPhoneAction
+    | UpdateLoginEmailAction
     | UpdateLoginError
-    | UpdateLoginCode
+    | UpdateLoginPasswordAction

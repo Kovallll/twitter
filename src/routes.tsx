@@ -4,6 +4,7 @@ import {
     Route,
 } from 'react-router-dom'
 
+import { AuthenticatedProtect, RequireAuth } from '@components/ProtectedPaths'
 import { Paths } from '@constants'
 import Login from '@pages/Login'
 import NotFound from '@pages/NotFound'
@@ -14,10 +15,38 @@ import SingUpCredential from '@pages/SingUpCredential'
 
 const routes = [
     { path: Paths.NotFound, element: <NotFound /> },
-    { path: Paths.SignUp, element: <SignUp /> },
-    { path: Paths.Login, element: <Login /> },
-    { path: Paths.SingUpCredential, element: <SingUpCredential /> },
-    { path: Paths.Profile, element: <Profile /> },
+    {
+        path: Paths.SignUp,
+        element: (
+            <AuthenticatedProtect redirectTo="/profile">
+                <SignUp />
+            </AuthenticatedProtect>
+        ),
+    },
+    {
+        path: Paths.Login,
+        element: (
+            <AuthenticatedProtect redirectTo="/profile">
+                <Login />
+            </AuthenticatedProtect>
+        ),
+    },
+    {
+        path: Paths.SingUpCredential,
+        element: (
+            <AuthenticatedProtect redirectTo="/profile">
+                <SingUpCredential />
+            </AuthenticatedProtect>
+        ),
+    },
+    {
+        path: Paths.Profile,
+        element: (
+            <RequireAuth redirectTo="/login">
+                <Profile />
+            </RequireAuth>
+        ),
+    },
 ]
 
 export const router = createHashRouter(

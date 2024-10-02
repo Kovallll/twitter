@@ -1,3 +1,8 @@
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { getFirebaseAuth } from 'firebase.config'
+import { onAuthStateChanged, User } from 'firebase/auth'
+
 import {
     Container,
     EditBlock,
@@ -26,15 +31,38 @@ import {
 } from './styled'
 
 import { Sidebar } from '@components/Sidebar'
-import { images } from '@constants'
+import { images, Paths } from '@constants'
 import { Button } from '@styles/global'
 import { theme } from '@styles/theme'
+import { LocalStorage } from '@utils'
 
 const Profile = () => {
+    const [user, setUser] = useState<User | null>(null)
+    const auth = getFirebaseAuth()
+    const navigate = useNavigate()
+    const localStorage = new LocalStorage()
+    console.log(user)
+    useEffect(() => {
+        const listener = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user)
+            }
+        })
+
+        return () => listener()
+    }, [auth])
+
+    const handleSignOutClick = () => {
+        localStorage.setItem('isSignedIn', false)
+        auth.signOut()
+        setUser(null)
+        navigate(Paths.SignUp)
+    }
+
     return (
         <Container>
             <SidebarWrap>
-                <Sidebar />
+                <Sidebar onSignOut={handleSignOutClick} />
             </SidebarWrap>
             <ProfileContent>
                 <ProfileHeader>

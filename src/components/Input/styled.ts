@@ -14,19 +14,10 @@ export const InputModule = styled.input`
                 padding: ${theme.spaces.md + 'px'} ${theme.spaces.sm + 'px'};
                 font-size: ${theme.fontSizes.xs + 'px'};
             }
+
             @media (${theme.media.sm}) {
                 margin-bottom: ${theme.spaces.xs + 'px'};
             }
-        `
-    }}
-`
-
-export const ErrorText = styled.p`
-    ${({ theme }) => {
-        return css`
-            width: ${theme.fullSize + '%'};
-            color: ${theme.palette.errorColor};
-            height: 20px;
         `
     }}
 `

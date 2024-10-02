@@ -1,20 +1,27 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
 import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
 import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
-import { connectStorageEmulator, getStorage } from 'firebase/storage'
 
 let firebaseApp: FirebaseApp
-const getEmulator = () => import.meta.env.VITE_USE_FIREBASE_EMULATOR
+
+const {
+    VITE_FIREBASE_APIKEY,
+    VITE_FIREBASE_AUTHDOMAIN,
+    VITE_FIREBASE_PROJECTID,
+    VITE_FIREBASE_STORAGEBUCKET,
+    VITE_FIREBASE_MESSAGINGSENDERID,
+    VITE_FIREBASE_APPID,
+} = import.meta.env
 
 export const setupFirebase = () => {
     try {
         firebaseApp = initializeApp({
-            apiKey: 'AIzaSyAGirT2KwYFIXh69X2NSxQrFoBWXDXAUD4',
-            authDomain: 'test-25a1a.firebaseapp.com',
-            projectId: 'test-25a1a',
-            storageBucket: 'test-25a1a.appspot.com',
-            messagingSenderId: '935175610545',
-            appId: '1:935175610545:web:00ac1a30a743b153b20290',
+            apiKey: VITE_FIREBASE_APIKEY,
+            authDomain: VITE_FIREBASE_AUTHDOMAIN,
+            projectId: VITE_FIREBASE_PROJECTID,
+            storageBucket: VITE_FIREBASE_STORAGEBUCKET,
+            messagingSenderId: VITE_FIREBASE_MESSAGINGSENDERID,
+            appId: VITE_FIREBASE_APPID,
         })
     } catch (error) {
         console.error({ error })
@@ -23,32 +30,30 @@ export const setupFirebase = () => {
 
 let auth: Auth
 let firestore: ReturnType<typeof getFirestore>
-let storage: ReturnType<typeof getStorage>
 
-export const useAuth = () => {
+async function setupAuthEmulator(auth: Auth) {
+    const authUrl = 'http://localhost:9099'
+    await fetch(authUrl)
+    connectAuthEmulator(auth, 'http://localhost:9099')
+}
+
+export const getFirebaseAuth = () => {
     auth = getAuth(firebaseApp)
-    if (getEmulator()) {
-        connectAuthEmulator(auth, 'http://localhost:9099')
+
+    if (window.location.hostname === 'localhost') {
+        setupAuthEmulator(auth)
     }
     return auth
 }
 
-export const useFirestore = () => {
+export const getFirebaseStore = () => {
     if (!firestore) {
         firestore = getFirestore()
-        if (getEmulator()) {
+
+        if (window.location.hostname === 'localhost') {
             connectFirestoreEmulator(firestore, 'localhost', 8080)
         }
     }
-    return firestore
-}
 
-export const useStorage = () => {
-    if (!storage) {
-        storage = getStorage()
-        if (getEmulator()) {
-            connectStorageEmulator(storage, 'localhost', 9199)
-        }
-    }
-    return storage
+    return firestore
 }

@@ -29,6 +29,7 @@ export const NotifyModule = styled.p`
                 'px'};
                 font-size: ${theme.fontSizes.md + 'px'};
             }
+
             @media (${theme.media.xs}) {
                 right: ${theme.notifyStyles.sm.right + 'px'};
                 top: ${theme.notifyStyles.sm.top + 'px'};

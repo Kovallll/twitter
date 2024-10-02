@@ -10,6 +10,7 @@ export interface Theme {
         red: string
         errorColor: string
     }
+    boldFont: string
     fullSize: string
     noneBorder: string
     maxWidthContent: string
@@ -123,13 +124,25 @@ export interface Theme {
         marginTop: string
         lg: {
             width: string
+            signEmailPadding: string
         }
         md: {
             width: string
+            signEmailPadding: string
         }
         sm: {
             width: string
+            signEmailPadding: string
         }
+    }
+    spinnerStyles: {
+        size: string
+        borderRadius: string
+        border: string
+        borderColor: string
+        animation: string
+        startRotate: string
+        endRotate: string
     }
     buttonsBlock: {
         lg: {
