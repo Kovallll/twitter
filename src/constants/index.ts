@@ -7,6 +7,8 @@ import messagesIcon from '@assets/icons/messages.svg'
 import moreIcon from '@assets/icons/more.svg'
 import notificationIcon from '@assets/icons/notification.svg'
 import profileIcon from '@assets/icons/profileOutline.svg'
+import profileBackground from '@assets/images/profileBackground.png'
+import profileImage from '@assets/images/profileImage.svg'
 import { getSelectDays, getSelectYears } from '@utils'
 
 export enum Paths {
@@ -91,8 +93,10 @@ export const loginDefaultData = {
     code: '',
 }
 
-export const icons = {
+export const images = {
     closeIcon,
+    profileBackground,
+    profileImage,
 }
 
 export const notifyTimeout = 4000

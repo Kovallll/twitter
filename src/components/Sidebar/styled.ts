@@ -38,7 +38,7 @@ export const SidebarLink = styled.a`
     ${({ theme }) => {
         return css`
             ${mixins.flexRowStart}
-            width: ${theme.fullSize + '%'};
+
             margin-bottom: ${theme.spaces.xxl + 'px'};
             text-decoration: none;
 
