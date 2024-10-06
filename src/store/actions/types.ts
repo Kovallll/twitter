@@ -1,5 +1,11 @@
 import { ActionTypes } from '@constants'
-import { ActionInterface, SignUpDate } from '@types'
+import {
+    AccountData,
+    ActionInterface,
+    EditModalData,
+    SignUpDate,
+    UserData,
+} from '@types'
 
 export type UpdateSignUpEmailAction = ActionInterface<
     typeof ActionTypes.SignUpEmail,
@@ -25,10 +31,6 @@ export type UpdateSignUpConfrimPasswordAction = ActionInterface<
     typeof ActionTypes.SignUpConfrimPassword,
     string
 >
-export type UpdateSignUpError = ActionInterface<
-    typeof ActionTypes.SignUpError,
-    string
->
 
 export type UpdateSignUpDate = ActionInterface<
     typeof ActionTypes.SignUpDate,
@@ -45,7 +47,32 @@ export type UpdateLoginPasswordAction = ActionInterface<
     string
 >
 
-export type UpdateLoginError = ActionInterface<
-    typeof ActionTypes.LoginError,
+export type UpdateUserData = ActionInterface<
+    typeof ActionTypes.UserData,
+    EditModalData
+>
+
+export type UpdateTotalUser = ActionInterface<
+    typeof ActionTypes.UserTotal,
+    UserData
+>
+
+export type UpdateUserDocId = ActionInterface<
+    typeof ActionTypes.UserDocId,
     string
+>
+
+export type UpdateUserFollowing = ActionInterface<
+    typeof ActionTypes.UserFollowing,
+    string[]
+>
+
+export type UpdateNotifyText = ActionInterface<
+    typeof ActionTypes.NotifyText,
+    string
+>
+
+export type SetTotalAccounts = ActionInterface<
+    typeof ActionTypes.TotalAccounts,
+    AccountData | never[]
 >

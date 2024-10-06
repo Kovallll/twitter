@@ -1,13 +1,18 @@
 import bookmarksIcon from '@assets/icons/bookmarks.svg'
 import closeIcon from '@assets/icons/close.svg'
+import dotsIcon from '@assets/icons/dots.svg'
 import exploreIcon from '@assets/icons/explore.svg'
+import eyeSee from '@assets/icons/eyeSee.svg'
+import eyeSlash from '@assets/icons/eyeSlash.svg'
 import googleIcon from '@assets/icons/googleIcon.svg'
 import homeIcon from '@assets/icons/homeOutline.svg'
+import uploadImage from '@assets/icons/image.svg'
 import listsIcon from '@assets/icons/lists.svg'
 import messagesIcon from '@assets/icons/messages.svg'
 import moreIcon from '@assets/icons/more.svg'
 import notificationIcon from '@assets/icons/notification.svg'
 import profileIcon from '@assets/icons/profileOutline.svg'
+import searchIcon from '@assets/icons/search.svg'
 import logoIcon from '@assets/icons/twitterLogo.svg'
 import profileBackground from '@assets/images/profileBackground.png'
 import profileImage from '@assets/images/profileImage.svg'
@@ -66,10 +71,14 @@ export enum ActionTypes {
     SignUpConfrimPassword = 'singUp/confrimPassword',
     SignUpUserId = 'singUp/userId',
     SignUpDate = 'singUp/date',
-    SignUpError = 'singUp/error',
     LoginEmail = 'login/email',
     LoginPassword = 'login/password',
-    LoginError = 'login/error',
+    UserData = 'user/data',
+    UserTotal = 'user/total',
+    UserDocId = 'user/docId',
+    UserFollowing = 'user/following',
+    NotifyText = 'notify/text',
+    TotalAccounts = 'total/accounts',
 }
 export const basePhoneCode = '+375'
 
@@ -81,14 +90,12 @@ export const signUpDefaultData = {
     email: '',
     password: '',
     confirmPassword: '',
-    error: '',
     date: defaultDate,
 }
 
 export const loginDefaultData = {
     email: '',
     password: '',
-    error: '',
 }
 
 export const images = {
@@ -98,7 +105,47 @@ export const images = {
     googleIcon,
     logoIcon,
     twitterImage,
+    uploadImage,
+    searchIcon,
+    dotsIcon,
+    eyeSee,
+    eyeSlash,
 }
+
+export const defaultUser = {
+    userId: null,
+    name: '',
+    email: '',
+    avatar: { id: '0', url: images.profileImage },
+    followers: [],
+    following: [],
+    countTweets: 0,
+    tweets: null,
+    social: '',
+    description: '',
+}
+
+export const userDefaultData = {
+    editData: {
+        description: '',
+        social: '',
+        name: '',
+        photoUrl: images.profileImage,
+    },
+    user: defaultUser,
+    docId: '',
+    following: [],
+}
+
+export const notifyDefaultData = {
+    text: '',
+}
+
+export const totalDefaultData = {
+    accounts: [],
+}
+
+export const maxUploadSizeImage = 41943040 //40mb
 
 export const notifyTimeout = 4000
 
@@ -117,3 +164,5 @@ export const sidebarLinks = [
     { icon: moreIcon, title: 'More' },
 ]
 export const countYears = 120
+
+export const magicNumbers = ['FFD8FFE0', '89504E47']

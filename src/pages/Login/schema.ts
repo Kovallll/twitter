@@ -1,7 +1,9 @@
 import * as yup from 'yup'
 
+import { passwordError } from './config'
+
 import { emailRegex, passwordRules } from '@constants'
-import { emailError, passwordError } from '@pages/SingUpCredential/config'
+import { emailError } from '@pages/SingUpCredential/config'
 
 export const loginSchema = yup
     .object({

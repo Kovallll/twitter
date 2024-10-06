@@ -13,6 +13,7 @@ import { Container, SignUpLink, Title, Wrap } from './styled'
 
 import { Input } from '@components/Input'
 import Notify from '@components/Notify'
+import { PasswordInput } from '@components/PasswordInput'
 import { images, notifyTimeout, Paths } from '@constants'
 import { loginWithEmailAndPassword } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -20,10 +21,9 @@ import { useAppDispatch, useAppSelector } from '@hooks'
 import {
     emailLabel,
     emailPlaceholder,
-    passwordLabel,
     passwordPlaceholder,
 } from '@pages/SingUpCredential/config'
-import { updateLoginEmail, updateLoginError, updateLoginPassword } from '@store'
+import { updateLoginEmail, updateLoginPassword, updateNotifyText } from '@store'
 import { Button, Form, LinkStyle, Logo } from '@styles/global'
 import { theme } from '@styles/theme'
 import { LoginFormInput } from '@types'
@@ -41,18 +41,27 @@ const Login = () => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { email, password, error } = useAppSelector((state) => state.login)
+    const { email, password } = useAppSelector((state) => state.login)
+    const { text } = useAppSelector((state) => state.notify)
 
     useEffect(() => {
+        const handleResetForm = () => {
+            dispatch(updateLoginEmail(''))
+            dispatch(updateLoginPassword(''))
+        }
+
         let timeout: NodeJS.Timeout
-        if (error) {
+        if (text) {
             timeout = setTimeout(() => {
-                dispatch(updateLoginError(''))
+                dispatch(updateNotifyText(''))
             }, notifyTimeout)
         }
 
-        return () => clearTimeout(timeout)
-    }, [dispatch, error])
+        return () => {
+            clearTimeout(timeout)
+            handleResetForm()
+        }
+    }, [dispatch, text])
 
     const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
         loginWithEmailAndPassword(data.email, data.password, dispatch, navigate)
@@ -67,7 +76,7 @@ const Login = () => {
     }
 
     const { email: emailError, password: passwordError } = errors
-    const notifyError = getNotifyError(error)
+    const notifyError = getNotifyError(text)
 
     return (
         <Container>
@@ -85,13 +94,11 @@ const Login = () => {
                         error={emailError?.message}
                         aria-invalid={errors.email ? 'true' : 'false'}
                     />
-                    <Input
-                        type="password"
+                    <PasswordInput
                         placeholder={passwordPlaceholder}
                         value={password}
                         onChangeInput={handleChangePasswordInput}
                         register={register}
-                        label={passwordLabel}
                         error={passwordError?.message}
                         aria-invalid={passwordError ? 'true' : 'false'}
                     />
@@ -109,7 +116,7 @@ const Login = () => {
                     </Link>
                 </SignUpLink>
             </Wrap>
-            {error !== '' && <Notify error={notifyError} />}
+            {text !== '' && <Notify text={notifyError} />}
         </Container>
     )
 }

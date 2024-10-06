@@ -67,7 +67,7 @@ export const CloseButton = styled.button`
                 height: ${theme.modalStyles.lg.sizeCloseButton + 'px'};
             }
 
-            @media (${theme.media.sm}) {
+            @media (${theme.media.xl}) {
                 top: ${theme.modalStyles.md.topCloseButton + 'px'};
                 right: ${theme.modalStyles.md.rightCloseButton + 'px'};
 

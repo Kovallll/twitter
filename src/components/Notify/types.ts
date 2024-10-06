@@ -1,3 +1,3 @@
 export interface NotifyProps {
-    error?: string
+    text: string
 }

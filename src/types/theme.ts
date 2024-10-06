@@ -86,6 +86,21 @@ export interface Theme {
             top: string
         }
     }
+    passwordInputStyles: {
+        right: string
+        lg: {
+            iconSize: string
+            top: string
+        }
+        md: {
+            iconSize: string
+            top: string
+        }
+        sm: {
+            iconSize: string
+            top: string
+        }
+    }
     selectStyles: {
         border: string
         borderRadius: string

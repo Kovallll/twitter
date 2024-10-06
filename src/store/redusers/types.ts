@@ -1,15 +1,26 @@
 import {
+    SetTotalAccounts,
     UpdateLoginEmailAction,
-    UpdateLoginError,
     UpdateLoginPasswordAction,
+    UpdateNotifyText,
     UpdateSignUpConfrimPasswordAction,
     UpdateSignUpDate,
     UpdateSignUpEmailAction,
-    UpdateSignUpError,
     UpdateSignUpNameAction,
     UpdateSignUpPasswordAction,
     UpdateSignUpPhoneAction,
+    UpdateTotalUser,
+    UpdateUserData,
+    UpdateUserDocId,
+    UpdateUserFollowing,
 } from '../actions/types'
+
+export type AllActionsType =
+    | SingUpAction
+    | LoginAction
+    | UserAction
+    | NotifyAction
+    | TotalDataAction
 
 export type SingUpAction =
     | UpdateSignUpEmailAction
@@ -17,10 +28,16 @@ export type SingUpAction =
     | UpdateSignUpPhoneAction
     | UpdateSignUpPasswordAction
     | UpdateSignUpConfrimPasswordAction
-    | UpdateSignUpError
     | UpdateSignUpDate
 
-export type LoginAction =
-    | UpdateLoginEmailAction
-    | UpdateLoginError
-    | UpdateLoginPasswordAction
+export type LoginAction = UpdateLoginEmailAction | UpdateLoginPasswordAction
+
+export type UserAction =
+    | UpdateUserData
+    | UpdateTotalUser
+    | UpdateUserDocId
+    | UpdateUserFollowing
+
+export type NotifyAction = UpdateNotifyText
+
+export type TotalDataAction = SetTotalAccounts

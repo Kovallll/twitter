@@ -17,7 +17,6 @@ import {
     monthType,
     nameLabel,
     namePlaceholder,
-    passwordLabel,
     passwordPlaceholder,
     phonePlaceholder,
     signUpSubmitText,
@@ -38,6 +37,7 @@ import {
 
 import { Input } from '@components/Input'
 import Notify from '@components/Notify'
+import { PasswordInput } from '@components/PasswordInput'
 import { PhoneInput } from '@components/PhoneInput'
 import Select from '@components/Select'
 import {
@@ -52,10 +52,10 @@ import { emailAndPasswordAuth } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import {
+    updateNotifyText,
     updateSignUpConfrimPassword,
     updateSignUpDate,
     updateSignUpEmail,
-    updateSignUpError,
     updateSignUpName,
     updateSignUpPassword,
     updateSignUpPhone,
@@ -83,19 +83,19 @@ const SingUpCredential = () => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { name, email, phone, password, confirmPassword, error, date } =
+    const { name, email, phone, password, confirmPassword, date } =
         useAppSelector((state) => state.signUp)
-
+    const { text } = useAppSelector((state) => state.notify)
     useEffect(() => {
         let timeout: NodeJS.Timeout
-        if (error) {
+        if (text) {
             timeout = setTimeout(() => {
-                dispatch(updateSignUpError(''))
+                dispatch(updateNotifyText(''))
             }, notifyTimeout)
         }
 
         return () => clearTimeout(timeout)
-    }, [dispatch, error])
+    }, [dispatch, text])
 
     const handleChangeIsLoading = (isLoading: boolean) => {
         setIsLoading(isLoading)
@@ -143,9 +143,9 @@ const SingUpCredential = () => {
             const isValidDate = getIsValidDate(resultDate)
             if (isValidDate) {
                 dispatch(updateSignUpDate(resultDate))
-                dispatch(updateSignUpError(''))
+                dispatch(updateNotifyText(''))
             } else {
-                dispatch(updateSignUpError(dateDayError))
+                dispatch(updateNotifyText(dateDayError))
                 dispatch(
                     updateSignUpDate({ ...resultDate, day: defaultValueDay })
                 )
@@ -156,7 +156,7 @@ const SingUpCredential = () => {
 
     const onSubmit: SubmitHandler<SignUpFormInput> = (data) => {
         setIsLoading(true)
-        if (!error) {
+        if (!text) {
             emailAndPasswordAuth(
                 dispatch,
                 navigate,
@@ -177,7 +177,7 @@ const SingUpCredential = () => {
         date: dateError,
     } = errors
 
-    const notifyError = getNotifyError(error)
+    const notifyError = getNotifyError(text)
     const years = getSelectYears()
     const days = getSelectDays()
 
@@ -222,18 +222,15 @@ const SingUpCredential = () => {
                         error={emailError?.message}
                         aria-invalid={errors.email ? 'true' : 'false'}
                     />
-                    <Input
-                        type="password"
+                    <PasswordInput
                         placeholder={passwordPlaceholder}
                         value={password}
                         onChangeInput={handleChangePasswordInput}
                         register={register}
-                        label={passwordLabel}
                         error={passwordError?.message}
                         aria-invalid={passwordError ? 'true' : 'false'}
                     />
-                    <Input
-                        type="password"
+                    <PasswordInput
                         placeholder={confirmPasswordPlaceholder}
                         value={confirmPassword}
                         onChangeInput={handleChangeConfrimPasswordInput}
@@ -282,7 +279,7 @@ const SingUpCredential = () => {
                     </Button>
                 </Form>
             </Wrap>
-            {error !== '' && <Notify error={notifyError} />}
+            {text !== '' && <Notify text={notifyError} />}
         </Container>
     )
 }

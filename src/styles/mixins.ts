@@ -44,4 +44,10 @@ export default {
         align-items: start;
         flex-direction: column;
     `,
+    flexColumnEnd: () => css`
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        flex-direction: column;
+    `,
 }

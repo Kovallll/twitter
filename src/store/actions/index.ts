@@ -1,18 +1,22 @@
 import {
+    SetTotalAccounts,
     UpdateLoginEmailAction,
-    UpdateLoginError,
     UpdateLoginPasswordAction,
+    UpdateNotifyText,
     UpdateSignUpConfrimPasswordAction,
     UpdateSignUpDate,
     UpdateSignUpEmailAction,
-    UpdateSignUpError,
     UpdateSignUpNameAction,
     UpdateSignUpPasswordAction,
     UpdateSignUpPhoneAction,
+    UpdateTotalUser,
+    UpdateUserData,
+    UpdateUserDocId,
+    UpdateUserFollowing,
 } from './types'
 
 import { ActionTypes } from '@constants'
-import { SignUpDate } from '@types'
+import { AccountData, EditModalData, SignUpDate, UserData } from '@types'
 
 export const updateSignUpEmail = (data: string): UpdateSignUpEmailAction => {
     return {
@@ -53,13 +57,6 @@ export const updateSignUpConfrimPassword = (
     }
 }
 
-export const updateSignUpError = (data: string): UpdateSignUpError => {
-    return {
-        type: ActionTypes.SignUpError,
-        payload: data,
-    }
-}
-
 export const updateSignUpDate = (data: SignUpDate): UpdateSignUpDate => {
     return {
         type: ActionTypes.SignUpDate,
@@ -83,9 +80,46 @@ export const updateLoginPassword = (
     }
 }
 
-export const updateLoginError = (data: string): UpdateLoginError => {
+export const updateUserData = (data: EditModalData): UpdateUserData => {
     return {
-        type: ActionTypes.LoginError,
+        type: ActionTypes.UserData,
+        payload: data,
+    }
+}
+
+export const updateTotalUser = (data: UserData): UpdateTotalUser => {
+    return {
+        type: ActionTypes.UserTotal,
+        payload: data,
+    }
+}
+
+export const updateUserDocId = (data: string): UpdateUserDocId => {
+    return {
+        type: ActionTypes.UserDocId,
+        payload: data,
+    }
+}
+
+export const updateUserFollowing = (data: string[]): UpdateUserFollowing => {
+    return {
+        type: ActionTypes.UserFollowing,
+        payload: data,
+    }
+}
+
+export const updateNotifyText = (data: string): UpdateNotifyText => {
+    return {
+        type: ActionTypes.NotifyText,
+        payload: data,
+    }
+}
+
+export const setTotalAccounts = (
+    data: AccountData | never[]
+): SetTotalAccounts => {
+    return {
+        type: ActionTypes.TotalAccounts,
         payload: data,
     }
 }

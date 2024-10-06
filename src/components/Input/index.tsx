@@ -20,8 +20,13 @@ export const Input = <T extends FieldValues>(props: InputProps<T>) => {
 
     return (
         <>
-            <ErrorText role="alert">{error}</ErrorText>
-            <InputModule {...validRegister} {...otherProps} value={value} />
+            {!!register && <ErrorText role="alert">{error}</ErrorText>}
+            <InputModule
+                onChange={handleInputChange}
+                {...validRegister}
+                {...otherProps}
+                value={value}
+            />
         </>
     )
 }

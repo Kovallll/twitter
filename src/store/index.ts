@@ -1,10 +1,19 @@
 import { combineReducers, createStore } from 'redux'
 
-import { updateLoginData, updateSignUpData } from './redusers'
+import {
+    setTotalData,
+    updateLoginData,
+    updateNotifyData,
+    updateSignUpData,
+    updateUserData,
+} from './redusers'
 
 const rootReduser = combineReducers({
     signUp: updateSignUpData,
     login: updateLoginData,
+    user: updateUserData,
+    notify: updateNotifyData,
+    total: setTotalData,
 })
 
 export const store = createStore(rootReduser)
@@ -14,16 +23,26 @@ export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
 
 export {
-    updateLoginError,
     updateLoginEmail,
     updateLoginPassword,
     updateSignUpConfrimPassword,
     updateSignUpDate,
     updateSignUpEmail,
-    updateSignUpError,
     updateSignUpName,
     updateSignUpPassword,
     updateSignUpPhone,
+    updateUserData,
+    updateNotifyText,
+    updateTotalUser,
+    updateUserDocId,
+    setTotalAccounts,
+    updateUserFollowing,
 } from './actions'
 
-export { type LoginAction, type SingUpAction } from './redusers/types'
+export {
+    type LoginAction,
+    type SingUpAction,
+    type UserAction,
+    type TotalDataAction,
+    type AllActionsType,
+} from './redusers/types'

@@ -8,7 +8,8 @@ export const Container = styled.section`
             ${mixins.flexColumnStart}
             max-width: ${theme.sidebarStyles.lg.width + 'px'};
             width: ${theme.fullSize + '%'};
-
+            padding-right: 12px;
+            padding-left: 4px;
             @media (${theme.media.md}) {
                 max-width: ${theme.sidebarStyles.md.width + 'px'};
             }
@@ -24,7 +25,7 @@ export const LogoWrap = styled.div`
         return css`
             margin-bottom: ${theme.spaces.xxxl + 'px'};
 
-            @media (${theme.media.md}) {
+            @media (${theme.media.xl}) {
                 margin-bottom: ${theme.spaces.xxl + 'px'};
             }
             @media (${theme.media.sm}) {
@@ -42,7 +43,7 @@ export const SidebarLink = styled.a`
             margin-bottom: ${theme.spaces.xxl + 'px'};
             text-decoration: none;
 
-            @media (${theme.media.md}) {
+            @media (${theme.media.xl}) {
                 margin-bottom: ${theme.spaces.xl + 'px'};
             }
             @media (${theme.media.sm}) {
@@ -62,7 +63,7 @@ export const Title = styled.p`
             font-size: ${theme.fontSizes.sm + 'px'};
             font-weight: 700;
 
-            @media (${theme.media.md}) {
+            @media (${theme.media.xl}) {
                 margin-left: ${theme.spaces.md + 'px'};
                 font-size: ${theme.fontSizes.xs + 'px'};
             }
@@ -80,7 +81,7 @@ export const Profile = styled.div`
             margin-top: ${theme.spaces.xxxl + 'px'};
             margin-bottom: ${theme.spaces.xl + 'px'};
 
-            @media (${theme.media.md}) {
+            @media (${theme.media.xl}) {
                 margin-top: ${theme.spaces.xxl + 'px'};
                 margin-bottom: ${theme.spaces.lg + 'px'};
             }
@@ -92,15 +93,16 @@ export const Profile = styled.div`
     }}
 `
 
-export const Image = styled.img`
+export const SidebarImage = styled.img`
     ${({ theme }) => {
         return css`
+            object-fit: cover;
             width: ${theme.sidebarStyles.lg.profileImagesize + 'px'};
             height: ${theme.sidebarStyles.lg.profileImagesize + 'px'};
             border-radius: ${theme.sidebarStyles.profileImageBorderRadius +
             '%'};
 
-            @media (${theme.media.md}) {
+            @media (${theme.media.xl}) {
                 width: ${theme.sidebarStyles.md.profileImagesize + 'px'};
                 height: ${theme.sidebarStyles.md.profileImagesize + 'px'};
             }
@@ -118,7 +120,7 @@ export const TextBlock = styled.div`
             ${mixins.flexColumnStart}
             margin-left: ${theme.spaces.xxl + 'px'};
 
-            @media (${theme.media.md}) {
+            @media (${theme.media.xl}) {
                 margin-left: ${theme.spaces.xl + 'px'};
             }
             @media (${theme.media.xs}) {

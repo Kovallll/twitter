@@ -39,14 +39,14 @@ import Notify from '@components/Notify'
 import { images, notifyTimeout, Paths } from '@constants'
 import { goggleAuth } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { updateSignUpError } from '@store'
+import { updateNotifyText } from '@store'
 import { Button, LinkStyle, Logo } from '@styles/global'
 import { getNotifyError } from '@utils'
 
 const SignUp = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { error } = useAppSelector((state) => state.signUp)
+    const { text } = useAppSelector((state) => state.notify)
 
     const handleGoggleAuthClick = () => {
         goggleAuth(dispatch, navigate)
@@ -54,20 +54,20 @@ const SignUp = () => {
 
     useEffect(() => {
         let timeout: NodeJS.Timeout
-        if (error) {
+        if (text) {
             timeout = setTimeout(() => {
-                dispatch(updateSignUpError(''))
+                dispatch(updateNotifyText(''))
             }, notifyTimeout)
         }
 
         return () => clearTimeout(timeout)
-    }, [dispatch, error])
+    }, [dispatch, text])
 
     const handleEmailAndPasswordAuthClick = () => {
         navigate(Paths.SingUpCredential)
     }
 
-    const notifyError = getNotifyError(error)
+    const notifyError = getNotifyError(text)
     return (
         <Container>
             <TopContent>
@@ -112,7 +112,7 @@ const SignUp = () => {
                     <BottomLink key={index}>{link}</BottomLink>
                 ))}
             </BottomContent>
-            {error !== '' && <Notify error={notifyError} />}
+            {text !== '' && <Notify text={notifyError} />}
         </Container>
     )
 }

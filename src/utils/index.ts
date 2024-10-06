@@ -78,13 +78,11 @@ export class LocalStorage {
     getItem = (
         key: string,
         undefinedItem: object | null | [] = null
-    ): boolean => {
-        return JSON.parse(
-            window.localStorage.getItem(key) ?? JSON.stringify(undefinedItem)
-        )
+    ): string => {
+        return window.localStorage.getItem(key) ?? JSON.stringify(undefinedItem)
     }
 
-    setItem = (key: string, value: boolean) => {
+    setItem = (key: string, value: string) => {
         window.localStorage.setItem(key, JSON.stringify(value))
     }
 }

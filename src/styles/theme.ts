@@ -52,6 +52,21 @@ export const theme: Theme = {
             profileImagesize: '32',
         },
     },
+    passwordInputStyles: {
+        right: '12',
+        lg: {
+            iconSize: '32',
+            top: '36',
+        },
+        md: {
+            iconSize: '28',
+            top: '42',
+        },
+        sm: {
+            iconSize: '24',
+            top: '44',
+        },
+    },
     signUpStyles: {
         marginTop: '40',
         margin: '20',
