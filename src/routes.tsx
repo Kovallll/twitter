@@ -12,6 +12,7 @@ import Profile from '@pages/Profile'
 import Root from '@pages/Root'
 import SignUp from '@pages/SignUp'
 import SingUpCredential from '@pages/SingUpCredential'
+import TweetPage from '@pages/TweetPage'
 
 const routes = [
     { path: Paths.NotFound, element: <NotFound /> },
@@ -44,6 +45,14 @@ const routes = [
         element: (
             <RequireAuth redirectTo="/login">
                 <Profile />
+            </RequireAuth>
+        ),
+    },
+    {
+        path: Paths.Tweet,
+        element: (
+            <RequireAuth redirectTo="/login">
+                <TweetPage />
             </RequireAuth>
         ),
     },

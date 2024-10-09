@@ -19,6 +19,7 @@
         "allowUmdGlobalAccess": true,
         "jsx": "react-jsx",
         "baseUrl": ".",
+        "downlevelIteration": true,
         "paths": {
             "@types": ["src/types"],
             "@components/*": ["src/components/*"],

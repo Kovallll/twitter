@@ -17,7 +17,6 @@ import {
     monthType,
     nameLabel,
     namePlaceholder,
-    passwordLabel,
     passwordPlaceholder,
     phonePlaceholder,
     signUpSubmitText,
@@ -29,7 +28,6 @@ import {
     Container,
     DateBlock,
     LogoWrap,
-    Spinner,
     Subtitle,
     Text,
     Title,
@@ -37,13 +35,16 @@ import {
 } from './styled'
 
 import { Input } from '@components/Input'
+import { PasswordInput } from '@components/Input/PasswordInput'
+import { PhoneInput } from '@components/Input/PhoneInput'
 import Notify from '@components/Notify'
-import { PhoneInput } from '@components/PhoneInput'
 import Select from '@components/Select'
 import {
     basePhoneCode,
     defaultDate,
     images,
+    maxLengthName,
+    maxLengthPassword,
     months,
     notifyTimeout,
     Paths,
@@ -52,15 +53,15 @@ import { emailAndPasswordAuth } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import {
+    updateNotifyText,
     updateSignUpConfrimPassword,
     updateSignUpDate,
     updateSignUpEmail,
-    updateSignUpError,
     updateSignUpName,
     updateSignUpPassword,
     updateSignUpPhone,
 } from '@store'
-import { Button, Form, LinkStyle, Logo } from '@styles/global'
+import { Button, Form, LinkStyle, Logo, Spinner } from '@styles/global'
 import { theme } from '@styles/theme'
 import { DateType, SignUpFormInput } from '@types'
 import {
@@ -83,19 +84,19 @@ const SingUpCredential = () => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { name, email, phone, password, confirmPassword, error, date } =
+    const { name, email, phone, password, confirmPassword, date } =
         useAppSelector((state) => state.signUp)
-
+    const { text } = useAppSelector((state) => state.notify)
     useEffect(() => {
         let timeout: NodeJS.Timeout
-        if (error) {
+        if (text) {
             timeout = setTimeout(() => {
-                dispatch(updateSignUpError(''))
+                dispatch(updateNotifyText(''))
             }, notifyTimeout)
         }
 
         return () => clearTimeout(timeout)
-    }, [dispatch, error])
+    }, [dispatch, text])
 
     const handleChangeIsLoading = (isLoading: boolean) => {
         setIsLoading(isLoading)
@@ -143,9 +144,9 @@ const SingUpCredential = () => {
             const isValidDate = getIsValidDate(resultDate)
             if (isValidDate) {
                 dispatch(updateSignUpDate(resultDate))
-                dispatch(updateSignUpError(''))
+                dispatch(updateNotifyText(''))
             } else {
-                dispatch(updateSignUpError(dateDayError))
+                dispatch(updateNotifyText(dateDayError))
                 dispatch(
                     updateSignUpDate({ ...resultDate, day: defaultValueDay })
                 )
@@ -153,10 +154,9 @@ const SingUpCredential = () => {
         },
         [date, dispatch]
     )
-
     const onSubmit: SubmitHandler<SignUpFormInput> = (data) => {
         setIsLoading(true)
-        if (!error) {
+        if (!text) {
             emailAndPasswordAuth(
                 dispatch,
                 navigate,
@@ -177,7 +177,7 @@ const SingUpCredential = () => {
         date: dateError,
     } = errors
 
-    const notifyError = getNotifyError(error)
+    const notifyError = getNotifyError(text)
     const years = getSelectYears()
     const days = getSelectDays()
 
@@ -202,6 +202,7 @@ const SingUpCredential = () => {
                         label={nameLabel}
                         error={nameError?.message}
                         aria-invalid={errors.name ? 'true' : 'false'}
+                        maxLength={maxLengthName}
                     />
                     <PhoneInput
                         type="text"
@@ -222,18 +223,16 @@ const SingUpCredential = () => {
                         error={emailError?.message}
                         aria-invalid={errors.email ? 'true' : 'false'}
                     />
-                    <Input
-                        type="password"
+                    <PasswordInput
                         placeholder={passwordPlaceholder}
                         value={password}
                         onChangeInput={handleChangePasswordInput}
                         register={register}
-                        label={passwordLabel}
                         error={passwordError?.message}
                         aria-invalid={passwordError ? 'true' : 'false'}
+                        maxLength={maxLengthPassword}
                     />
-                    <Input
-                        type="password"
+                    <PasswordInput
                         placeholder={confirmPasswordPlaceholder}
                         value={confirmPassword}
                         onChangeInput={handleChangeConfrimPasswordInput}
@@ -241,6 +240,7 @@ const SingUpCredential = () => {
                         label={confirmPasswordLabel}
                         error={confirmPasswordError?.message}
                         aria-invalid={confirmPasswordError ? 'true' : 'false'}
+                        maxLength={maxLengthPassword}
                     />
                     <Link to={Paths.SignUp} style={LinkStyle}>
                         {linkText}
@@ -282,7 +282,7 @@ const SingUpCredential = () => {
                     </Button>
                 </Form>
             </Wrap>
-            {error !== '' && <Notify error={notifyError} />}
+            {text !== '' && <Notify text={notifyError} />}
         </Container>
     )
 }

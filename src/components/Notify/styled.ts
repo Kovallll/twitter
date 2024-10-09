@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components'
 
+import { NotifyModuleProps } from './types'
+
 import mixins from '@styles/mixins'
 
-export const NotifyModule = styled.p`
-    ${({ theme }) => {
+export const NotifyModule = styled.p<NotifyModuleProps>`
+    ${({ theme, $isSuccess }) => {
         return css`
             ${mixins.flexRowCenter}
 
@@ -14,8 +16,10 @@ export const NotifyModule = styled.p`
             'px ' +
             theme.notifyStyles.lg.paddingLR +
             'px'};
-            z-index: 10;
-            background: ${theme.palette.errorColor};
+            z-index: ${theme.notifyStyles.zIndex};
+            background: ${$isSuccess
+                ? theme.palette.successColor
+                : theme.palette.errorColor};
             font-size: ${theme.fontSizes.lg + 'px'};
             border-radius: ${theme.notifyStyles.borderRadius + 'px'};
             color: ${theme.palette.common.white};

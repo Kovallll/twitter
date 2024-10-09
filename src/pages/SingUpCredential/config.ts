@@ -16,7 +16,6 @@ export const dateText = `Facilisi sem pulvinar velit nunc, gravida scelerisque
                         congue.`
 export const nameLabel = 'name'
 export const emailLabel = 'email'
-export const passwordLabel = 'password'
 export const confirmPasswordLabel = 'confirmPassword'
 export const confirmPasswordError = "passwords don't match"
 export const passwordError = 'Please create a stronger password'
