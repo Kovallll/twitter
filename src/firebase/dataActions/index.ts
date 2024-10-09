@@ -21,17 +21,21 @@ import {
 } from 'firebase/storage'
 import { jwtDecode } from 'jwt-decode'
 
-import { usersCollection } from '@constants'
+import {
+    countTweetsImages,
+    tokensLocalStorage,
+    usersCollection,
+} from '@constants'
 import {
     AllActionsType,
     setTotalAccounts,
+    updateLoadingTweet,
     updateTotalUser,
     updateUserData,
-    updateUserDocId,
     updateUserFollowing,
+    updateUserTweetLiked,
 } from '@store'
 import {
-    AccountData,
     AvatarImage,
     CreatedTweetImageType,
     EditModalData,
@@ -52,15 +56,20 @@ export const initUserData = async (
 ) => {
     const localStorage = new LocalStorage()
     const docsRef = collection(database, usersCollection)
-    const token = localStorage.getItem('token')
+    const token = JSON.parse(localStorage.getItem(tokensLocalStorage))
 
-    const decodedToken = jwtDecode(token) as { user_id: string }
+    const decodedToken = jwtDecode(token.access) as { user_id: string }
 
     const allDocs = await getDocs(docsRef)
     allDocs.forEach((userDoc) => {
-        const userData = userDoc.data() as UserData
-        if (!userId && userData.userId === decodedToken.user_id) {
-            dispatch(updateUserDocId(userDoc.id))
+        const data = userDoc.data() as UserData
+        if (userId === '' && data.userId === decodedToken.user_id) {
+            const userData = {
+                ...data,
+                docId: userDoc.id,
+            }
+            const docRef = doc(database, usersCollection, userDoc.id)
+            updateDoc(docRef, userData)
             dispatch(updateTotalUser(userData))
             const { name, description, social, avatar } = userData
             const editData = {
@@ -84,15 +93,18 @@ export const updateTweets = (
         tweets: updatedTweets,
     }).then(async () => {
         const data = await getDoc(docRef)
-        const userData = data.data() as UserData
+        const accData = data.data()
+        const userData = {
+            ...accData,
+        } as UserData
         dispatch(updateTotalUser(userData))
+        dispatch(updateLoadingTweet(false))
     })
 }
 
 export const uploadTweetsToStorage = (
     uploadTweet: TweetStorageType,
     user: UserData,
-    docId: string,
     dispatch: Dispatch<AllActionsType>
 ) => {
     uploadTweet.imagesData?.forEach((image) => {
@@ -108,7 +120,7 @@ export const uploadTweetsToStorage = (
         ? [readyToUploadTweet, ...user.tweets]
         : [readyToUploadTweet]
 
-    updateTweets(updatedTweets, docId, dispatch)
+    updateTweets(updatedTweets, user.docId, dispatch)
 }
 
 export const deleteTweetFromStorage = (
@@ -143,21 +155,24 @@ export const uploadUserDataToStorage = (
         social: data.social,
     }).then(async () => {
         const data = await getDoc(docRef)
-        const userData = data.data() as UserData
+        const accData = data.data()
+        const userData = {
+            ...accData,
+            docId: data.id,
+        } as UserData
         dispatch(updateTotalUser(userData))
     })
 }
 
 export const uploadProfileAvatar = (
     image: AvatarImage,
-    docId: string,
     user: UserData,
     dispatch: Dispatch<AllActionsType>
 ) => {
     const imagesRef = ref(storage, `images/${image.id}`)
     uploadBytes(imagesRef, image.file).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((downloadURL) => {
-            const docRef = doc(database, usersCollection, docId)
+            const docRef = doc(database, usersCollection, user.docId)
             const newAvatar = { id: user.userId ?? '', url: downloadURL }
             updateDoc(docRef, {
                 avatar: newAvatar,
@@ -179,16 +194,19 @@ export const uploadTweetImagesFromStorage = async (
 ) => {
     const docsRef = collection(database, usersCollection)
     const allDocs = await getDocs(docsRef)
+    let counter = 0
     allDocs.forEach((userDoc) => {
         const userData = userDoc.data() as UserData
+        if (counter >= countTweetsImages) return
         if (userData.userId !== userId) {
             const { tweets } = userData
-            tweets?.map((tweet) =>
+            tweets?.map((tweet) => {
+                counter++
                 dowloadImagesFromStorage(
                     tweet.imagesData,
                     handleChangeTweetImages
                 )
-            )
+            })
         }
     })
 }
@@ -214,29 +232,19 @@ export const setTotalAccountsFromStorage = async (
     allDocs.forEach((userDoc) => {
         const userData = userDoc.data() as UserData
         if (userId && userId !== userData.userId) {
-            const { name, social, avatar, userId, followers } = userData
-            const accountData = {
-                docId: userDoc.id,
-                userId: userId!,
-                name,
-                social,
-                avatar,
-                followers,
-            }
-            dispatch(setTotalAccounts(accountData))
+            dispatch(setTotalAccounts(userData))
         }
     })
 }
 
 export const followOrUnfollowAccount = (
     user: UserData,
-    account: AccountData,
-    userDocId: string,
+    account: UserData,
     dispatch: Dispatch<AllActionsType>
 ) => {
-    const userDocRef = doc(database, usersCollection, userDocId)
+    const userDocRef = doc(database, usersCollection, user.docId)
     const accountDocRef = doc(database, usersCollection, account.docId)
-    if (!user.following.includes(account.userId)) {
+    if (!user.following.includes(account.userId!)) {
         setDoc(
             userDocRef,
             {
@@ -244,7 +252,7 @@ export const followOrUnfollowAccount = (
             },
             { merge: true }
         ).then(async () => {
-            const newUserFollowing = [...user.following, account.userId]
+            const newUserFollowing = [...user.following, account.userId!]
             dispatch(updateUserFollowing(newUserFollowing))
             dispatch(
                 updateTotalUser({
@@ -282,4 +290,44 @@ export const followOrUnfollowAccount = (
             followers: newAccountFollowers,
         })
     }
+}
+
+export const clickLikeTweet = (
+    user: UserData,
+    tweetId: string,
+    isLiked: boolean,
+    dispatch: Dispatch<AllActionsType>
+) => {
+    const docRef = doc(database, usersCollection, user.docId)
+
+    const updatedTweets = user.tweets!.map((tweet) => {
+        if (tweet.tweetId === tweetId) {
+            if (isLiked) {
+                const tweetLiked = tweet.liked.filter(
+                    (id) => user.userId !== id
+                )
+                dispatch(updateUserTweetLiked(tweetLiked))
+                return { ...tweet, liked: tweetLiked }
+            } else {
+                const tweetLiked = [...tweet.liked, user.userId!]
+                dispatch(updateUserTweetLiked(tweetLiked))
+                return { ...tweet, liked: tweetLiked }
+            }
+        } else {
+            return tweet
+        }
+    })
+
+    updateDoc(docRef, {
+        tweets: updatedTweets,
+    })
+        .then(() => {
+            dispatch(
+                updateTotalUser({
+                    ...user,
+                    tweets: updatedTweets,
+                })
+            )
+        })
+        .catch((err) => console.error(err))
 }

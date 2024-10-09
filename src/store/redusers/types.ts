@@ -1,8 +1,14 @@
 import {
     SetTotalAccounts,
+    UpdateIsSidebarOpen,
+    UpdateIsTweetModalOpen,
+    UpdateLoadingInititalData,
+    UpdateLoadingTweet,
     UpdateLoginEmailAction,
     UpdateLoginPasswordAction,
     UpdateNotifyText,
+    UpdateSearchData,
+    UpdateSearchValue,
     UpdateSignUpConfrimPasswordAction,
     UpdateSignUpDate,
     UpdateSignUpEmailAction,
@@ -11,8 +17,8 @@ import {
     UpdateSignUpPhoneAction,
     UpdateTotalUser,
     UpdateUserData,
-    UpdateUserDocId,
     UpdateUserFollowing,
+    UpdateUserLiked,
 } from '../actions/types'
 
 export type AllActionsType =
@@ -21,6 +27,8 @@ export type AllActionsType =
     | UserAction
     | NotifyAction
     | TotalDataAction
+    | SearchAction
+    | BooleanAction
 
 export type SingUpAction =
     | UpdateSignUpEmailAction
@@ -35,9 +43,17 @@ export type LoginAction = UpdateLoginEmailAction | UpdateLoginPasswordAction
 export type UserAction =
     | UpdateUserData
     | UpdateTotalUser
-    | UpdateUserDocId
     | UpdateUserFollowing
+    | UpdateUserLiked
 
 export type NotifyAction = UpdateNotifyText
 
 export type TotalDataAction = SetTotalAccounts
+
+export type SearchAction = UpdateSearchData | UpdateSearchValue
+
+export type BooleanAction =
+    | UpdateLoadingTweet
+    | UpdateLoadingInititalData
+    | UpdateIsSidebarOpen
+    | UpdateIsTweetModalOpen

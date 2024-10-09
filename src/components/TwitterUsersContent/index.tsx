@@ -1,13 +1,12 @@
+import { SearchBlock } from './SearchBlock'
 import { ContentSection } from './styled'
-
-import { Search } from '@components/Search'
-import { TweetImageBoard } from '@components/TweetImageBoard'
-import { TwitterAccountsBoard } from '@components/TwitterAccountsBoard'
+import { TweetImageBoard } from './TweetImageBoard'
+import { TwitterAccountsBoard } from './TwitterAccountsBoard'
 
 export const TwitterUsersContent = () => {
     return (
         <ContentSection>
-            <Search />
+            <SearchBlock />
             <TweetImageBoard />
             <TwitterAccountsBoard />
         </ContentSection>

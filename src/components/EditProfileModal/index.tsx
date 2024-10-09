@@ -1,6 +1,16 @@
 import { useState } from 'react'
 
 import {
+    descriptionText,
+    editText,
+    nameText,
+    profileImageAltText,
+    resetNotifyMessage,
+    resetText,
+    socialText,
+    title,
+} from './config'
+import {
     Container,
     ForgotPassword,
     Image,
@@ -12,19 +22,27 @@ import {
 } from './styled'
 import { EditProfileModalProps } from './types'
 
-import FileUploader from '@components/FilesUploader'
 import Modal from '@components/Modal'
+import FileUploader from '@components/TweetCreator/FilesUploader'
+import {
+    maxLengthDescription,
+    maxLengthName,
+    maxLengthSocial,
+} from '@constants'
 import { resetPassword } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { updateUserData } from '@store'
+import { updateNotifyText, updateUserData } from '@store'
 import { theme } from '@styles/theme'
 
 export const EditProfileModal = (props: EditProfileModalProps) => {
     const [file, setFile] = useState<File | null>(null)
+
     const { handleChangeIsOpenModal, handleEditProfile, email } = props
-    const { editData } = useAppSelector((state) => state.user)
-    const { description, social, name, photoUrl } = editData
+
     const dispatch = useAppDispatch()
+    const { editData } = useAppSelector((state) => state.user)
+
+    const { description, social, name, photoUrl } = editData
 
     const handleChangeDescription = (value: string) => {
         dispatch(updateUserData({ ...editData, description: value }))
@@ -51,46 +69,53 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
 
     const handleClickResetPassword = () => {
         resetPassword(email)
+        dispatch(updateNotifyText(resetNotifyMessage))
     }
 
     return (
         <Modal onCloseModal={handleChangeIsOpenModal}>
             <Container>
-                <Title>Edit profile</Title>
+                <Title>{title}</Title>
                 <FileUploader
                     isTweet={false}
                     handleUpdateImage={handleChangePhoto}
                 >
-                    <Image src={photoUrl} />
+                    <Image src={photoUrl} alt={profileImageAltText} />
                 </FileUploader>
 
                 <InfoBlock>
-                    <Text>Name:</Text>
-                    <ModalInput value={name} onChangeInput={handleChangeName} />
+                    <Text>{nameText}</Text>
+                    <ModalInput
+                        value={name}
+                        onChangeInput={handleChangeName}
+                        maxLength={maxLengthName}
+                    />
                 </InfoBlock>
                 <InfoBlock>
-                    <Text>Description:</Text>
+                    <Text>{descriptionText}</Text>
                     <ModalInput
                         value={description ?? ''}
                         onChangeInput={handleChangeDescription}
+                        maxLength={maxLengthDescription}
                     />
                 </InfoBlock>
                 <InfoBlock>
-                    <Text>Social:</Text>
+                    <Text>{socialText}</Text>
                     <ModalInput
                         value={social ?? ''}
                         onChangeInput={handleChangeSocial}
+                        maxLength={maxLengthSocial}
                     />
                 </InfoBlock>
                 <ForgotPassword onClick={handleClickResetPassword}>
-                    Reset password
+                    {resetText}
                 </ForgotPassword>
                 <ModalButton
                     $backgroundColor={theme.palette.blue}
                     $color={theme.palette.common.white}
                     onClick={handleClickEditButton}
                 >
-                    Edit
+                    {editText}
                 </ModalButton>
             </Container>
         </Modal>

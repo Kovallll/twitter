@@ -1,36 +1,49 @@
 import { useState } from 'react'
 import { v4 } from 'uuid'
 
+import { avtarIconAltText, tweetButtonText } from './config'
 import {
-    ProfileIcon,
+    ButtonWrap,
+    CreatorSpinner,
+    ImageWrap,
     TweetButton,
     TweetButtonBlock,
     TweetCreatorBlock,
+    TweetIcon,
 } from './styled'
 import { TweetCreatorProps } from './types'
 
-import FileUploader from '@components/FilesUploader'
-import { months } from '@constants'
+import FileUploader from '@components/TweetCreator/FilesUploader'
 import { uploadTweetsToStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
+import { updateLoadingTweet } from '@store'
 import { theme } from '@styles/theme'
 import { TweetImageType, TweetStorageType } from '@types'
 
-export const TweetCreator = ({}: TweetCreatorProps) => {
+export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
     const [tweetText, setTweetText] = useState('')
     const [createdTweetImages, setCreatedTweetImages] = useState<
         TweetImageType[] | null
     >(null)
-    const isTweetDisabled = tweetText === '' ? true : false
-    const tweetButtonBg = isTweetDisabled
-        ? theme.palette.gray
-        : theme.palette.lightBlue
+
     const dispatch = useAppDispatch()
-    const { user, docId } = useAppSelector((state) => state.user)
+    const { user } = useAppSelector((state) => state.user)
+    const { isLoadingTweet } = useAppSelector((state) => state.boolean)
+
+    const handleChangeTweetText = (value: string) => {
+        setTweetText(value)
+    }
+
+    const handleDeleteTweetImage = (id: string) => {
+        setCreatedTweetImages((prev) => prev!.filter((file) => file.id !== id))
+    }
+
     const uploadTweets = () => {
         const uploadTweet: TweetStorageType = getTweet()
-        uploadTweetsToStorage(uploadTweet, user, docId, dispatch)
+        dispatch(updateLoadingTweet(true))
+        uploadTweetsToStorage(uploadTweet, user, dispatch)
     }
+
     const addTweetImage = (
         event: ProgressEvent<FileReader>,
         file: File,
@@ -47,31 +60,18 @@ export const TweetCreator = ({}: TweetCreatorProps) => {
         )
     }
 
-    const handleDeleteTweetImage = (id: string) => {
-        setCreatedTweetImages((prev) => prev!.filter((file) => file.id !== id))
-    }
-
-    const handleChangeTweetText = (value: string) => {
-        setTweetText(value)
-    }
     const getTweet = () => {
-        const timePost = getTimePost()
+        const timePost = Date.now()
         const tweetId = v4()
         const tweet: TweetStorageType = {
             tweetId,
             imagesData: createdTweetImages,
             text: tweetText,
             timePost: timePost,
+            liked: [],
         }
 
         return tweet
-    }
-
-    const getTimePost = () => {
-        const date = new Date()
-        const timePost = `${months[date.getMonth()]} ${date.getDay() - 1}`
-
-        return timePost
     }
 
     const resetCreateTweet = () => {
@@ -83,9 +83,16 @@ export const TweetCreator = ({}: TweetCreatorProps) => {
         uploadTweets()
         resetCreateTweet()
     }
+
+    const isTweetDisabled = tweetText === '' ? true : false
+    const tweetButtonBg = isTweetDisabled
+        ? theme.palette.gray
+        : theme.palette.lightBlue
     return (
-        <TweetCreatorBlock>
-            <ProfileIcon src={user.avatar.url} />
+        <TweetCreatorBlock $isModal={isModal}>
+            <ImageWrap>
+                <TweetIcon src={user.avatar.url} alt={avtarIconAltText} />
+            </ImageWrap>
             <FileUploader
                 isTweet={true}
                 tweetText={tweetText}
@@ -93,16 +100,23 @@ export const TweetCreator = ({}: TweetCreatorProps) => {
                 handleChangeTweetText={handleChangeTweetText}
                 handleDeleteTweetImage={handleDeleteTweetImage}
                 handleUpdateImage={addTweetImage}
+                isModal={isModal}
             />
             <TweetButtonBlock>
-                <TweetButton
-                    $backgroundColor={tweetButtonBg}
-                    $color={theme.palette.common.white}
-                    onClick={handleCreateTweet}
-                    disabled={isTweetDisabled}
-                >
-                    Tweet
-                </TweetButton>
+                {isLoadingTweet ? (
+                    <CreatorSpinner />
+                ) : (
+                    <ButtonWrap>
+                        <TweetButton
+                            $backgroundColor={tweetButtonBg}
+                            $color={theme.palette.common.white}
+                            onClick={handleCreateTweet}
+                            disabled={isTweetDisabled}
+                        >
+                            {tweetButtonText}
+                        </TweetButton>
+                    </ButtonWrap>
+                )}
             </TweetButtonBlock>
         </TweetCreatorBlock>
     )

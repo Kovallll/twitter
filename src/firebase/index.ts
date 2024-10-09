@@ -17,4 +17,5 @@ export {
     uploadTweetsToStorage,
     uploadUserDataToStorage,
     followOrUnfollowAccount,
+    clickLikeTweet,
 } from './dataActions'

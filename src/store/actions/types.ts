@@ -1,11 +1,5 @@
 import { ActionTypes } from '@constants'
-import {
-    AccountData,
-    ActionInterface,
-    EditModalData,
-    SignUpDate,
-    UserData,
-} from '@types'
+import { ActionInterface, EditModalData, SignUpDate, UserData } from '@types'
 
 export type UpdateSignUpEmailAction = ActionInterface<
     typeof ActionTypes.SignUpEmail,
@@ -57,13 +51,13 @@ export type UpdateTotalUser = ActionInterface<
     UserData
 >
 
-export type UpdateUserDocId = ActionInterface<
-    typeof ActionTypes.UserDocId,
-    string
->
-
 export type UpdateUserFollowing = ActionInterface<
     typeof ActionTypes.UserFollowing,
+    string[]
+>
+
+export type UpdateUserLiked = ActionInterface<
+    typeof ActionTypes.UserLiked,
     string[]
 >
 
@@ -74,5 +68,35 @@ export type UpdateNotifyText = ActionInterface<
 
 export type SetTotalAccounts = ActionInterface<
     typeof ActionTypes.TotalAccounts,
-    AccountData | never[]
+    UserData | never[]
+>
+
+export type UpdateSearchValue = ActionInterface<
+    typeof ActionTypes.SeacrhValue,
+    string
+>
+
+export type UpdateSearchData = ActionInterface<
+    typeof ActionTypes.SearchData,
+    JSX.Element[]
+>
+
+export type UpdateLoadingTweet = ActionInterface<
+    typeof ActionTypes.LoadingTweet,
+    boolean
+>
+
+export type UpdateLoadingInititalData = ActionInterface<
+    typeof ActionTypes.LoadingInititalData,
+    boolean
+>
+
+export type UpdateIsSidebarOpen = ActionInterface<
+    typeof ActionTypes.isSidebarOpen,
+    boolean
+>
+
+export type UpdateIsTweetModalOpen = ActionInterface<
+    typeof ActionTypes.isTweetModalOpen,
+    boolean
 >

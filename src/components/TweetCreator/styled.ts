@@ -1,28 +1,51 @@
 import styled, { css } from 'styled-components'
 
-import { Button } from '@styles/global'
+import { TweetCreatorBlockProps } from './types'
+
+import { Button, ProfileIcon, Spinner } from '@styles/global'
 import mixins from '@styles/mixins'
 
-export const ProfileIcon = styled.img`
-    ${({}) => {
+export const TweetIcon = styled(ProfileIcon)`
+    ${({ theme }) => {
         return css`
-            width: 64px;
-            height: 64px;
-            object-fit: cover;
-            border-radius: 50%;
+            margin-right: ${theme.spaces.sm + 'px'};
+            position: absolute;
+            top: ${theme.spaces.sm + 'px'};
+            left: ${theme.spaces.sm + 'px'};
+        `
+    }}
+`
+
+export const ImageWrap = styled.div`
+    ${({ theme }) => {
+        return css`
+            min-width: ${theme.profileIconStyles.lg.size + 'px'};
+            height: ${theme.profileIconStyles.lg.size + 'px'};
         `
     }}
 `
 
 export const TweetButtonBlock = styled.div`
-    ${({}) => {
+    ${({ theme }) => {
         return css`
             ${mixins.flexColumnEnd}
-            width: 120px;
-            height: 100px;
+
+            width: ${theme.tweetCreatorStyles.buttonWidth + 'px'};
         `
     }}
 `
+
+export const ButtonWrap = styled.div`
+    ${({ theme }) => {
+        return css`
+            width: ${theme.tweetCreatorStyles.buttonWidth + 'px'};
+            position: absolute;
+            bottom: ${theme.spaces.md + 'px'};
+            right: ${theme.spaces.md + 'px'};
+        `
+    }}
+`
+
 export const TweetButton = styled(Button)`
     ${({ theme }) => {
         return css`
@@ -36,15 +59,44 @@ export const TweetButton = styled(Button)`
     }}
 `
 
-export const TweetCreatorBlock = styled.div`
-    ${({ theme }) => {
+export const TweetCreatorBlock = styled.div<TweetCreatorBlockProps>`
+    ${({ theme, $isModal }) => {
         return css`
             ${mixins.flexRowSB}
 
+            position: relative;
             width: ${theme.fullSize + '%'};
-            border-top: 1px solid #d8d8d8;
-            border-bottom: 1px solid #d8d8d8;
-            padding: 20px;
+            border-top: ${$isModal ? '0' : '1px solid #d8d8d8'};
+            border-bottom: ${$isModal ? '0' : '1px solid #d8d8d8'};
+            padding: ${theme.spaces.xl + 'px'};
+
+            @media (${theme.media.md}) {
+                padding: ${theme.spaces.lg + 'px'};
+            }
+
+            @media (${theme.media.sm}) {
+                padding: ${theme.spaces.md + 'px'};
+            }
+
+            @media (${theme.media.xs}) {
+                padding: ${theme.spaces.sm + 'px'};
+            }
         `
     }}
+`
+
+export const CreatorSpinner = styled(Spinner)`
+    ${({ theme }) => {
+        return css`
+            height: ${theme.tweetCreatorStyles.spinnerHeight + 'px'};
+        `
+    }}
+`
+
+export const TopContent = styled.div`
+    ${mixins.flexRowSB}
+`
+
+export const BottomContent = styled.div`
+    ${mixins.flexRowSB}
 `

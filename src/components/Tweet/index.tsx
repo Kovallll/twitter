@@ -1,19 +1,28 @@
 import { useEffect, useState } from 'react'
 
 import {
-    DeleteOption,
+    avatarIconAltText,
+    deleteText,
+    imageIconAltText,
+    likeIconAltText,
+    moreIconAltText,
+} from './config'
+import { MorePopup } from './MorePopup'
+import {
     InfoBlock,
+    LikeCount,
+    LikeIcon,
     MoreBlock,
     MoreIcon,
-    MorePopup,
-    ProfileIcon,
     TopInfoBlock,
     TweetArticle,
     TweetAuthor,
     TweetDate,
+    TweetIcon,
     TweetImage,
     TweetImageBlock,
     TweetInfoBlock,
+    TweetLike,
     TweetSocial,
     TweetText,
 } from './styled'
@@ -21,30 +30,39 @@ import { TweetProps } from './types'
 
 import { ConfirmModal } from '@components/Modal/ConfirmModal'
 import { images } from '@constants'
-import { dowloadImagesFromStorage } from '@firebase'
-import { useAppSelector } from '@hooks'
+import { clickLikeTweet, dowloadImagesFromStorage } from '@firebase'
+import { useAppDispatch, useDebounce } from '@hooks'
 import { CreatedTweetImageType } from '@types'
+import { getTimePostTweet } from '@utils'
 
-export const Tweet = ({ data, handleDeleteTweet }: TweetProps) => {
+export const Tweet = ({
+    data,
+    handleDeleteTweet,
+    isUserTweet = false,
+}: TweetProps) => {
+    const { tweetData, user } = data
+    const { imagesData, text, timePost, tweetId, liked } = tweetData
+
     const [isMoreOpen, setIsMoreOpen] = useState(false)
     const [isDelete, setIsDelete] = useState(false)
+    const [isLiked, setIsLiked] = useState(false)
     const [tweetImages, setTweetImages] = useState<
         CreatedTweetImageType[] | null
     >(null)
-    const { imagesData, text, timePost, tweetId } = data
-    const { user } = useAppSelector((state) => state.user)
-    const handleChangeTweetImages = (tweetImages: CreatedTweetImageType) => {
-        console.log(tweetImages, 'tweetImages')
-        setTweetImages((prev) =>
-            prev ? [...prev, tweetImages] : [tweetImages]
-        )
-    }
-    console.log(imagesData, 'imagesData')
+
+    const dispatch = useAppDispatch()
+
     useEffect(() => {
         dowloadImagesFromStorage(imagesData, handleChangeTweetImages)
 
         return () => setTweetImages(null)
     }, [imagesData])
+
+    const handleChangeTweetImages = (tweetImages: CreatedTweetImageType) => {
+        setTweetImages((prev) =>
+            prev ? [...prev, tweetImages] : [tweetImages]
+        )
+    }
 
     const handleChangeIsMore = () => {
         setIsMoreOpen((prev) => !prev)
@@ -55,42 +73,53 @@ export const Tweet = ({ data, handleDeleteTweet }: TweetProps) => {
     }
 
     const handleClickDeleteTweet = () => {
-        handleDeleteTweet(tweetId)
+        if (handleDeleteTweet) handleDeleteTweet(tweetId)
     }
 
+    const handleClickLike = useDebounce(() => {
+        setIsLiked((prev) => !prev)
+        clickLikeTweet(user, tweetId, isLiked, dispatch)
+    }, 200)
+    const likeIcon = isLiked ? images.likeFill : images.likeOutline
+    const timePostTweet = getTimePostTweet(timePost)
     return (
         <TweetArticle>
             <TweetInfoBlock>
-                <ProfileIcon src={user.avatar.url} />
+                <TweetIcon src={user.avatar.url} alt={avatarIconAltText} />
                 <InfoBlock>
                     <TopInfoBlock>
                         <TweetAuthor>{user.name}</TweetAuthor>
                         <TweetSocial>{user.social}</TweetSocial>
-                        <TweetDate>{timePost}</TweetDate>
+                        <TweetDate>{timePostTweet}</TweetDate>
                     </TopInfoBlock>
                     <TweetText>{text}</TweetText>
                 </InfoBlock>
-                <MoreBlock onClick={handleChangeIsMore}>
-                    <MoreIcon src={images.dotsIcon} />
-                    {isMoreOpen && (
-                        <MorePopup>
-                            <DeleteOption onClick={handleChangeIsDelete}>
-                                Delete
-                            </DeleteOption>
-                        </MorePopup>
-                    )}
-                </MoreBlock>
+                {isUserTweet && (
+                    <MoreBlock onClick={handleChangeIsMore}>
+                        <MoreIcon src={images.dotsIcon} alt={moreIconAltText} />
+                        {isMoreOpen && (
+                            <MorePopup
+                                onDelete={handleChangeIsDelete}
+                                onClose={handleChangeIsMore}
+                            />
+                        )}
+                    </MoreBlock>
+                )}
             </TweetInfoBlock>
             <TweetImageBlock>
                 {tweetImages?.map(({ id, url }) => (
-                    <TweetImage key={id} src={url} />
+                    <TweetImage key={id} src={url} alt={imageIconAltText} />
                 ))}
             </TweetImageBlock>
+            <TweetLike onClick={handleClickLike}>
+                <LikeIcon src={likeIcon} alt={likeIconAltText} />
+                <LikeCount>{liked.length}</LikeCount>
+            </TweetLike>
             {isDelete && (
                 <ConfirmModal
                     onClose={handleChangeIsDelete}
                     onConfirm={handleClickDeleteTweet}
-                    confirmText="Delete"
+                    confirmText={deleteText}
                 />
             )}
         </TweetArticle>

@@ -1,3 +1,3 @@
-export interface SidebarProps {
-    onSignOut: () => void
+export interface WrapProps {
+    $isSidebarOpen: boolean
 }

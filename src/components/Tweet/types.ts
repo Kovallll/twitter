@@ -1,6 +1,12 @@
-import { ReadyToTweetStorageType } from '@types'
+import { ReadyToTweetStorageType, UserData } from '@types'
 
 export interface TweetProps {
-    data: ReadyToTweetStorageType
-    handleDeleteTweet: (tweetId: string) => void
+    data: TweetData
+    handleDeleteTweet?: (tweetId: string) => void
+    isUserTweet?: boolean
+}
+
+export interface TweetData {
+    tweetData: ReadyToTweetStorageType
+    user: UserData
 }

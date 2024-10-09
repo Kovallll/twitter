@@ -1,32 +1,13 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Container } from './styled'
 
-import { Container, SidebarWrap } from './styled'
-
-import { ProfileMainContent } from '@components/ProfileMainContent'
 import { Sidebar } from '@components/Sidebar'
 import { TwitterUsersContent } from '@components/TwitterUsersContent'
-import { initUserData, signOutFirebaseAccount } from '@firebase'
-import { useAppDispatch, useAppSelector } from '@hooks'
+import { ProfileMainContent } from '@pages/Profile/ProfileMainContent'
 
 const Profile = () => {
-    const { user } = useAppSelector((state) => state.user)
-    const navigate = useNavigate()
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        initUserData(user.userId, dispatch)
-    }, [dispatch, user.userId])
-
-    const handleSignOutClick = () => {
-        signOutFirebaseAccount(navigate, dispatch)
-    }
-
     return (
         <Container>
-            <SidebarWrap>
-                <Sidebar onSignOut={handleSignOutClick} />
-            </SidebarWrap>
+            <Sidebar />
             <ProfileMainContent />
             <TwitterUsersContent />
         </Container>

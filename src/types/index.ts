@@ -54,18 +54,21 @@ export interface TweetStorageType {
     tweetId: string
     imagesData: TweetImageType[] | null
     text: string
-    timePost: string
+    timePost: number
+    liked: string[]
 }
 
 export interface ReadyToTweetStorageType {
     tweetId: string
     imagesData: StorageTweetImageType[] | null
     text: string
-    timePost: string
+    timePost: number
+    liked: string[]
 }
 
 export interface UserData {
-    userId: string | null
+    docId: string
+    userId: string
     email: string
     name: string
     social?: string
@@ -76,12 +79,6 @@ export interface UserData {
     tweets: ReadyToTweetStorageType[] | null
 }
 
-export interface ModalUserData {
-    description: string
-    social: string
-    name: string
-}
-
 export interface EditModalData {
     description: string | undefined
     social: string | undefined
@@ -89,19 +86,7 @@ export interface EditModalData {
     photoUrl?: string
 }
 
-export interface PassingUserData {
-    social: string
-    avatarUrl: string
-    name: string
-}
-
-export type UserUploadTweetImage = CreatedTweetImageType[] | null
-
-export interface AccountData {
-    docId: string
-    userId: string
-    name: string
-    social?: string
-    avatar: CreatedTweetImageType
-    followers: string[]
+export interface UserCredential {
+    password: string
+    email: string
 }

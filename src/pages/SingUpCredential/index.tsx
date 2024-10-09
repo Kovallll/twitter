@@ -28,7 +28,6 @@ import {
     Container,
     DateBlock,
     LogoWrap,
-    Spinner,
     Subtitle,
     Text,
     Title,
@@ -36,14 +35,16 @@ import {
 } from './styled'
 
 import { Input } from '@components/Input'
+import { PasswordInput } from '@components/Input/PasswordInput'
+import { PhoneInput } from '@components/Input/PhoneInput'
 import Notify from '@components/Notify'
-import { PasswordInput } from '@components/PasswordInput'
-import { PhoneInput } from '@components/PhoneInput'
 import Select from '@components/Select'
 import {
     basePhoneCode,
     defaultDate,
     images,
+    maxLengthName,
+    maxLengthPassword,
     months,
     notifyTimeout,
     Paths,
@@ -60,7 +61,7 @@ import {
     updateSignUpPassword,
     updateSignUpPhone,
 } from '@store'
-import { Button, Form, LinkStyle, Logo } from '@styles/global'
+import { Button, Form, LinkStyle, Logo, Spinner } from '@styles/global'
 import { theme } from '@styles/theme'
 import { DateType, SignUpFormInput } from '@types'
 import {
@@ -153,7 +154,6 @@ const SingUpCredential = () => {
         },
         [date, dispatch]
     )
-
     const onSubmit: SubmitHandler<SignUpFormInput> = (data) => {
         setIsLoading(true)
         if (!text) {
@@ -202,6 +202,7 @@ const SingUpCredential = () => {
                         label={nameLabel}
                         error={nameError?.message}
                         aria-invalid={errors.name ? 'true' : 'false'}
+                        maxLength={maxLengthName}
                     />
                     <PhoneInput
                         type="text"
@@ -229,6 +230,7 @@ const SingUpCredential = () => {
                         register={register}
                         error={passwordError?.message}
                         aria-invalid={passwordError ? 'true' : 'false'}
+                        maxLength={maxLengthPassword}
                     />
                     <PasswordInput
                         placeholder={confirmPasswordPlaceholder}
@@ -238,6 +240,7 @@ const SingUpCredential = () => {
                         label={confirmPasswordLabel}
                         error={confirmPasswordError?.message}
                         aria-invalid={confirmPasswordError ? 'true' : 'false'}
+                        maxLength={maxLengthPassword}
                     />
                     <Link to={Paths.SignUp} style={LinkStyle}>
                         {linkText}

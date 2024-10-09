@@ -50,4 +50,16 @@ export default {
         align-items: center;
         flex-direction: column;
     `,
+    loadingAnimation: () => css`
+        animation: skeleton-loading 1.2s linear infinite alternate;
+
+        @keyframes skeleton-loading {
+            0% {
+                background-color: hsl(200, 20%, 80%);
+            }
+            100% {
+                background-color: hsl(200, 20%, 95%);
+            }
+        }
+    `,
 }

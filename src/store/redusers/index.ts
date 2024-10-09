@@ -1,6 +1,8 @@
 import {
+    BooleanAction,
     LoginAction,
     NotifyAction,
+    SearchAction,
     SingUpAction,
     TotalDataAction,
     UserAction,
@@ -8,8 +10,10 @@ import {
 
 import {
     ActionTypes,
+    booleanStatesDefaultData,
     loginDefaultData,
     notifyDefaultData,
+    searchDefaultData,
     signUpDefaultData,
     totalDefaultData,
     userDefaultData,
@@ -57,10 +61,10 @@ export const updateUserData = (state = userDefaultData, action: UserAction) => {
             return { ...state, user: action.payload }
         case ActionTypes.UserData:
             return { ...state, editData: action.payload }
-        case ActionTypes.UserDocId:
-            return { ...state, docId: action.payload }
         case ActionTypes.UserFollowing:
             return { ...state, following: [...state.following, action.payload] }
+        case ActionTypes.UserLiked:
+            return { ...state, liked: action.payload }
         default:
             return state
     }
@@ -90,6 +94,38 @@ export const setTotalData = (
                     ? action.payload
                     : [...state.accounts, action.payload],
             }
+        default:
+            return state
+    }
+}
+
+export const updateSearch = (
+    state = searchDefaultData,
+    action: SearchAction
+) => {
+    switch (action.type) {
+        case ActionTypes.SeacrhValue:
+            return { ...state, value: action.payload }
+        case ActionTypes.SearchData:
+            return { ...state, data: action.payload }
+        default:
+            return state
+    }
+}
+
+export const updateBooleanStates = (
+    state = booleanStatesDefaultData,
+    action: BooleanAction
+) => {
+    switch (action.type) {
+        case ActionTypes.LoadingTweet:
+            return { ...state, isLoadingTweet: action.payload }
+        case ActionTypes.LoadingInititalData:
+            return { ...state, isLoadingInitialData: action.payload }
+        case ActionTypes.isSidebarOpen:
+            return { ...state, isSidebarOpen: action.payload }
+        case ActionTypes.isTweetModalOpen:
+            return { ...state, isTweetModalOpen: action.payload }
         default:
             return state
     }

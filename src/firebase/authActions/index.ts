@@ -1,5 +1,6 @@
 import { Dispatch } from 'react'
 import { NavigateFunction } from 'react-router-dom'
+import axios from 'axios'
 import {
     getFirebaseAuth,
     getFirebaseStore,
@@ -13,10 +14,19 @@ import {
     signInWithPopup,
 } from 'firebase/auth'
 import { addDoc, collection } from 'firebase/firestore'
+import { jwtDecode } from 'jwt-decode'
 
-import { defaultUser, images, Paths, usersCollection } from '@constants'
+import {
+    defaultUser,
+    images,
+    loginType,
+    Paths,
+    signUpType,
+    tokensLocalStorage,
+    usersCollection,
+} from '@constants'
 import { AllActionsType, updateNotifyText, updateTotalUser } from '@store'
-import { SignUpDate, SignUpFormInput } from '@types'
+import { SignUpDate, SignUpFormInput, UserCredential } from '@types'
 import { LocalStorage } from '@utils'
 
 setupFirebase()
@@ -32,10 +42,11 @@ export const goggleAuth = (
         .then(({ user }) => {
             const localStorage = new LocalStorage()
             user.getIdToken().then((token) => {
-                localStorage.setItem('token', token)
+                localStorage.setItem(tokensLocalStorage, { access: token })
             })
             const userId = user.uid
             const userInfo = {
+                docId: '',
                 userId,
                 name: user.displayName ?? 'Anonim',
                 email: user.email,
@@ -69,31 +80,32 @@ export const emailAndPasswordAuth = (
 ) => {
     const { email, name, phone } = data
     createUserWithEmailAndPassword(auth, data.email, data.password)
-        .then(({ user }) => {
-            const localStorage = new LocalStorage()
-            user.getIdToken().then((token) => {
-                localStorage.setItem('token', token)
-            })
-
-            const userId = user.uid
-            const userInfo = {
-                userId,
-                name,
-                email,
-                phone,
-                dateBirthday: `${date.day} ${date.month} ${date.year}`,
-                loginTime: Date.now(),
-                avatar: { id: userId, url: images.profileImage },
-                followers: [],
-                following: [],
-                description: '',
-                social: '',
-                tweets: null,
-            }
-            handleResetForm()
-            const docsRef = collection(database, usersCollection)
-            addDoc(docsRef, userInfo)
-            navigate(Paths.Profile)
+        .then(() => {
+            setAuthTokens(data, signUpType)
+                .then((res) => {
+                    const decodedToken = jwtDecode(res) as { user_id: string }
+                    const userId = decodedToken.user_id
+                    const userInfo = {
+                        docId: '',
+                        userId,
+                        name,
+                        email,
+                        phone,
+                        dateBirthday: `${date.day} ${date.month} ${date.year}`,
+                        loginTime: Date.now(),
+                        avatar: { id: userId, url: images.profileImage },
+                        followers: [],
+                        following: [],
+                        description: '',
+                        social: '',
+                        tweets: null,
+                    }
+                    handleResetForm()
+                    const docsRef = collection(database, usersCollection)
+                    addDoc(docsRef, userInfo)
+                    navigate(Paths.Profile)
+                })
+                .catch((err) => dispatch(updateNotifyText(err)))
         })
         .catch((error) => {
             const errorCode = error.code
@@ -107,14 +119,18 @@ export const loginWithEmailAndPassword = (
     email: string,
     password: string,
     dispatch: Dispatch<AllActionsType>,
-    navigate: NavigateFunction
+    navigate: NavigateFunction,
+    handleResetForm: () => void
 ) => {
     signInWithEmailAndPassword(auth, email, password)
-        .then(({ user }) => {
-            user.getIdToken().then((token) => {
-                localStorage.setItem('token', token)
-            })
-            navigate(Paths.Profile)
+        .then(() => {
+            const data = { password, email }
+            setAuthTokens(data, loginType)
+                .then(() => {
+                    navigate(Paths.Profile)
+                    handleResetForm()
+                })
+                .catch((err) => dispatch(updateNotifyText(err)))
         })
         .catch((error) => {
             const errorCode = error.code
@@ -127,19 +143,33 @@ export const signOutFirebaseAccount = (
     navigate: NavigateFunction,
     dispatch: Dispatch<AllActionsType>
 ) => {
-    const localStorage = new LocalStorage()
-    localStorage.setItem('token', '')
-    dispatch(updateTotalUser(defaultUser))
     auth.signOut()
     navigate(Paths.SignUp)
+    const localStorage = new LocalStorage()
+    localStorage.setItem(tokensLocalStorage, null)
+    dispatch(updateTotalUser(defaultUser))
 }
 
 export const resetPassword = (email: string) => {
-    sendPasswordResetEmail(auth, email)
-        .then(() => {
-            console.log('send to email')
-        })
-        .catch((error) => {
-            console.error(error)
-        })
+    sendPasswordResetEmail(auth, email).catch((error) => {
+        console.error(error)
+    })
+}
+
+export const setAuthTokens = async (data: UserCredential, type: string) => {
+    const localStorage = new LocalStorage()
+    const response = await axios.post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:${type}?key=${import.meta.env.VITE_FIREBASE_APIKEY}`,
+        {
+            password: data.password,
+            email: data.email,
+            returnSecureToken: true,
+        }
+    )
+    localStorage.setItem(tokensLocalStorage, {
+        access: response.data.idToken,
+        refresh: response.data.refreshToken,
+    })
+
+    return response.data.idToken
 }

@@ -2,8 +2,10 @@ import { combineReducers, createStore } from 'redux'
 
 import {
     setTotalData,
+    updateBooleanStates,
     updateLoginData,
     updateNotifyData,
+    updateSearch,
     updateSignUpData,
     updateUserData,
 } from './redusers'
@@ -14,6 +16,8 @@ const rootReduser = combineReducers({
     user: updateUserData,
     notify: updateNotifyData,
     total: setTotalData,
+    search: updateSearch,
+    boolean: updateBooleanStates,
 })
 
 export const store = createStore(rootReduser)
@@ -34,15 +38,15 @@ export {
     updateUserData,
     updateNotifyText,
     updateTotalUser,
-    updateUserDocId,
     setTotalAccounts,
     updateUserFollowing,
+    updateSearchValue,
+    updateSearchData,
+    updateUserTweetLiked,
+    updateLoadingTweet,
+    updateLoadingInitialData,
+    updateIsSidebarOpen,
+    updateIsTweetModalOpen,
 } from './actions'
 
-export {
-    type LoginAction,
-    type SingUpAction,
-    type UserAction,
-    type TotalDataAction,
-    type AllActionsType,
-} from './redusers/types'
+export { type AllActionsType } from './redusers/types'

@@ -1,21 +1,74 @@
 import styled, { css } from 'styled-components'
 
+import { Button, ProfileIcon } from '@styles/global'
 import mixins from '@styles/mixins'
+
+export const Wrap = styled.div`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexColumnCenter}
+
+            width: ${theme.fullSize + '%'};
+            height: ${theme.fullSize + '%'};
+            padding: ${theme.spaces.md +
+            'px ' +
+            theme.spaces.xl +
+            'px ' +
+            '0 ' +
+            theme.spaces.md +
+            'px'};
+
+            @media (${theme.media.xl}) {
+                max-width: ${theme.sidebarStyles.lg.maxWidth + 'px'};
+                padding: ${theme.spaces.sm +
+                'px ' +
+                theme.spaces.lg +
+                'px ' +
+                '0 ' +
+                theme.spaces.sm +
+                'px'};
+            }
+
+            @media (${theme.media.lg}) {
+                max-width: ${theme.sidebarStyles.md.maxWidth + 'px'};
+                padding: ${theme.spaces.xs +
+                'px ' +
+                theme.spaces.md +
+                'px ' +
+                '0 ' +
+                theme.spaces.xs +
+                'px'};
+            }
+
+            @media (${theme.media.md}) {
+                max-width: ${theme.sidebarStyles.sm.maxWidth + 'px'};
+                padding: ${theme.spaces.xxs +
+                'px ' +
+                theme.spaces.sm +
+                'px ' +
+                '0 ' +
+                theme.spaces.xxs +
+                'px'};
+            }
+
+            @media (${theme.media.xxs}) {
+                justify-content: start;
+                position: fixed;
+                left: 0;
+                top: 0;
+                z-index: ${theme.sidebarStyles.zIndex};
+                background: ${theme.palette.common.white};
+            }
+        `
+    }}
+`
 
 export const Container = styled.section`
     ${({ theme }) => {
         return css`
             ${mixins.flexColumnStart}
-            max-width: ${theme.sidebarStyles.lg.width + 'px'};
+
             width: ${theme.fullSize + '%'};
-            padding-right: 12px;
-            padding-left: 4px;
-            @media (${theme.media.md}) {
-                max-width: ${theme.sidebarStyles.md.width + 'px'};
-            }
-            @media (${theme.media.xs}) {
-                max-width: ${theme.sidebarStyles.sm.width + 'px'};
-            }
         `
     }}
 `
@@ -28,6 +81,13 @@ export const LogoWrap = styled.div`
             @media (${theme.media.xl}) {
                 margin-bottom: ${theme.spaces.xxl + 'px'};
             }
+
+            @media (${theme.media.md}) {
+                ${mixins.flexRowCenter}
+
+                width: ${theme.fullSize + '%'};
+            }
+
             @media (${theme.media.sm}) {
                 margin-bottom: ${theme.spaces.xl + 'px'};
             }
@@ -46,8 +106,14 @@ export const SidebarLink = styled.a`
             @media (${theme.media.xl}) {
                 margin-bottom: ${theme.spaces.xl + 'px'};
             }
-            @media (${theme.media.sm}) {
+            @media (${theme.media.md}) {
+                ${mixins.flexRowCenter}
+
+                width: ${theme.fullSize + '%'};
                 margin-bottom: ${theme.spaces.lg + 'px'};
+            }
+            @media (${theme.media.sm}) {
+                margin-bottom: ${theme.spaces.md + 'px'};
             }
         `
     }}
@@ -61,13 +127,14 @@ export const Title = styled.p`
             margin-left: ${theme.spaces.lg + 'px'};
             color: ${theme.palette.common.black};
             font-size: ${theme.fontSizes.sm + 'px'};
-            font-weight: 700;
+            font-weight: ${theme.boldFont};
 
             @media (${theme.media.xl}) {
                 margin-left: ${theme.spaces.md + 'px'};
                 font-size: ${theme.fontSizes.xs + 'px'};
             }
-            @media (${theme.media.xs}) {
+
+            @media (${theme.media.md}) {
                 display: none;
             }
         `
@@ -77,7 +144,9 @@ export const Title = styled.p`
 export const Profile = styled.div`
     ${({ theme }) => {
         return css`
-            ${mixins.flexRowCenter}
+            ${mixins.flexRowStart}
+
+            width: ${theme.fullSize + '%'};
             margin-top: ${theme.spaces.xxxl + 'px'};
             margin-bottom: ${theme.spaces.xl + 'px'};
 
@@ -85,27 +154,34 @@ export const Profile = styled.div`
                 margin-top: ${theme.spaces.xxl + 'px'};
                 margin-bottom: ${theme.spaces.lg + 'px'};
             }
+
+            @media (${theme.media.md}) {
+                ${mixins.flexRowCenter}
+            }
+
             @media (${theme.media.xs}) {
                 margin-top: ${theme.spaces.xl + 'px'};
                 margin-bottom: ${theme.spaces.md + 'px'};
+            }
+
+            @media (${theme.media.xxs}) {
+                display: none;
             }
         `
     }}
 `
 
-export const SidebarImage = styled.img`
+export const SidebarImage = styled(ProfileIcon)`
     ${({ theme }) => {
         return css`
-            object-fit: cover;
             width: ${theme.sidebarStyles.lg.profileImagesize + 'px'};
             height: ${theme.sidebarStyles.lg.profileImagesize + 'px'};
-            border-radius: ${theme.sidebarStyles.profileImageBorderRadius +
-            '%'};
 
             @media (${theme.media.xl}) {
                 width: ${theme.sidebarStyles.md.profileImagesize + 'px'};
                 height: ${theme.sidebarStyles.md.profileImagesize + 'px'};
             }
+
             @media (${theme.media.xs}) {
                 width: ${theme.sidebarStyles.sm.profileImagesize + 'px'};
                 height: ${theme.sidebarStyles.sm.profileImagesize + 'px'};
@@ -118,13 +194,19 @@ export const TextBlock = styled.div`
     ${({ theme }) => {
         return css`
             ${mixins.flexColumnStart}
+
             margin-left: ${theme.spaces.xxl + 'px'};
 
             @media (${theme.media.xl}) {
                 margin-left: ${theme.spaces.xl + 'px'};
             }
-            @media (${theme.media.xs}) {
-                margin-left: ${theme.spaces.lg + 'px'};
+
+            @media (${theme.media.lg}) {
+                margin-left: ${theme.spaces.md + 'px'};
+            }
+
+            @media (${theme.media.md}) {
+                display: none;
             }
         `
     }}
@@ -133,12 +215,10 @@ export const TextBlock = styled.div`
 export const NameText = styled.p`
     ${({ theme }) => {
         return css`
-            font-weight: 700;
+            font-weight: ${theme.boldFont};
             font-size: ${theme.fontSizes.xs + 'px'};
-
-            @media (${theme.media.xs}) {
-                font-size: ${theme.fontSizes.xxs + 'px'};
-            }
+            word-wrap: break-word;
+            width: ${theme.sidebarStyles.nameWidth + 'px'};
         `
     }}
 `
@@ -146,10 +226,81 @@ export const NameText = styled.p`
 export const SocialText = styled.p`
     ${({ theme }) => {
         return css`
+            font-size: ${theme.fontSizes.xxs + 'px'};
+            word-wrap: break-word;
+            width: ${theme.sidebarStyles.socialWidth + 'px'};
+        `
+    }}
+`
+
+export const DesktopText = styled.p`
+    ${({ theme }) => {
+        return css`
             font-size: ${theme.fontSizes.xs + 'px'};
 
-            @media (${theme.media.xs}) {
-                font-size: ${theme.fontSizes.xxs + 'px'};
+            @media (${theme.media.md}) {
+                display: none;
+            }
+        `
+    }}
+`
+
+export const IconWrap = styled.div`
+    ${({ theme }) => {
+        return css`
+            display: none;
+
+            @media (${theme.media.md}) {
+                ${mixins.flexRowCenter}
+                width: ${theme.fullSize + '%'};
+            }
+        `
+    }}
+`
+
+export const TabletIconWrap = styled.div`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexRowCenter}
+
+            border-radius: ${theme.circleRadius + '%'};
+            width: ${theme.sidebarStyles.iconWrapSize + 'px'};
+            height: ${theme.sidebarStyles.iconWrapSize + 'px'};
+        `
+    }}
+`
+
+export const PostIconWrap = styled(TabletIconWrap)`
+    ${({ theme }) => {
+        return css`
+            background-color: ${theme.palette.blue};
+        `
+    }}
+`
+
+export const LogOutIconWrap = styled(TabletIconWrap)`
+    ${({ theme }) => {
+        return css`
+            background-color: ${theme.palette.gray};
+            margin-top: ${theme.spaces.md + 'px'};
+        `
+    }}
+`
+
+export const TabletIcon = styled.img`
+    ${({ theme }) => {
+        return css`
+            width: ${theme.sidebarStyles.iconSize + 'px'};
+            height: ${theme.sidebarStyles.iconSize + 'px'};
+        `
+    }}
+`
+
+export const SidebarButton = styled(Button)`
+    ${({ theme }) => {
+        return css`
+            @media (${theme.media.md}) {
+                display: none;
             }
         `
     }}

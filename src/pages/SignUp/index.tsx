@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import {
     bottomLinks,
     emailSignUpText,
+    googleIconAltText,
     googleSignUpText,
     loginLinkText,
     loginText,
@@ -81,7 +82,10 @@ const SignUp = () => {
                             $withBorder={true}
                             onClick={handleGoggleAuthClick}
                         >
-                            <GoogleIcon src={images.googleIcon} />
+                            <GoogleIcon
+                                src={images.googleIcon}
+                                alt={googleIconAltText}
+                            />
                             {googleSignUpText}
                         </Button>
                         <Button

@@ -12,9 +12,9 @@ import { loginSchema } from './schema'
 import { Container, SignUpLink, Title, Wrap } from './styled'
 
 import { Input } from '@components/Input'
+import { PasswordInput } from '@components/Input/PasswordInput'
 import Notify from '@components/Notify'
-import { PasswordInput } from '@components/PasswordInput'
-import { images, notifyTimeout, Paths } from '@constants'
+import { images, maxLengthPassword, notifyTimeout, Paths } from '@constants'
 import { loginWithEmailAndPassword } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAppDispatch, useAppSelector } from '@hooks'
@@ -45,11 +45,6 @@ const Login = () => {
     const { text } = useAppSelector((state) => state.notify)
 
     useEffect(() => {
-        const handleResetForm = () => {
-            dispatch(updateLoginEmail(''))
-            dispatch(updateLoginPassword(''))
-        }
-
         let timeout: NodeJS.Timeout
         if (text) {
             timeout = setTimeout(() => {
@@ -59,12 +54,22 @@ const Login = () => {
 
         return () => {
             clearTimeout(timeout)
-            handleResetForm()
         }
     }, [dispatch, text])
 
+    const handleResetForm = () => {
+        dispatch(updateLoginEmail(''))
+        dispatch(updateLoginPassword(''))
+    }
+
     const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
-        loginWithEmailAndPassword(data.email, data.password, dispatch, navigate)
+        loginWithEmailAndPassword(
+            data.email,
+            data.password,
+            dispatch,
+            navigate,
+            handleResetForm
+        )
     }
 
     const handleChangeEmailInput = (value: string) => {
@@ -101,6 +106,7 @@ const Login = () => {
                         register={register}
                         error={passwordError?.message}
                         aria-invalid={passwordError ? 'true' : 'false'}
+                        maxLength={maxLengthPassword}
                     />
                     <Button
                         $backgroundColor={theme.palette.blue}
