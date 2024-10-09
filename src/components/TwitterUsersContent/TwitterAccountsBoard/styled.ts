@@ -9,7 +9,7 @@ export const AccountsSection = styled.section`
     ${({ theme }) => {
         return css`
             padding: ${theme.spaces.xl + 'px'};
-            background-color: #f7f9f9;
+            background-color: ${theme.palette.accountsBgColor};
             border-radius: ${theme.spaces.lg + 'px'};
             width: ${theme.fullSize + '%'};
 

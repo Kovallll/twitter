@@ -31,7 +31,7 @@ export const LettersCount = styled.p`
         return css`
             position: absolute;
             top: 0;
-            right:${theme.spaces.sm + 'px'}
+            right:${theme.spaces.sm + 'px'};
             color: ${theme.palette.lightBlue};
             font-size: ${theme.fontSizes.xs + 'px'};
             @media (${theme.media.md}) {
@@ -39,7 +39,7 @@ export const LettersCount = styled.p`
             }
 
             @media (${theme.media.sm}) {
-                right: ${theme.spaces.xs + 'px'}
+                right: ${theme.spaces.xs + 'px'};
             }
         `
     }}
