@@ -1,6 +1,5 @@
 import { Dispatch } from 'react'
 import { NavigateFunction } from 'react-router-dom'
-import axios from 'axios'
 import {
     getFirebaseAuth,
     getFirebaseStore,
@@ -14,19 +13,16 @@ import {
     signInWithPopup,
 } from 'firebase/auth'
 import { addDoc, collection } from 'firebase/firestore'
-import { jwtDecode } from 'jwt-decode'
 
 import {
     defaultUser,
     images,
-    loginType,
     Paths,
-    signUpType,
     tokensLocalStorage,
     usersCollection,
 } from '@constants'
 import { AllActionsType, updateNotifyText, updateTotalUser } from '@store'
-import { SignUpDate, SignUpFormInput, UserCredential } from '@types'
+import { SignUpDate, SignUpFormInput } from '@types'
 import { LocalStorage } from '@utils'
 
 setupFirebase()
@@ -80,36 +76,32 @@ export const emailAndPasswordAuth = (
 ) => {
     const { email, name, phone } = data
     createUserWithEmailAndPassword(auth, data.email, data.password)
-        .then(() => {
-            setAuthTokens(data, signUpType)
-                .then((res) => {
-                    const decodedToken = jwtDecode(res) as { user_id: string }
-                    const userId = decodedToken.user_id
-                    const userInfo = {
-                        docId: '',
-                        userId,
-                        name,
-                        email,
-                        phone,
-                        dateBirthday: `${date.day} ${date.month} ${date.year}`,
-                        loginTime: Date.now(),
-                        avatar: { id: userId, url: images.profileImage },
-                        followers: [],
-                        following: [],
-                        description: '',
-                        social: '',
-                        tweets: null,
-                    }
-                    handleResetForm()
-                    const docsRef = collection(database, usersCollection)
-                    addDoc(docsRef, userInfo)
-                    navigate(Paths.Profile)
-                })
-                .catch((err) => {
-                    const localStorage = new LocalStorage()
-                    localStorage.setItem(tokensLocalStorage, null)
-                    dispatch(updateNotifyText(err))
-                })
+        .then(({ user }) => {
+            const localStorage = new LocalStorage()
+            user.getIdToken().then((token) => {
+                localStorage.setItem(tokensLocalStorage, { access: token })
+            })
+            const userId = user.uid
+
+            const userInfo = {
+                docId: '',
+                userId,
+                name,
+                email,
+                phone,
+                dateBirthday: `${date.day} ${date.month} ${date.year}`,
+                loginTime: Date.now(),
+                avatar: { id: userId, url: images.profileImage },
+                followers: [],
+                following: [],
+                description: '',
+                social: '',
+                tweets: null,
+            }
+            handleResetForm()
+            const docsRef = collection(database, usersCollection)
+            addDoc(docsRef, userInfo)
+            navigate(Paths.Profile)
         })
         .catch((error) => {
             const errorCode = error.code
@@ -127,14 +119,13 @@ export const loginWithEmailAndPassword = (
     handleResetForm: () => void
 ) => {
     signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-            const data = { password, email }
-            setAuthTokens(data, loginType)
-                .then(() => {
-                    navigate(Paths.Profile)
-                    handleResetForm()
-                })
-                .catch((err) => dispatch(updateNotifyText(err)))
+        .then(({ user }) => {
+            user.getIdToken().then((token) => {
+                const localStorage = new LocalStorage()
+                localStorage.setItem(tokensLocalStorage, { access: token })
+            })
+            navigate(Paths.Profile)
+            handleResetForm()
         })
         .catch((error) => {
             const errorCode = error.code
@@ -158,22 +149,4 @@ export const resetPassword = (email: string) => {
     sendPasswordResetEmail(auth, email).catch((error) => {
         console.error(error)
     })
-}
-
-export const setAuthTokens = async (data: UserCredential, type: string) => {
-    const localStorage = new LocalStorage()
-    const response = await axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:${type}?key=${import.meta.env.VITE_FIREBASE_APIKEY}`,
-        {
-            password: data.password,
-            email: data.email,
-            returnSecureToken: true,
-        }
-    )
-    localStorage.setItem(tokensLocalStorage, {
-        access: response.data.idToken,
-        refresh: response.data.refreshToken,
-    })
-
-    return response.data.idToken
 }
