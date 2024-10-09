@@ -105,7 +105,11 @@ export const emailAndPasswordAuth = (
                     addDoc(docsRef, userInfo)
                     navigate(Paths.Profile)
                 })
-                .catch((err) => dispatch(updateNotifyText(err)))
+                .catch((err) => {
+                    const localStorage = new LocalStorage()
+                    localStorage.setItem(tokensLocalStorage, null)
+                    dispatch(updateNotifyText(err))
+                })
         })
         .catch((error) => {
             const errorCode = error.code
