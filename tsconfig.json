@@ -19,19 +19,19 @@
         "allowUmdGlobalAccess": true,
         "jsx": "react-jsx",
         "baseUrl": ".",
+        "downlevelIteration": true,
         "paths": {
             "@types": ["src/types"],
             "@components/*": ["src/components/*"],
             "@assets/*": ["src/assets/*"],
             "@constants": ["src/constants"],
-            "@styles/*": ["src/styles/*"],
+            "@styles": ["src/styles"],
             "@utils": ["src/utils"],
             "@hooks": ["src/hooks"],
             "@pages/*": ["src/pages/*"],
-            "@service": ["src/service"],
             "@store": ["src/store"],
             "@firebase": ["src/firebase"]
         }
     },
-    "include": ["src", "declare.d.ts", "firebase.config.ts"]
+    "include": ["src", "src/types/declare.d.ts", "firebase.config.ts"]
 }

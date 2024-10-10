@@ -1,3 +1,8 @@
 export interface NotifyProps {
-    error?: string
+    text: string
+    isSuccess?: boolean
+}
+
+export interface NotifyModuleProps {
+    $isSuccess?: boolean
 }

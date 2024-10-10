@@ -1,0 +1,5 @@
+export const title = 'You might like'
+export const follow = 'Follow'
+export const unfollow = 'Unfollow'
+export const showMore = 'Show More'
+export const avatarIconAltText = 'avatarIcon'

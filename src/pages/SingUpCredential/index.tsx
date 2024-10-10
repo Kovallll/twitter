@@ -1,27 +1,29 @@
-import { useCallback, useEffect, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
 import {
-    confirmPasswordLabel,
+    confirmPasswordControlName,
     confirmPasswordPlaceholder,
-    dateDayError,
     dateSubtitle,
     dateText,
+    dayControlName,
     dayType,
-    defaultValueDay,
-    emailLabel,
+    emailControlName,
     emailPlaceholder,
     linkText,
     logoAltText,
+    monthControlName,
     monthType,
-    nameLabel,
+    nameControlName,
     namePlaceholder,
-    passwordLabel,
+    passwordControlName,
     passwordPlaceholder,
+    phoneControlName,
     phonePlaceholder,
     signUpSubmitText,
     singUpTitleText,
+    yearControlName,
     yearType,
 } from './config'
 import { signUpSchema } from './schema'
@@ -29,7 +31,6 @@ import {
     Container,
     DateBlock,
     LogoWrap,
-    Spinner,
     Subtitle,
     Text,
     Title,
@@ -37,13 +38,15 @@ import {
 } from './styled'
 
 import { Input } from '@components/Input'
+import { PasswordInput } from '@components/Input/PasswordInput'
+import { PhoneInput } from '@components/Input/PhoneInput'
 import Notify from '@components/Notify'
-import { PhoneInput } from '@components/PhoneInput'
 import Select from '@components/Select'
 import {
     basePhoneCode,
-    defaultDate,
     images,
+    maxLengthName,
+    maxLengthPassword,
     months,
     notifyTimeout,
     Paths,
@@ -51,119 +54,53 @@ import {
 import { emailAndPasswordAuth } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import {
-    updateSignUpConfrimPassword,
-    updateSignUpDate,
-    updateSignUpEmail,
-    updateSignUpError,
-    updateSignUpName,
-    updateSignUpPassword,
-    updateSignUpPhone,
-} from '@store'
-import { Button, Form, LinkStyle, Logo } from '@styles/global'
-import { theme } from '@styles/theme'
-import { DateType, SignUpFormInput } from '@types'
-import {
-    getIsValidDate,
-    getNotifyError,
-    getSelectDays,
-    getSelectYears,
-} from '@utils'
+import { notifySelector, updateNotifyText, userSelector } from '@store'
+import { Button, Form, LinkStyle, Logo, Spinner, theme } from '@styles'
+import { SignUpFormInput } from '@types'
+import { getNotifyError, getSelectDays, getSelectYears } from '@utils'
 
 const SingUpCredential = () => {
     const [isLoading, setIsLoading] = useState(false)
     const {
-        register,
+        reset,
         formState: { errors },
         handleSubmit,
+        control,
     } = useForm<SignUpFormInput>({
         resolver: yupResolver(signUpSchema),
         mode: 'onChange',
+        defaultValues: { phone: basePhoneCode },
     })
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { name, email, phone, password, confirmPassword, error, date } =
-        useAppSelector((state) => state.signUp)
-
+    const { text } = useAppSelector(notifySelector)
+    const { date } = useAppSelector(userSelector)
     useEffect(() => {
         let timeout: NodeJS.Timeout
-        if (error) {
+        if (text) {
             timeout = setTimeout(() => {
-                dispatch(updateSignUpError(''))
+                dispatch(updateNotifyText(''))
             }, notifyTimeout)
         }
 
         return () => clearTimeout(timeout)
-    }, [dispatch, error])
+    }, [dispatch, text])
 
     const handleChangeIsLoading = (isLoading: boolean) => {
         setIsLoading(isLoading)
     }
 
-    const handleChangeEmailInput = (value: string) => {
-        dispatch(updateSignUpEmail(value))
-    }
-    const handleChangeNameInput = (value: string) => {
-        dispatch(updateSignUpName(value))
-    }
-    const handleChangePhoneInput = (value: string) => {
-        dispatch(updateSignUpPhone(value))
-    }
-    const handleChangePasswordInput = (value: string) => {
-        dispatch(updateSignUpPassword(value))
-    }
-
-    const handleChangeConfrimPasswordInput = (value: string) => {
-        dispatch(updateSignUpConfrimPassword(value))
-    }
-
-    const handleResetForm = () => {
-        dispatch(updateSignUpConfrimPassword(''))
-        dispatch(updateSignUpPassword(''))
-        dispatch(updateSignUpPhone(basePhoneCode))
-        dispatch(updateSignUpName(''))
-        dispatch(updateSignUpEmail(''))
-        dispatch(updateSignUpDate(defaultDate))
-    }
-
-    const handleChangeDate = useCallback(
-        (value: string, type: DateType) => {
-            let resultDate = date
-            if (type === 'day') {
-                resultDate = { ...date, day: value }
-            }
-            if (type === 'month') {
-                resultDate = { ...date, month: value }
-            }
-            if (type === 'year') {
-                resultDate = { ...date, year: value }
-            }
-
-            const isValidDate = getIsValidDate(resultDate)
-            if (isValidDate) {
-                dispatch(updateSignUpDate(resultDate))
-                dispatch(updateSignUpError(''))
-            } else {
-                dispatch(updateSignUpError(dateDayError))
-                dispatch(
-                    updateSignUpDate({ ...resultDate, day: defaultValueDay })
-                )
-            }
-        },
-        [date, dispatch]
-    )
-
     const onSubmit: SubmitHandler<SignUpFormInput> = (data) => {
         setIsLoading(true)
-        if (!error) {
+        if (!text) {
             emailAndPasswordAuth(
                 dispatch,
                 navigate,
                 data,
                 date,
                 handleChangeIsLoading,
-                handleResetForm
+                reset
             )
         }
     }
@@ -177,7 +114,7 @@ const SingUpCredential = () => {
         date: dateError,
     } = errors
 
-    const notifyError = getNotifyError(error)
+    const notifyError = getNotifyError(text)
     const years = getSelectYears()
     const days = getSelectDays()
 
@@ -193,54 +130,78 @@ const SingUpCredential = () => {
                 </LogoWrap>
                 <Title>{singUpTitleText}</Title>
                 <Form onSubmit={handleSubmit(onSubmit)}>
-                    <Input
-                        type="text"
-                        placeholder={namePlaceholder}
-                        value={name}
-                        onChangeInput={handleChangeNameInput}
-                        register={register}
-                        label={nameLabel}
-                        error={nameError?.message}
-                        aria-invalid={errors.name ? 'true' : 'false'}
+                    <Controller
+                        control={control}
+                        name={nameControlName}
+                        render={({ field: { onChange, value } }) => (
+                            <Input
+                                type="text"
+                                placeholder={namePlaceholder}
+                                value={value}
+                                onChangeInput={onChange}
+                                error={nameError?.message ?? ''}
+                                aria-invalid={errors.name ? 'true' : 'false'}
+                                maxLength={maxLengthName}
+                            />
+                        )}
                     />
-                    <PhoneInput
-                        type="text"
-                        placeholder={phonePlaceholder}
-                        value={phone}
-                        onChangeInput={handleChangePhoneInput}
-                        register={register}
-                        error={phoneError?.message}
-                        aria-invalid={errors.phone ? 'true' : 'false'}
+                    <Controller
+                        control={control}
+                        name={phoneControlName}
+                        render={({ field: { onChange, value } }) => (
+                            <PhoneInput
+                                type="text"
+                                placeholder={phonePlaceholder}
+                                value={value}
+                                onChangeInput={onChange}
+                                error={phoneError?.message ?? ''}
+                                aria-invalid={errors.phone ? 'true' : 'false'}
+                            />
+                        )}
                     />
-                    <Input
-                        type="text"
-                        placeholder={emailPlaceholder}
-                        value={email}
-                        onChangeInput={handleChangeEmailInput}
-                        register={register}
-                        label={emailLabel}
-                        error={emailError?.message}
-                        aria-invalid={errors.email ? 'true' : 'false'}
+                    <Controller
+                        control={control}
+                        name={emailControlName}
+                        render={({ field: { onChange, value } }) => (
+                            <Input
+                                type="text"
+                                placeholder={emailPlaceholder}
+                                value={value}
+                                onChangeInput={onChange}
+                                error={emailError?.message ?? ''}
+                                aria-invalid={errors.email ? 'true' : 'false'}
+                            />
+                        )}
                     />
-                    <Input
-                        type="password"
-                        placeholder={passwordPlaceholder}
-                        value={password}
-                        onChangeInput={handleChangePasswordInput}
-                        register={register}
-                        label={passwordLabel}
-                        error={passwordError?.message}
-                        aria-invalid={passwordError ? 'true' : 'false'}
+                    <Controller
+                        control={control}
+                        name={passwordControlName}
+                        render={({ field: { onChange, value } }) => (
+                            <PasswordInput
+                                placeholder={passwordPlaceholder}
+                                value={value}
+                                onChangeInput={onChange}
+                                error={passwordError?.message ?? ''}
+                                aria-invalid={passwordError ? 'true' : 'false'}
+                                maxLength={maxLengthPassword}
+                            />
+                        )}
                     />
-                    <Input
-                        type="password"
-                        placeholder={confirmPasswordPlaceholder}
-                        value={confirmPassword}
-                        onChangeInput={handleChangeConfrimPasswordInput}
-                        register={register}
-                        label={confirmPasswordLabel}
-                        error={confirmPasswordError?.message}
-                        aria-invalid={confirmPasswordError ? 'true' : 'false'}
+                    <Controller
+                        control={control}
+                        name={confirmPasswordControlName}
+                        render={({ field: { onChange, value } }) => (
+                            <PasswordInput
+                                placeholder={confirmPasswordPlaceholder}
+                                value={value}
+                                onChangeInput={onChange}
+                                error={confirmPasswordError?.message ?? ''}
+                                aria-invalid={
+                                    confirmPasswordError ? 'true' : 'false'
+                                }
+                                maxLength={maxLengthPassword}
+                            />
+                        )}
                     />
                     <Link to={Paths.SignUp} style={LinkStyle}>
                         {linkText}
@@ -248,29 +209,44 @@ const SingUpCredential = () => {
                     <Subtitle>{dateSubtitle}</Subtitle>
                     <Text>{dateText}</Text>
                     <DateBlock>
-                        <Select
-                            value={date.month}
-                            data={months}
-                            type={monthType}
-                            register={register}
-                            error={dateError?.month?.message}
-                            onChangeDate={handleChangeDate}
+                        <Controller
+                            control={control}
+                            name={monthControlName}
+                            render={({ field: { onChange, value } }) => (
+                                <Select
+                                    data={months}
+                                    type={monthType}
+                                    error={dateError?.month?.message}
+                                    onChangeDate={onChange}
+                                    value={value}
+                                />
+                            )}
                         />
-                        <Select
-                            value={date.year}
-                            data={years}
-                            type={yearType}
-                            register={register}
-                            error={dateError?.year?.message}
-                            onChangeDate={handleChangeDate}
+                        <Controller
+                            control={control}
+                            name={yearControlName}
+                            render={({ field: { onChange, value } }) => (
+                                <Select
+                                    value={value}
+                                    data={years}
+                                    type={yearType}
+                                    error={dateError?.year?.message}
+                                    onChangeDate={onChange}
+                                />
+                            )}
                         />
-                        <Select
-                            value={date.day}
-                            data={days}
-                            type={dayType}
-                            register={register}
-                            error={dateError?.day?.message}
-                            onChangeDate={handleChangeDate}
+                        <Controller
+                            control={control}
+                            name={dayControlName}
+                            render={({ field: { onChange, value } }) => (
+                                <Select
+                                    value={value}
+                                    data={days}
+                                    type={dayType}
+                                    error={dateError?.day?.message}
+                                    onChangeDate={onChange}
+                                />
+                            )}
                         />
                     </DateBlock>
                     <Button
@@ -282,7 +258,7 @@ const SingUpCredential = () => {
                     </Button>
                 </Form>
             </Wrap>
-            {error !== '' && <Notify error={notifyError} />}
+            {text !== '' && <Notify text={notifyError} />}
         </Container>
     )
 }

@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import { LinkStyle } from '@styles/global'
-import mixins from '@styles/mixins'
+import { LinkStyle, mixins } from '@styles'
 
 export const Container = styled.div`
     ${({ theme }) => {
@@ -59,7 +58,7 @@ export const Title = styled.h1`
     ${({ theme }) => {
         return css`
             font-size: ${theme.fontSizes.xxl + 'px'};
-            margin: ${theme.spaces.xxl + 'px' + ' 0px'};
+            margin: ${theme.spaces.xxxl + 'px' + ' 0px'};
 
             @media (${theme.media.xl}) {
                 font-size: ${theme.fontSizes.xl + 'px'};
@@ -225,6 +224,7 @@ export const SignEmailText = styled.p`
             @media (${theme.media.lg}) {
                 padding: ${theme.signUpStyles.md.signEmailPadding + 'px 0px'};
             }
+
             @media (${theme.media.md}) {
                 padding: ${theme.signUpStyles.sm.signEmailPadding + 'px 0px'};
             }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
 import {
@@ -12,26 +12,27 @@ import { loginSchema } from './schema'
 import { Container, SignUpLink, Title, Wrap } from './styled'
 
 import { Input } from '@components/Input'
+import { PasswordInput } from '@components/Input/PasswordInput'
 import Notify from '@components/Notify'
-import { images, notifyTimeout, Paths } from '@constants'
+import { images, maxLengthPassword, notifyTimeout, Paths } from '@constants'
 import { loginWithEmailAndPassword } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import {
-    emailLabel,
+    emailControlName,
     emailPlaceholder,
-    passwordLabel,
+    passwordControlName,
     passwordPlaceholder,
 } from '@pages/SingUpCredential/config'
-import { updateLoginEmail, updateLoginError, updateLoginPassword } from '@store'
-import { Button, Form, LinkStyle, Logo } from '@styles/global'
-import { theme } from '@styles/theme'
+import { notifySelector, updateNotifyText } from '@store'
+import { Button, Form, LinkStyle, Logo, theme } from '@styles'
 import { LoginFormInput } from '@types'
 import { getNotifyError } from '@utils'
 
 const Login = () => {
     const {
-        register,
+        reset,
+        control,
         formState: { errors },
         handleSubmit,
     } = useForm<LoginFormInput>({
@@ -41,33 +42,33 @@ const Login = () => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { email, password, error } = useAppSelector((state) => state.login)
+    const { text } = useAppSelector(notifySelector)
 
     useEffect(() => {
         let timeout: NodeJS.Timeout
-        if (error) {
+        if (text) {
             timeout = setTimeout(() => {
-                dispatch(updateLoginError(''))
+                dispatch(updateNotifyText(''))
             }, notifyTimeout)
         }
 
-        return () => clearTimeout(timeout)
-    }, [dispatch, error])
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [dispatch, text])
 
     const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
-        loginWithEmailAndPassword(data.email, data.password, dispatch, navigate)
-    }
-
-    const handleChangeEmailInput = (value: string) => {
-        dispatch(updateLoginEmail(value))
-    }
-
-    const handleChangePasswordInput = (value: string) => {
-        dispatch(updateLoginPassword(value))
+        loginWithEmailAndPassword(
+            data.email,
+            data.password,
+            dispatch,
+            navigate,
+            reset
+        )
     }
 
     const { email: emailError, password: passwordError } = errors
-    const notifyError = getNotifyError(error)
+    const notifyError = getNotifyError(text)
 
     return (
         <Container>
@@ -75,25 +76,33 @@ const Login = () => {
                 <Logo src={images.logoIcon} alt={logoAltText} />
                 <Title>{loginTitleText}</Title>
                 <Form onSubmit={handleSubmit(onSubmit)}>
-                    <Input
-                        type="text"
-                        placeholder={emailPlaceholder}
-                        value={email}
-                        onChangeInput={handleChangeEmailInput}
-                        register={register}
-                        label={emailLabel}
-                        error={emailError?.message}
-                        aria-invalid={errors.email ? 'true' : 'false'}
+                    <Controller
+                        control={control}
+                        name={emailControlName}
+                        render={({ field: { onChange, value } }) => (
+                            <Input
+                                type="text"
+                                placeholder={emailPlaceholder}
+                                value={value}
+                                onChangeInput={onChange}
+                                error={emailError?.message ?? ''}
+                                aria-invalid={errors.email ? 'true' : 'false'}
+                            />
+                        )}
                     />
-                    <Input
-                        type="password"
-                        placeholder={passwordPlaceholder}
-                        value={password}
-                        onChangeInput={handleChangePasswordInput}
-                        register={register}
-                        label={passwordLabel}
-                        error={passwordError?.message}
-                        aria-invalid={passwordError ? 'true' : 'false'}
+                    <Controller
+                        control={control}
+                        name={passwordControlName}
+                        render={({ field: { onChange, value } }) => (
+                            <PasswordInput
+                                placeholder={passwordPlaceholder}
+                                value={value}
+                                onChangeInput={onChange}
+                                error={passwordError?.message ?? ''}
+                                aria-invalid={passwordError ? 'true' : 'false'}
+                                maxLength={maxLengthPassword}
+                            />
+                        )}
                     />
                     <Button
                         $backgroundColor={theme.palette.blue}
@@ -109,7 +118,7 @@ const Login = () => {
                     </Link>
                 </SignUpLink>
             </Wrap>
-            {error !== '' && <Notify error={notifyError} />}
+            {text !== '' && <Notify text={notifyError} />}
         </Container>
     )
 }

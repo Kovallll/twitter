@@ -1,0 +1,7 @@
+export const logoAltText = 'logo'
+export const navIconAltText = 'navIcon'
+export const postIconAltText = 'postIcon'
+export const logOutText = 'Log out'
+export const profileImageAltText = 'profileImage'
+export const logOutIconAltText = 'logoutIcon'
+export const tweetText = 'Tweet'

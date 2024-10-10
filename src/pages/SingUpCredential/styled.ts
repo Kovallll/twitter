@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const Container = styled.div`
     ${({ theme }) => {
@@ -45,7 +45,7 @@ export const Title = styled.h1`
     ${({ theme }) => {
         return css`
             font-size: ${theme.fontSizes.xl + 'px'};
-            margin: ${theme.spaces.xxl + 'px' + ' 0px'};
+            margin: ${theme.spaces.xxxl + 'px' + ' 0px'};
 
             @media (${theme.media.xl}) {
                 font-size: ${theme.fontSizes.lg + 'px'};
@@ -108,6 +108,7 @@ export const DateBlock = styled.div`
             ${mixins.flexRowSB}
 
             margin-bottom: ${theme.spaces.xl + 'px'};
+
             :first-child {
                 width: ${theme.fullSize + '%'};
             }
@@ -118,36 +119,6 @@ export const DateBlock = styled.div`
 
             @media (${theme.media.xs}) {
                 margin-bottom: ${theme.fontSizes.xs + 'px'};
-            }
-        `
-    }}
-`
-export const Spinner = styled.div`
-    ${({ theme }) => {
-        return css`
-            ${mixins.flexRowCenter}
-            height: ${theme.fullSize + 'vh'};
-            width: ${theme.fullSize + '%'};
-            color: ${theme.palette.common.black};
-
-            &:after {
-                content: ' ';
-                width: ${theme.spinnerStyles.size + 'px'};
-                height: ${theme.spinnerStyles.size + 'px'};
-                border-radius: ${theme.spinnerStyles.borderRadius + '%'};
-                border: ${theme.spinnerStyles.border +
-                theme.palette.common.black};
-                border-color: ${theme.spinnerStyles.borderColor};
-                animation: ${theme.spinnerStyles.animation};
-            }
-
-            @keyframes spinner {
-                0% {
-                    transform: rotate(${theme.spinnerStyles.startRotate});
-                }
-                100% {
-                    transform: rotate(${theme.spinnerStyles.endRotate});
-                }
             }
         `
     }}

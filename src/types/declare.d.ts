@@ -9,9 +9,3 @@ declare module '*.svg' {
 declare module 'styled-components' {
     export interface DefaultTheme extends Theme {}
 }
-
-declare global {
-    interface Window {
-        recaptchaVerifier: any
-    }
-}

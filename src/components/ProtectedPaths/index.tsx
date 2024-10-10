@@ -1,20 +1,24 @@
 import { Navigate } from 'react-router-dom'
-import { setupFirebase } from 'firebase.config'
 
 import { PathProps } from './types'
 
+import { InitializerUserData } from '@components/InitializerUserData'
+import { tokenLocalStorage } from '@constants'
 import { LocalStorage } from '@utils'
 
-setupFirebase()
-
 const localStorage = new LocalStorage()
+export function ProtectedRoute({ children, redirectTo }: PathProps) {
+    const token = localStorage.getItem(tokenLocalStorage)
 
-export function RequireAuth({ children, redirectTo }: PathProps) {
-    const isAuthenticated = localStorage.getItem('isSignedIn')
-    return isAuthenticated ? children : <Navigate to={redirectTo} />
+    return token !== null ? (
+        <InitializerUserData>{children}</InitializerUserData>
+    ) : (
+        <Navigate to={redirectTo} />
+    )
 }
 
-export function AuthenticatedProtect({ children, redirectTo }: PathProps) {
-    const isAuthenticated = localStorage.getItem('isSignedIn')
-    return !isAuthenticated ? children : <Navigate to={redirectTo} />
+export function UnauthorizedRoute({ children, redirectTo }: PathProps) {
+    const token = localStorage.getItem(tokenLocalStorage)
+
+    return token === null ? children : <Navigate to={redirectTo} />
 }
