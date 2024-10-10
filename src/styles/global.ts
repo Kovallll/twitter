@@ -14,15 +14,18 @@ export const GlobalStyle = createGlobalStyle`
     body {
         font-family: 'Arial', sans-serif;
         ::-webkit-scrollbar {
+            cursor: pointer;
             height: 10px; 
             width: 10px; 
             border: 1px solid #d5d5d5;
         }
         ::-webkit-scrollbar-track {
-            background: white;     
+            background: white;    
+            cursor: pointer; 
         }
         ::-webkit-scrollbar-thumb {
-            background-color: blue;   
+            background-color: ${theme.palette.blue};  
+            cursor: pointer; 
             border-radius: 20px;   
             border: 3px solid white; 
         }
@@ -56,7 +59,7 @@ export const ModalTitle = styled.h1`
     ${({ theme }) => {
         return css`
             font-size: ${theme.fontSizes.xl + 'px'};
-            margin-top: ${theme.spaces.xxl + 'px'};
+            margin-top: ${theme.spaces.xxxl + 'px'};
 
             @media (${theme.media.xl}) {
                 font-size: ${theme.fontSizes.lg + 'px'};
@@ -91,7 +94,7 @@ export const Button = styled.button<ButtonProps>`
             border-radius: ${theme.buttonStyles.borderRadius};
             cursor: pointer;
             width: ${theme.fullSize + '%'};
-            padding: ${theme.spaces.lg + 'px' + ' 0px'};
+            padding: ${theme.spaces.lg + 'px ' + theme.spaces.xs + 'px'};
             margin-bottom: ${theme.spaces.xl + 'px'};
             font-size: ${theme.fontSizes.md + 'px'};
             font-weight: ${theme.boldFont};
@@ -117,7 +120,54 @@ export const ErrorText = styled.p`
         return css`
             width: ${theme.fullSize + '%'};
             color: ${theme.palette.errorColor};
-            height: 20px;
+            height: ${theme.errorTextHeight + 'px'};
+        `
+    }}
+`
+
+export const Spinner = styled.div`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexRowCenter}
+            height: ${theme.fullSize + 'vh'};
+            width: ${theme.fullSize + '%'};
+            color: ${theme.palette.common.black};
+
+            &:after {
+                content: ' ';
+                width: ${theme.spinnerStyles.size + 'px'};
+                height: ${theme.spinnerStyles.size + 'px'};
+                border-radius: ${theme.spinnerStyles.borderRadius + '%'};
+                border: ${theme.spinnerStyles.border +
+                theme.palette.common.black};
+                border-color: ${theme.spinnerStyles.borderColor};
+                animation: ${theme.spinnerStyles.animation};
+            }
+
+            @keyframes spinner {
+                0% {
+                    transform: rotate(${theme.spinnerStyles.startRotate});
+                }
+                100% {
+                    transform: rotate(${theme.spinnerStyles.endRotate});
+                }
+            }
+        `
+    }}
+`
+
+export const ProfileIcon = styled.img`
+    ${({ theme }) => {
+        return css`
+            width: ${theme.profileIconStyles.lg.size + 'px'};
+            height: ${theme.profileIconStyles.lg.size + 'px'};
+            object-fit: cover;
+            border-radius: ${theme.circleRadius + '%'};
+
+            @media (${theme.media.lg}) {
+                width: ${theme.profileIconStyles.md.size + 'px'};
+                height: ${theme.profileIconStyles.md.size + 'px'};
+            }
         `
     }}
 `

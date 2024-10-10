@@ -41,3 +41,52 @@ export interface ActionInterface<T, P> {
     readonly type: T
     readonly payload: P
 }
+
+export type TweetImageType = { id: string; file: File; url: string }
+
+export type AvatarImage = { id: string; file: File }
+
+export type CreatedTweetImageType = { id: string; url: string }
+
+export type StorageTweetImageType = { id: string }
+
+export interface TweetStorageType {
+    tweetId: string
+    imagesData: TweetImageType[] | null
+    text: string
+    timePost: number
+    liked: string[]
+}
+
+export interface ReadyToTweetStorageType {
+    tweetId: string
+    imagesData: StorageTweetImageType[] | null
+    text: string
+    timePost: number
+    liked: string[]
+}
+
+export interface UserData {
+    docId: string
+    userId: string
+    email: string
+    name: string
+    social?: string
+    description?: string
+    avatar: CreatedTweetImageType
+    followers: string[]
+    following: string[]
+    tweets: ReadyToTweetStorageType[] | null
+}
+
+export interface EditModalData {
+    description: string | undefined
+    social: string | undefined
+    name: string
+    photoUrl?: string
+}
+
+export interface UserCredential {
+    password: string
+    email: string
+}

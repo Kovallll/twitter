@@ -1,18 +1,28 @@
 import {
+    SetTotalAccounts,
+    UpdateIsSidebarOpen,
+    UpdateIsTweetModalOpen,
+    UpdateLoadingInititalData,
+    UpdateLoadingTweet,
     UpdateLoginEmailAction,
-    UpdateLoginError,
     UpdateLoginPasswordAction,
+    UpdateNotifyText,
+    UpdateSearchData,
+    UpdateSearchValue,
     UpdateSignUpConfrimPasswordAction,
     UpdateSignUpDate,
     UpdateSignUpEmailAction,
-    UpdateSignUpError,
     UpdateSignUpNameAction,
     UpdateSignUpPasswordAction,
     UpdateSignUpPhoneAction,
+    UpdateTotalUser,
+    UpdateUserData,
+    UpdateUserFollowing,
+    UpdateUserLiked,
 } from './types'
 
 import { ActionTypes } from '@constants'
-import { SignUpDate } from '@types'
+import { EditModalData, SignUpDate, UserData } from '@types'
 
 export const updateSignUpEmail = (data: string): UpdateSignUpEmailAction => {
     return {
@@ -53,13 +63,6 @@ export const updateSignUpConfrimPassword = (
     }
 }
 
-export const updateSignUpError = (data: string): UpdateSignUpError => {
-    return {
-        type: ActionTypes.SignUpError,
-        payload: data,
-    }
-}
-
 export const updateSignUpDate = (data: SignUpDate): UpdateSignUpDate => {
     return {
         type: ActionTypes.SignUpDate,
@@ -83,9 +86,92 @@ export const updateLoginPassword = (
     }
 }
 
-export const updateLoginError = (data: string): UpdateLoginError => {
+export const updateUserData = (data: EditModalData): UpdateUserData => {
     return {
-        type: ActionTypes.LoginError,
+        type: ActionTypes.UserData,
+        payload: data,
+    }
+}
+
+export const updateUserFollowing = (data: string[]): UpdateUserFollowing => {
+    return {
+        type: ActionTypes.UserFollowing,
+        payload: data,
+    }
+}
+
+export const updateUserTweetLiked = (data: string[]): UpdateUserLiked => {
+    return {
+        type: ActionTypes.UserLiked,
+        payload: data,
+    }
+}
+
+export const updateNotifyText = (data: string): UpdateNotifyText => {
+    return {
+        type: ActionTypes.NotifyText,
+        payload: data,
+    }
+}
+
+export const setTotalAccounts = (
+    data: UserData | never[]
+): SetTotalAccounts => {
+    return {
+        type: ActionTypes.TotalAccounts,
+        payload: data,
+    }
+}
+
+export const updateSearchValue = (data: string): UpdateSearchValue => {
+    return {
+        type: ActionTypes.SeacrhValue,
+        payload: data,
+    }
+}
+
+export const updateSearchData = (data: JSX.Element[]): UpdateSearchData => {
+    return {
+        type: ActionTypes.SearchData,
+        payload: data,
+    }
+}
+
+export const updateTotalUser = (data: UserData): UpdateTotalUser => {
+    return {
+        type: ActionTypes.UserTotal,
+        payload: data,
+    }
+}
+
+export const updateLoadingTweet = (data: boolean): UpdateLoadingTweet => {
+    return {
+        type: ActionTypes.LoadingTweet,
+        payload: data,
+    }
+}
+
+export const updateLoadingInitialData = (
+    data: boolean
+): UpdateLoadingInititalData => {
+    return {
+        type: ActionTypes.LoadingInititalData,
+        payload: data,
+    }
+}
+
+export const updateIsSidebarOpen = (data: boolean): UpdateIsSidebarOpen => {
+    return {
+        type: ActionTypes.isSidebarOpen,
+        payload: data,
+    }
+}
+
+export const updateIsTweetModalOpen = (
+    data: boolean
+): UpdateIsTweetModalOpen => {
+    return {
+        type: ActionTypes.isTweetModalOpen,
         payload: data,
     }
 }

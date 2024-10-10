@@ -1,8 +1,7 @@
 import { FieldValues, Path } from 'react-hook-form'
 
-import { PhoneInputProps } from './types'
-
 import { Input } from '@components/Input'
+import { InputProps } from '@components/Input/types'
 import { basePhoneCode } from '@constants'
 
 const startBracket = 3
@@ -11,10 +10,8 @@ const startDash = 7
 const endDash = 9
 const endLine = 12
 
-export const PhoneInput = <T extends FieldValues>(
-    props: PhoneInputProps<T>
-) => {
-    const { value, register, error, onChangeInput } = props
+export const PhoneInput = <T extends FieldValues>(props: InputProps<T>) => {
+    const { value, register, error, onChangeInput, ...otherProps } = props
 
     const handleChangePhoneInput = (value: string) => {
         const input = value.replace(/\D/g, '')
@@ -44,6 +41,7 @@ export const PhoneInput = <T extends FieldValues>(
 
     return (
         <Input
+            {...otherProps}
             onChangeInput={handleInputChange}
             label={'phone' as Path<T>}
             register={register}

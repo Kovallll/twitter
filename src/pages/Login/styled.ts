@@ -35,7 +35,7 @@ export const Title = styled.h1`
     ${({ theme }) => {
         return css`
             font-size: ${theme.fontSizes.xxl + 'px'};
-            margin: ${theme.spaces.xxl + 'px' + ' 0px'};
+            margin: ${theme.spaces.xxxl + 'px' + ' 0px'};
 
             @media (${theme.media.xl}) {
                 font-size: ${theme.fontSizes.xl + 'px'};
