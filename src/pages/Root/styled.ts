@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const Container = styled.div`
     ${mixins.flexRowCenter}

@@ -31,21 +31,20 @@ import { TweetProps } from './types'
 import { ConfirmModal } from '@components/Modal/ConfirmModal'
 import { images } from '@constants'
 import { clickLikeTweet, dowloadImagesFromStorage } from '@firebase'
-import { useAppDispatch, useDebounce } from '@hooks'
+import { useAppDispatch, useAppSelector, useDebounce } from '@hooks'
+import { userSelector } from '@store'
 import { CreatedTweetImageType } from '@types'
 import { getTimePostTweet } from '@utils'
 
-export const Tweet = ({
-    data,
-    handleDeleteTweet,
-    isUserTweet = false,
-}: TweetProps) => {
-    const { tweetData, user } = data
+export const Tweet = (props: TweetProps) => {
+    const { data, handleDeleteTweet, isUserTweet = false } = props
+
+    const { user } = useAppSelector(userSelector)
+    const { tweetData, account } = data
     const { imagesData, text, timePost, tweetId, liked } = tweetData
 
     const [isMoreOpen, setIsMoreOpen] = useState(false)
     const [isDelete, setIsDelete] = useState(false)
-    const [isLiked, setIsLiked] = useState(false)
     const [tweetImages, setTweetImages] = useState<
         CreatedTweetImageType[] | null
     >(null)
@@ -76,20 +75,21 @@ export const Tweet = ({
         if (handleDeleteTweet) handleDeleteTweet(tweetId)
     }
 
+    const isLiked = !!liked.find((likeId) => user.userId === likeId)
     const handleClickLike = useDebounce(() => {
-        setIsLiked((prev) => !prev)
-        clickLikeTweet(user, tweetId, isLiked, dispatch)
+        clickLikeTweet(account, tweetId, isLiked, dispatch)
     }, 200)
+
     const likeIcon = isLiked ? images.likeFill : images.likeOutline
     const timePostTweet = getTimePostTweet(timePost)
     return (
         <TweetArticle>
             <TweetInfoBlock>
-                <TweetIcon src={user.avatar.url} alt={avatarIconAltText} />
+                <TweetIcon src={account.avatar.url} alt={avatarIconAltText} />
                 <InfoBlock>
                     <TopInfoBlock>
-                        <TweetAuthor>{user.name}</TweetAuthor>
-                        <TweetSocial>{user.social}</TweetSocial>
+                        <TweetAuthor>{account.name}</TweetAuthor>
+                        <TweetSocial>{account.social}</TweetSocial>
                         <TweetDate>{timePostTweet}</TweetDate>
                     </TopInfoBlock>
                     <TweetText>{text}</TweetText>

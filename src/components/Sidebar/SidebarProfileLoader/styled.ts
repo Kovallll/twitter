@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { NameText, SidebarImage, SocialText } from '../styled'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const SkeletonImage = styled(SidebarImage)`
     ${mixins.loadingAnimation}

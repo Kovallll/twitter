@@ -1,8 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import { Input } from '@components/Input'
-import { Button, LinkStyle, ProfileIcon } from '@styles/global'
-import mixins from '@styles/mixins'
+import { Button, LinkStyle, mixins, ProfileIcon } from '@styles'
 
 export const Container = styled.div`
     ${({ theme }) => {
@@ -10,6 +9,14 @@ export const Container = styled.div`
             ${mixins.flexColumnCenter}
 
             padding: ${theme.spaces.xl + 'px'};
+
+            @media (${theme.media.xs}) {
+                padding: ${theme.spaces.lg + 'px'};
+            }
+
+            @media (${theme.media.xxs}) {
+                padding: ${theme.spaces.md + 'px'};
+            }
         `
     }}
 `
@@ -48,7 +55,7 @@ export const ModalInput = styled(Input)`
             font-size: ${theme.fontSizes.xs + 'px'};
 
             @media (${theme.media.md}) {
-                padding: ${theme.spaces.sm + 'px'} ${theme.spaces.sm + 'px'};
+                padding: ${theme.spaces.sm + 'px'};
             }
         `
     }}

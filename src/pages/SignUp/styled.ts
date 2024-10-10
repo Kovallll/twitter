@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import { LinkStyle } from '@styles/global'
-import mixins from '@styles/mixins'
+import { LinkStyle, mixins } from '@styles'
 
 export const Container = styled.div`
     ${({ theme }) => {
@@ -225,6 +224,7 @@ export const SignEmailText = styled.p`
             @media (${theme.media.lg}) {
                 padding: ${theme.signUpStyles.md.signEmailPadding + 'px 0px'};
             }
+
             @media (${theme.media.md}) {
                 padding: ${theme.signUpStyles.sm.signEmailPadding + 'px 0px'};
             }

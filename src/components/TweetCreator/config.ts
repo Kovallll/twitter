@@ -1,2 +1,3 @@
 export const avtarIconAltText = 'avatarIcon'
-export const tweetButtonText = 'Tweet'
+export const tweetSuccesText = 'Tweet'
+export const tweetErrorText = 'Add text'

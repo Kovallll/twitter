@@ -6,8 +6,10 @@ import { TweetImageProps } from './types'
 
 import { images } from '@constants'
 
-export const TweetImage = ({ id, url, handleDeleteImage }: TweetImageProps) => {
+export const TweetImage = (props: TweetImageProps) => {
     const [isHover, setIsHover] = useState(false)
+
+    const { id, url, handleDeleteImage } = props
 
     const handleMouseOver = () => {
         setIsHover(true)

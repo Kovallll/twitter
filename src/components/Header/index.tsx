@@ -1,65 +1,38 @@
-import { avatarIconAltText, subtitleText } from './config'
+import { HeaderContent } from './HeaderContent'
 import { HeaderLoader } from './Loader'
-import {
-    AvatarIcon,
-    HeaderContent,
-    HeaderSubtitle,
-    HeaderTextBlock,
-    HeaderTitle,
-    HeaderWrap,
-    IconWrap,
-    Title,
-} from './styled'
+import { HeaderContentBlock, HeaderWrap } from './styled'
 import { HeaderProps } from './types'
 
 import { ToggleButton } from '@components/ToggleThemeButton'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { updateIsSidebarOpen } from '@store'
+import {
+    booleanStatesSelector,
+    updateIsSidebarOpen,
+    userSelector,
+} from '@store'
 
 export const Header = ({ title }: HeaderProps) => {
     const dispatch = useAppDispatch()
-    const { isLoadingInitialData } = useAppSelector((state) => state.boolean)
-    const { user } = useAppSelector((state) => state.user)
+    const { isLoadingInitialData } = useAppSelector(booleanStatesSelector)
+    const { user } = useAppSelector(userSelector)
 
     const handleClickProfileIcon = () => {
         dispatch(updateIsSidebarOpen(true))
     }
 
+    if (isLoadingInitialData) {
+        return <HeaderLoader />
+    }
+
     return (
         <HeaderWrap>
-            {isLoadingInitialData ? (
-                <HeaderLoader />
-            ) : (
-                <HeaderContent>
-                    {title ? (
-                        <>
-                            <IconWrap onClick={handleClickProfileIcon}>
-                                <AvatarIcon
-                                    src={user.avatar.url}
-                                    alt={avatarIconAltText}
-                                />
-                            </IconWrap>
-                            <Title>{title}</Title>
-                        </>
-                    ) : (
-                        <>
-                            <IconWrap onClick={handleClickProfileIcon}>
-                                <AvatarIcon
-                                    src={user.avatar.url}
-                                    alt={avatarIconAltText}
-                                />
-                            </IconWrap>
-                            <HeaderTextBlock>
-                                <HeaderTitle>{user?.name}</HeaderTitle>
-                                <HeaderSubtitle>
-                                    {user?.tweets?.length ?? 0} {subtitleText}
-                                </HeaderSubtitle>
-                            </HeaderTextBlock>
-                        </>
-                    )}
-                </HeaderContent>
-            )}
-
+            <HeaderContentBlock>
+                <HeaderContent
+                    title={title}
+                    user={user}
+                    handleClickProfileIcon={handleClickProfileIcon}
+                />
+            </HeaderContentBlock>
             <ToggleButton />
         </HeaderWrap>
     )

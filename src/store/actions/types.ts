@@ -1,44 +1,9 @@
 import { ActionTypes } from '@constants'
 import { ActionInterface, EditModalData, SignUpDate, UserData } from '@types'
 
-export type UpdateSignUpEmailAction = ActionInterface<
-    typeof ActionTypes.SignUpEmail,
-    string
->
-
-export type UpdateSignUpNameAction = ActionInterface<
-    typeof ActionTypes.SignUpName,
-    string
->
-
-export type UpdateSignUpPhoneAction = ActionInterface<
-    typeof ActionTypes.SignUpPhone,
-    string
->
-
-export type UpdateSignUpPasswordAction = ActionInterface<
-    typeof ActionTypes.SignUpPassword,
-    string
->
-
-export type UpdateSignUpConfrimPasswordAction = ActionInterface<
-    typeof ActionTypes.SignUpConfrimPassword,
-    string
->
-
-export type UpdateSignUpDate = ActionInterface<
-    typeof ActionTypes.SignUpDate,
+export type UpdateUserDate = ActionInterface<
+    typeof ActionTypes.UserDate,
     SignUpDate
->
-
-export type UpdateLoginEmailAction = ActionInterface<
-    typeof ActionTypes.LoginEmail,
-    string
->
-
-export type UpdateLoginPasswordAction = ActionInterface<
-    typeof ActionTypes.LoginPassword,
-    string
 >
 
 export type UpdateUserData = ActionInterface<

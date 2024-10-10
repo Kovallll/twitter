@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const Container = styled.div`
     ${({ theme }) => {
@@ -108,6 +108,7 @@ export const DateBlock = styled.div`
             ${mixins.flexRowSB}
 
             margin-bottom: ${theme.spaces.xl + 'px'};
+
             :first-child {
                 width: ${theme.fullSize + '%'};
             }

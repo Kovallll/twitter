@@ -23,7 +23,7 @@ import { jwtDecode } from 'jwt-decode'
 
 import {
     countTweetsImages,
-    tokensLocalStorage,
+    tokenLocalStorage,
     usersCollection,
 } from '@constants'
 import {
@@ -56,7 +56,7 @@ export const initUserData = async (
 ) => {
     const localStorage = new LocalStorage()
     const docsRef = collection(database, usersCollection)
-    const token = JSON.parse(localStorage.getItem(tokensLocalStorage))
+    const token = localStorage.getItem(tokenLocalStorage)
 
     const decodedToken = jwtDecode(token.access) as { user_id: string }
 
@@ -64,9 +64,15 @@ export const initUserData = async (
     allDocs.forEach((userDoc) => {
         const data = userDoc.data() as UserData
         if (userId === '' && data.userId === decodedToken.user_id) {
+            const correctTweets =
+                data.tweets?.map((tweet) => ({
+                    ...tweet,
+                    liked: [...new Set(tweet.liked)],
+                })) ?? null
             const userData = {
                 ...data,
                 docId: userDoc.id,
+                tweets: correctTweets,
             }
             const docRef = doc(database, usersCollection, userDoc.id)
             updateDoc(docRef, userData)
@@ -244,7 +250,7 @@ export const followOrUnfollowAccount = (
 ) => {
     const userDocRef = doc(database, usersCollection, user.docId)
     const accountDocRef = doc(database, usersCollection, account.docId)
-    if (!user.following.includes(account.userId!)) {
+    if (!user.following.includes(account.userId)) {
         setDoc(
             userDocRef,
             {

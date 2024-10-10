@@ -1,45 +1,24 @@
-import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { PathProps } from './types'
 
-import { tokensLocalStorage } from '@constants'
-import { initUserData, setTotalAccountsFromStorage } from '@firebase'
-import { useAppDispatch, useAppSelector } from '@hooks'
-import { setTotalAccounts, updateSearchData } from '@store'
-import { getTweetsTexts, LocalStorage } from '@utils'
+import { InitializerUserData } from '@components/InitializerUserData'
+import { tokenLocalStorage } from '@constants'
+import { LocalStorage } from '@utils'
 
 const localStorage = new LocalStorage()
-export function RequireAuth({ children, redirectTo }: PathProps) {
-    const [prevSearchValue, setPrevSearchValue] = useState<string | null>(null)
+export function ProtectedRoute({ children, redirectTo }: PathProps) {
+    const token = localStorage.getItem(tokenLocalStorage)
 
-    const dispatch = useAppDispatch()
-    const { user } = useAppSelector((state) => state.user)
-    const { accounts } = useAppSelector((state) => state.total)
-    const { value: searchValue } = useAppSelector((state) => state.search)
-
-    useEffect(() => {
-        initUserData(user.userId, dispatch)
-        setTotalAccountsFromStorage(user.userId, dispatch)
-
-        return () => {
-            dispatch(setTotalAccounts([]))
-        }
-    }, [dispatch, user.userId])
-
-    if (prevSearchValue !== searchValue) {
-        const tweetsTexts = getTweetsTexts(accounts, searchValue)
-        dispatch(updateSearchData(tweetsTexts))
-        setPrevSearchValue(searchValue)
-    }
-
-    const tokens = JSON.parse(localStorage.getItem(tokensLocalStorage))
-
-    return tokens !== null ? children : <Navigate to={redirectTo} />
+    return token !== null ? (
+        <InitializerUserData>{children}</InitializerUserData>
+    ) : (
+        <Navigate to={redirectTo} />
+    )
 }
 
-export function AuthenticatedProtect({ children, redirectTo }: PathProps) {
-    const tokens = JSON.parse(localStorage.getItem(tokensLocalStorage))
+export function UnauthorizedRoute({ children, redirectTo }: PathProps) {
+    const token = localStorage.getItem(tokenLocalStorage)
 
-    return tokens === null ? children : <Navigate to={redirectTo} />
+    return token === null ? children : <Navigate to={redirectTo} />
 }

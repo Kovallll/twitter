@@ -1,9 +1,7 @@
 import {
     BooleanAction,
-    LoginAction,
     NotifyAction,
     SearchAction,
-    SingUpAction,
     TotalDataAction,
     UserAction,
 } from './types'
@@ -11,49 +9,11 @@ import {
 import {
     ActionTypes,
     booleanStatesDefaultData,
-    loginDefaultData,
     notifyDefaultData,
     searchDefaultData,
-    signUpDefaultData,
     totalDefaultData,
     userDefaultData,
 } from '@constants'
-
-export const updateSignUpData = (
-    state = signUpDefaultData,
-    action: SingUpAction
-) => {
-    switch (action.type) {
-        case ActionTypes.SignUpEmail:
-            return { ...state, email: action.payload }
-        case ActionTypes.SignUpName:
-            return { ...state, name: action.payload }
-        case ActionTypes.SignUpPhone:
-            return { ...state, phone: action.payload }
-        case ActionTypes.SignUpPassword:
-            return { ...state, password: action.payload }
-        case ActionTypes.SignUpConfrimPassword:
-            return { ...state, confirmPassword: action.payload }
-        case ActionTypes.SignUpDate:
-            return { ...state, date: action.payload }
-        default:
-            return state
-    }
-}
-
-export const updateLoginData = (
-    state = loginDefaultData,
-    action: LoginAction
-) => {
-    switch (action.type) {
-        case ActionTypes.LoginEmail:
-            return { ...state, email: action.payload }
-        case ActionTypes.LoginPassword:
-            return { ...state, password: action.payload }
-        default:
-            return state
-    }
-}
 
 export const updateUserData = (state = userDefaultData, action: UserAction) => {
     switch (action.type) {
@@ -65,6 +25,8 @@ export const updateUserData = (state = userDefaultData, action: UserAction) => {
             return { ...state, following: [...state.following, action.payload] }
         case ActionTypes.UserLiked:
             return { ...state, liked: action.payload }
+        case ActionTypes.UserDate:
+            return { ...state, date: action.payload }
         default:
             return state
     }

@@ -87,15 +87,39 @@ export const getIsValidDate = (date: SignUpDate) => {
 }
 
 export class LocalStorage {
-    getItem = (
-        key: string,
-        undefinedItem: object | null | [] = null
-    ): string => {
-        return window.localStorage.getItem(key) ?? JSON.stringify(undefinedItem)
+    private static instance: LocalStorage | null = null
+
+    static getInstance(): LocalStorage {
+        if (this.instance === null) {
+            this.instance = new LocalStorage()
+        }
+        return this.instance
+    }
+
+    checkIsLocalStorageAvailable = () => {
+        const test = 'test'
+        try {
+            localStorage.setItem(test, test)
+            localStorage.removeItem(test)
+            return true
+        } catch (e) {
+            console.error(e)
+            return false
+        }
+    }
+
+    getItem = (key: string): any => {
+        if (this.checkIsLocalStorageAvailable()) {
+            return JSON.parse(
+                window.localStorage.getItem(key) ?? JSON.stringify(null)
+            )
+        }
     }
 
     setItem = (key: string, value: any) => {
-        window.localStorage.setItem(key, JSON.stringify(value))
+        if (this.checkIsLocalStorageAvailable()) {
+            window.localStorage.setItem(key, JSON.stringify(value))
+        }
     }
 }
 
@@ -137,6 +161,7 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
                             return (
                                 <SearchTweetText
                                     to={`${tweetPath}/${tweet.tweetId}`}
+                                    key={tweet.tweetId}
                                 >
                                     {tweet.text}
                                 </SearchTweetText>

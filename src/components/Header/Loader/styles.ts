@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { AvatarIcon, HeaderSubtitle, HeaderTitle } from '../styled'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const SkeletonIcon = styled(AvatarIcon)`
     ${({ theme }) => {
@@ -10,8 +10,9 @@ export const SkeletonIcon = styled(AvatarIcon)`
             display: none;
 
             @media (${theme.media.xxs}) {
-                display: flex;
                 ${mixins.loadingAnimation};
+
+                display: flex;
             }
         `
     }}

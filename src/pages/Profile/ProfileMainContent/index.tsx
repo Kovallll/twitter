@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 
 import {
+    defaultDescription,
+    defaultSocial,
     editText,
     followersText,
     followingText,
     imageAltText,
     profileIconAltText,
+    successText,
     tweetsText,
 } from './config'
 import { ProfileLoader } from './Loader'
@@ -44,9 +47,12 @@ import {
 } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import {
+    booleanStatesSelector,
+    notifySelector,
     updateIsTweetModalOpen,
     updateLoadingInitialData,
     updateNotifyText,
+    userSelector,
 } from '@store'
 import { EditModalData } from '@types'
 
@@ -54,10 +60,10 @@ export const ProfileMainContent = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
     const dispatch = useAppDispatch()
-    const { user } = useAppSelector((state) => state.user)
-    const { text } = useAppSelector((state) => state.notify)
+    const { user } = useAppSelector(userSelector)
+    const { text } = useAppSelector(notifySelector)
     const { isLoadingInitialData, isTweetModalOpen } = useAppSelector(
-        (state) => state.boolean
+        booleanStatesSelector
     )
 
     useEffect(() => {
@@ -99,6 +105,7 @@ export const ProfileMainContent = () => {
             uploadProfileAvatar(image, user, dispatch)
         }
         uploadUserData(data)
+        dispatch(updateNotifyText(successText))
     }
 
     const handleDeleteTweet = (tweetId: string) => {
@@ -108,6 +115,13 @@ export const ProfileMainContent = () => {
     const handleOpenModalTweet = () => {
         dispatch(updateIsTweetModalOpen(false))
     }
+
+    const userSocial =
+        user.social && user.social !== '' ? user.social : defaultSocial
+    const userDescription =
+        user.description && user.description !== ''
+            ? user.description
+            : defaultDescription
     return (
         <>
             <ProfileContent>
@@ -120,7 +134,7 @@ export const ProfileMainContent = () => {
                         <ProfileTopInfo>
                             <ImageWrap>
                                 <ProfileImage
-                                    src={user?.avatar.url}
+                                    src={user.avatar.url}
                                     alt={profileIconAltText}
                                 />
                             </ImageWrap>
@@ -134,21 +148,21 @@ export const ProfileMainContent = () => {
                             </EditBlock>
                         </ProfileTopInfo>
                         <ProfileBottomInfo>
-                            <ProfileName>{user?.name}</ProfileName>
-                            <ProfileSocial>{user?.social ?? ''}</ProfileSocial>
+                            <ProfileName>{user.name}</ProfileName>
+                            <ProfileSocial>{userSocial}</ProfileSocial>
                             <ProfileDescription>
-                                {user?.description ?? ''}
+                                {userDescription}
                             </ProfileDescription>
                             <ProfileFollowBlock>
                                 <Follow>
                                     <FollowCount>
-                                        {user?.following.length}
+                                        {user.following.length}
                                     </FollowCount>
                                     {followingText}
                                 </Follow>
                                 <Follow>
                                     <FollowCount>
-                                        {user?.followers.length}
+                                        {user.followers.length}
                                     </FollowCount>
                                     {followersText}
                                 </Follow>
@@ -164,7 +178,7 @@ export const ProfileMainContent = () => {
                     ) : (
                         user.tweets?.map((data) => (
                             <Tweet
-                                data={{ tweetData: data, user: user }}
+                                data={{ tweetData: data, account: user }}
                                 handleDeleteTweet={handleDeleteTweet}
                                 isUserTweet={true}
                             />

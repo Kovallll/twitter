@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const Container = styled.div`
     ${({ theme }) => {
@@ -8,7 +8,7 @@ export const Container = styled.div`
             ${mixins.flexColumnStart}
 
             position: absolute;
-            background-color: #eff3f4;
+            background-color: ${theme.palette.searchBgColor};
             border-radius: ${theme.spaces.lg + 'px'};
             max-height: ${theme.searchStyles.maxHeight + 'px'};
             width: ${theme.fullSize + '%'};
@@ -20,7 +20,7 @@ export const Container = styled.div`
     }}
 `
 
-export const PupupText = styled.div`
+export const TweetText = styled.p`
     ${({ theme }) => {
         return css`
             text-align: center;
