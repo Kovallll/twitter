@@ -50,7 +50,7 @@ export const Header = ({ title }: HeaderProps) => {
                                 />
                             </IconWrap>
                             <HeaderTextBlock>
-                                <HeaderTitle>{user?.name}</HeaderTitle>
+                                <HeaderTitle>{user.name}</HeaderTitle>
                                 <HeaderSubtitle>
                                     {user?.tweets?.length ?? 0} {subtitleText}
                                 </HeaderSubtitle>

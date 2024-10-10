@@ -6,6 +6,7 @@ import {
 
 import { AuthenticatedProtect, RequireAuth } from '@components/ProtectedPaths'
 import { Paths } from '@constants'
+import Home from '@pages/Home'
 import Login from '@pages/Login'
 import NotFound from '@pages/NotFound'
 import Profile from '@pages/Profile'
@@ -53,6 +54,14 @@ const routes = [
         element: (
             <RequireAuth redirectTo="/login">
                 <TweetPage />
+            </RequireAuth>
+        ),
+    },
+    {
+        path: Paths.Home,
+        element: (
+            <RequireAuth redirectTo="/login">
+                <Home />
             </RequireAuth>
         ),
     },

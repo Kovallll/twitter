@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { Button, ProfileIcon } from '@styles/global'
@@ -95,7 +96,7 @@ export const LogoWrap = styled.div`
     }}
 `
 
-export const SidebarLink = styled.a`
+export const SidebarLink = styled(Link)`
     ${({ theme }) => {
         return css`
             ${mixins.flexRowStart}

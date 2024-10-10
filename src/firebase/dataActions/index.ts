@@ -244,7 +244,7 @@ export const followOrUnfollowAccount = (
 ) => {
     const userDocRef = doc(database, usersCollection, user.docId)
     const accountDocRef = doc(database, usersCollection, account.docId)
-    if (!user.following.includes(account.userId!)) {
+    if (!user.following.includes(account.userId)) {
         setDoc(
             userDocRef,
             {

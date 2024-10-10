@@ -85,7 +85,7 @@ export const Sidebar = () => {
                             <Logo src={logo} alt={logoAltText} />
                         </LogoWrap>
                         {sidebarLinks.map((link, index) => (
-                            <SidebarLink href={link.link} key={index}>
+                            <SidebarLink to={link.link} key={index}>
                                 <Icon src={link.icon} alt={navIconAltText} />
                                 <Title>{link.title}</Title>
                             </SidebarLink>

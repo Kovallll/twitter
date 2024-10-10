@@ -58,9 +58,7 @@ export const TwitterAccountsBoard = () => {
                                 <FollowButton
                                     onClick={handleFollowAccount(account)}
                                 >
-                                    {(user.following as string[]).includes(
-                                        account.userId!
-                                    )
+                                    {user.following.includes(account.userId!)
                                         ? unfollow
                                         : follow}
                                 </FollowButton>

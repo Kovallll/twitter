@@ -21,6 +21,7 @@ import logoIcon from '@assets/icons/twitterLogo.svg'
 import profileBackground from '@assets/images/profileBackground.png'
 import profileImage from '@assets/images/profileImage.svg'
 import twitterImage from '@assets/images/signupTwitter.png'
+import { UserData } from '@types'
 
 export enum Month {
     January = 'January',
@@ -129,7 +130,7 @@ export const defaultUser = {
     tweets: null,
     social: '',
     description: '',
-}
+} as UserData
 
 export const userDefaultData = {
     editData: {
