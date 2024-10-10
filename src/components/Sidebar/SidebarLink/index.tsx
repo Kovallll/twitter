@@ -8,7 +8,7 @@ export const SidebarLink = ({ linkData }: SidebarLinkProps) => {
     const [isActiveLink, setIsActiveLink] = useState(false)
 
     const { icon, link, title } = linkData
-    console.log(isActiveLink, 'isActiveLink', link)
+
     const hadnleClickLink = () => {
         setIsActiveLink((prev) => !prev)
     }

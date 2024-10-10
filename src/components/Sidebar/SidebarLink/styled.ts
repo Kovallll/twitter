@@ -37,11 +37,10 @@ export const Title = styled.p<TitleProps>`
     ${({ theme, $isActiveLink }) => {
         return css`
             margin-left: ${theme.spaces.lg + 'px'};
-            color: ${theme.palette.common.black};
             font-size: ${theme.fontSizes.sm + 'px'};
             font-weight: ${theme.boldFont};
             color: ${$isActiveLink
-                ? theme.palette.gray
+                ? theme.palette.blue
                 : theme.palette.common.black};
 
             @media (${theme.media.xl}) {

@@ -31,15 +31,17 @@ import { TweetProps } from './types'
 import { ConfirmModal } from '@components/Modal/ConfirmModal'
 import { images } from '@constants'
 import { clickLikeTweet, dowloadImagesFromStorage } from '@firebase'
-import { useAppDispatch, useAppSelector, useDebounce } from '@hooks'
+import { useAppSelector, useDebounce } from '@hooks'
 import { userSelector } from '@store'
 import { CreatedTweetImageType } from '@types'
 import { getTimePostTweet } from '@utils'
 
 export const Tweet = (props: TweetProps) => {
+    const [isLiked, setIsLiked] = useState(false)
+    const [countOfLikes, setCountOfLikes] = useState(0)
+
     const { data, handleDeleteTweet, isUserTweet = false } = props
 
-    const { user } = useAppSelector(userSelector)
     const { tweetData, account } = data
     const { imagesData, text, timePost, tweetId, liked } = tweetData
 
@@ -49,18 +51,24 @@ export const Tweet = (props: TweetProps) => {
         CreatedTweetImageType[] | null
     >(null)
 
-    const dispatch = useAppDispatch()
+    const { user } = useAppSelector(userSelector)
 
     useEffect(() => {
         dowloadImagesFromStorage(imagesData, handleChangeTweetImages)
+        setIsLiked(!!liked.find((likeId) => user.userId === likeId))
+        setCountOfLikes(liked.length)
 
         return () => setTweetImages(null)
-    }, [imagesData])
+    }, [imagesData, liked, user.userId])
 
     const handleChangeTweetImages = (tweetImages: CreatedTweetImageType) => {
         setTweetImages((prev) =>
             prev ? [...prev, tweetImages] : [tweetImages]
         )
+    }
+
+    const handleChangeCountLikes = (value: number) => {
+        setCountOfLikes(value)
     }
 
     const handleChangeIsMore = () => {
@@ -75,9 +83,9 @@ export const Tweet = (props: TweetProps) => {
         if (handleDeleteTweet) handleDeleteTweet(tweetId)
     }
 
-    const isLiked = !!liked.find((likeId) => user.userId === likeId)
     const handleClickLike = useDebounce(() => {
-        clickLikeTweet(account, tweetId, isLiked, dispatch)
+        setIsLiked((prev) => !prev)
+        clickLikeTweet(user, account, tweetId, isLiked, handleChangeCountLikes)
     }, 200)
 
     const likeIcon = isLiked ? images.likeFill : images.likeOutline
@@ -113,7 +121,7 @@ export const Tweet = (props: TweetProps) => {
             </TweetImageBlock>
             <TweetLike onClick={handleClickLike}>
                 <LikeIcon src={likeIcon} alt={likeIconAltText} />
-                <LikeCount>{liked.length}</LikeCount>
+                <LikeCount>{countOfLikes}</LikeCount>
             </TweetLike>
             {isDelete && (
                 <ConfirmModal

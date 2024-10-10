@@ -94,7 +94,7 @@ export const Sidebar = () => {
                         </LogoWrap>
                         {sidebarLinks.map((linkData) => (
                             <SidebarLink
-                                key={linkData.link}
+                                key={linkData.title}
                                 linkData={linkData}
                             />
                         ))}

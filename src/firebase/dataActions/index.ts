@@ -33,7 +33,6 @@ import {
     updateTotalUser,
     updateUserData,
     updateUserFollowing,
-    updateUserTweetLiked,
 } from '@store'
 import {
     AvatarImage,
@@ -300,25 +299,22 @@ export const followOrUnfollowAccount = (
 
 export const clickLikeTweet = (
     user: UserData,
+    account: UserData,
     tweetId: string,
     isLiked: boolean,
-    dispatch: Dispatch<AllActionsType>
+    handleChangeCountLikes: (likes: number) => void
 ) => {
-    const docRef = doc(database, usersCollection, user.docId)
+    const docRef = doc(database, usersCollection, account.docId)
 
-    const updatedTweets = user.tweets!.map((tweet) => {
+    const updatedTweets = account.tweets!.map((tweet) => {
         if (tweet.tweetId === tweetId) {
-            if (isLiked) {
-                const tweetLiked = tweet.liked.filter(
-                    (id) => user.userId !== id
-                )
-                dispatch(updateUserTweetLiked(tweetLiked))
-                return { ...tweet, liked: tweetLiked }
-            } else {
-                const tweetLiked = [...tweet.liked, user.userId!]
-                dispatch(updateUserTweetLiked(tweetLiked))
-                return { ...tweet, liked: tweetLiked }
-            }
+            const tweetLiked = isLiked
+                ? tweet.liked.filter((id) => user.userId !== id)
+                : [...tweet.liked, user.userId]
+
+            const uniqueTweetLiked = [...new Set(tweetLiked)]
+            handleChangeCountLikes(uniqueTweetLiked.length)
+            return { ...tweet, liked: uniqueTweetLiked }
         } else {
             return tweet
         }
@@ -326,14 +322,5 @@ export const clickLikeTweet = (
 
     updateDoc(docRef, {
         tweets: updatedTweets,
-    })
-        .then(() => {
-            dispatch(
-                updateTotalUser({
-                    ...user,
-                    tweets: updatedTweets,
-                })
-            )
-        })
-        .catch((err) => console.error(err))
+    }).catch((err) => console.error(err))
 }

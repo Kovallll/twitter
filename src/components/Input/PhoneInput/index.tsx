@@ -36,7 +36,6 @@ export const PhoneInput = (props: InputProps) => {
         onChangeInput(phoneValue)
     }
 
-    console.log(error, 'roore')
     return (
         <Input
             {...otherProps}
