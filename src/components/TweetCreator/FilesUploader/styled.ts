@@ -32,6 +32,8 @@ export const TweetText = styled.textarea`
             width: ${theme.tweetCreatorStyles.width + '%'};
             border: 0;
             resize: none;
+            background-color: ${theme.palette.bgColor};
+            color: ${theme.palette.text};
 
             &::placeholder {
                 font-weight: ${theme.boldFont};
@@ -113,7 +115,7 @@ export const LettersCount = styled.p<ModalProps>`
             top: -${$isModal ? theme.spaces.xl + 'px' : theme.spaces.md + 'px'};
             right: ${$isModal ? 'none' : 0};
             left: ${$isModal ? 0 : 'none'};
-            color: ${theme.palette.lightBlue};
+            color: ${theme.palette.lightPrimary};
             font-size: ${theme.fontSizes.xs + 'px'};
 
             @media (${theme.media.xs}) {

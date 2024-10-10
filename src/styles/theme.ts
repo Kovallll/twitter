@@ -1,4 +1,4 @@
-import { Theme } from '@types'
+import { ColorTheme, Theme } from '@types'
 
 export const theme: Theme = {
     palette: {
@@ -6,16 +6,6 @@ export const theme: Theme = {
             black: '#000',
             white: '#fff',
         },
-        blue: '#1D9BF0',
-        lightBlue: '#01C4F2',
-        gray: '#B3B8BB',
-        lightGray: '#e6e6e6',
-        red: '#ef1c5c',
-        errorColor: '#ff0000',
-        accountsBgColor: '#f7f9f9',
-        successColor: '#6EC207',
-        searchBgColor: '#eff3f4',
-        lineBoardColor: '#d8d8d8',
     },
     fullSize: '100',
     boldFont: '700',
@@ -190,7 +180,7 @@ export const theme: Theme = {
     modalStyles: {
         borderRadius: '16',
         zIndex: '10',
-        top: '30',
+        top: '40',
         half: '50',
         lg: {
             width: '540',
@@ -318,7 +308,7 @@ export const theme: Theme = {
             buttonHeight: '20',
             circleWidth: '14',
             circleHeight: '14',
-            top: '1',
+            top: '1.75',
             transform: '-19',
         },
     },
@@ -435,5 +425,43 @@ export const theme: Theme = {
         sm: 'max-width: 1000px',
         xs: 'max-width: 768px',
         xxs: 'max-width: 560px',
+    },
+}
+
+export const lightTheme: ColorTheme = {
+    ...theme,
+    palette: {
+        ...theme.palette,
+        text: 'black',
+        bgColor: 'white',
+        primary: '#1D9BF0',
+        lightPrimary: '#01C4F2',
+        secondary: '#B3B8BB',
+        lightSecondary: '#e6e6e6',
+        errorColor: '#ff0000',
+        accountsBgColor: '#f7f9f9',
+        successColor: '#6EC207',
+        searchBgColor: '#eff3f4',
+        inputBgColor: '#fff',
+        lineBoardColor: '#d8d8d8',
+    },
+}
+
+export const darkTheme: ColorTheme = {
+    ...theme,
+    palette: {
+        ...theme.palette,
+        text: 'white',
+        bgColor: 'black',
+        primary: '#1D9BF0',
+        lightPrimary: '#01C4F2',
+        secondary: '#B3B8BB',
+        lightSecondary: '#e6e6e6',
+        errorColor: '#ff0000',
+        accountsBgColor: '#2c292b',
+        successColor: '#6EC207',
+        searchBgColor: '#19171a',
+        inputBgColor: '#19171a',
+        lineBoardColor: '#2f3336',
     },
 }

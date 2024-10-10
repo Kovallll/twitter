@@ -16,6 +16,7 @@ import {
     DesktopText,
     Icon,
     IconWrap,
+    LogOutButton,
     LogOutIconWrap,
     LogoWrap,
     NameText,
@@ -38,7 +39,7 @@ import { signOutFirebaseAccount } from '@firebase'
 import { useAppDispatch, useAppSelector, useClickOutside } from '@hooks'
 import { updateIsSidebarOpen, updateIsTweetModalOpen } from '@store'
 import { Logo } from '@styles/global'
-import { theme } from '@styles/theme'
+import { getIsLightTheme } from '@utils'
 
 export const Sidebar = () => {
     const sidebarRef = useRef(null)
@@ -46,7 +47,7 @@ export const Sidebar = () => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { user } = useAppSelector((state) => state.user)
+    const { user, theme } = useAppSelector((state) => state.user)
     const { isLoadingInitialData, isSidebarOpen } = useAppSelector(
         (state) => state.boolean
     )
@@ -84,17 +85,22 @@ export const Sidebar = () => {
                         <LogoWrap>
                             <Logo src={logo} alt={logoAltText} />
                         </LogoWrap>
-                        {sidebarLinks.map((link, index) => (
-                            <SidebarLink href={link.link} key={index}>
-                                <Icon src={link.icon} alt={navIconAltText} />
-                                <Title>{link.title}</Title>
-                            </SidebarLink>
-                        ))}
-                        <SidebarButton
-                            $backgroundColor={theme.palette.blue}
-                            $color={theme.palette.common.white}
-                            onClick={handleOpenModalTweet}
-                        >
+                        {sidebarLinks.map(({ title, link, icon }, index) => {
+                            const themeIcon = getIsLightTheme(theme)
+                                ? icon.light
+                                : icon.dark
+
+                            return (
+                                <SidebarLink to={link} key={index}>
+                                    <Icon
+                                        src={themeIcon}
+                                        alt={navIconAltText}
+                                    />
+                                    <Title>{title}</Title>
+                                </SidebarLink>
+                            )
+                        })}
+                        <SidebarButton onClick={handleOpenModalTweet}>
                             {tweetText}
                         </SidebarButton>
                         <IconWrap onClick={handleOpenModalTweet}>
@@ -119,13 +125,9 @@ export const Sidebar = () => {
                                 </TextBlock>
                             </Profile>
                         )}
-                        <SidebarButton
-                            $backgroundColor={theme.palette.gray}
-                            $color={theme.palette.common.white}
-                            onClick={handleChangeIsLogOut}
-                        >
+                        <LogOutButton onClick={handleChangeIsLogOut}>
                             <DesktopText>{logOutText}</DesktopText>
-                        </SidebarButton>
+                        </LogOutButton>
                         <IconWrap onClick={handleChangeIsLogOut}>
                             <LogOutIconWrap>
                                 <TabletIcon

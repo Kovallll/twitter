@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
     confirmPasswordLabel,
@@ -28,7 +28,9 @@ import {
     Container,
     DateBlock,
     LogoWrap,
+    SignUpLink,
     Subtitle,
+    SumbitButton,
     Text,
     Title,
     Wrap,
@@ -61,8 +63,7 @@ import {
     updateSignUpPassword,
     updateSignUpPhone,
 } from '@store'
-import { Button, Form, LinkStyle, Logo, Spinner } from '@styles/global'
-import { theme } from '@styles/theme'
+import { Form, Logo, Spinner } from '@styles/global'
 import { DateType, SignUpFormInput } from '@types'
 import {
     getIsValidDate,
@@ -242,9 +243,7 @@ const SingUpCredential = () => {
                         aria-invalid={confirmPasswordError ? 'true' : 'false'}
                         maxLength={maxLengthPassword}
                     />
-                    <Link to={Paths.SignUp} style={LinkStyle}>
-                        {linkText}
-                    </Link>
+                    <SignUpLink to={Paths.SignUp}>{linkText}</SignUpLink>
                     <Subtitle>{dateSubtitle}</Subtitle>
                     <Text>{dateText}</Text>
                     <DateBlock>
@@ -273,13 +272,9 @@ const SingUpCredential = () => {
                             onChangeDate={handleChangeDate}
                         />
                     </DateBlock>
-                    <Button
-                        $backgroundColor={theme.palette.blue}
-                        $color={theme.palette.common.white}
-                        type="submit"
-                    >
+                    <SumbitButton type="submit">
                         {signUpSubmitText}
-                    </Button>
+                    </SumbitButton>
                 </Form>
             </Wrap>
             {text !== '' && <Notify text={notifyError} />}

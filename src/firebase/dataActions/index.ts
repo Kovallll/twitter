@@ -56,7 +56,7 @@ export const initUserData = async (
 ) => {
     const localStorage = new LocalStorage()
     const docsRef = collection(database, usersCollection)
-    const token = JSON.parse(localStorage.getItem(tokensLocalStorage))
+    const token = localStorage.getItem(tokensLocalStorage)
 
     const decodedToken = jwtDecode(token.access) as { user_id: string }
 

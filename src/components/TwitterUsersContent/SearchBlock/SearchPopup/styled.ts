@@ -8,7 +8,7 @@ export const Container = styled.div`
             ${mixins.flexColumnStart}
 
             position: absolute;
-            background-color: #eff3f4;
+            background-color: ${theme.palette.searchBgColor};
             border-radius: ${theme.spaces.lg + 'px'};
             max-height: ${theme.searchStyles.maxHeight + 'px'};
             width: ${theme.fullSize + '%'};
@@ -26,7 +26,7 @@ export const PupupText = styled.div`
             text-align: center;
             cursor: default;
             border-bottom: 0;
-            color: ${theme.palette.common.black};
+            color: ${theme.palette.text};
             width: ${theme.fullSize + '%'};
             cursor: pointer;
             font-size: ${theme.fontSizes.md + 'px'};

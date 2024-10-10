@@ -17,7 +17,6 @@ import FileUploader from '@components/TweetCreator/FilesUploader'
 import { uploadTweetsToStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import { updateLoadingTweet } from '@store'
-import { theme } from '@styles/theme'
 import { TweetImageType, TweetStorageType } from '@types'
 
 export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
@@ -85,9 +84,7 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
     }
 
     const isTweetDisabled = tweetText === '' ? true : false
-    const tweetButtonBg = isTweetDisabled
-        ? theme.palette.gray
-        : theme.palette.lightBlue
+
     return (
         <TweetCreatorBlock $isModal={isModal}>
             <ImageWrap>
@@ -108,10 +105,9 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
                 ) : (
                     <ButtonWrap>
                         <TweetButton
-                            $backgroundColor={tweetButtonBg}
-                            $color={theme.palette.common.white}
                             onClick={handleCreateTweet}
                             disabled={isTweetDisabled}
+                            $isTweetDisabled={isTweetDisabled}
                         >
                             {tweetButtonText}
                         </TweetButton>

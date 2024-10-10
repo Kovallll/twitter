@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
+import { Button } from '@styles/global'
 import mixins from '@styles/mixins'
 
 export const Container = styled.section`
@@ -53,11 +55,31 @@ export const Title = styled.h1`
     }}
 `
 
-export const SignUpLink = styled.div`
+export const SignUpLinkWrap = styled.div`
     ${({ theme }) => {
         return css`
             ${mixins.flexRowEnd}
 
+            width: ${theme.fullSize + '%'};
+        `
+    }}
+`
+
+export const SignUpLink = styled(Link)`
+    ${({ theme }) => {
+        return css`
+            ${mixins.linkStyles(theme)}
+        `
+    }}
+`
+
+export const SubmitButton = styled(Button)`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexRowCenter};
+
+            background-color: ${theme.palette.primary};
+            color: ${theme.palette.common.white};
             width: ${theme.fullSize + '%'};
         `
     }}

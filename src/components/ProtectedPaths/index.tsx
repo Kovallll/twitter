@@ -33,13 +33,13 @@ export function RequireAuth({ children, redirectTo }: PathProps) {
         setPrevSearchValue(searchValue)
     }
 
-    const tokens = JSON.parse(localStorage.getItem(tokensLocalStorage))
+    const tokens = localStorage.getItem(tokensLocalStorage)
 
     return tokens !== null ? children : <Navigate to={redirectTo} />
 }
 
 export function AuthenticatedProtect({ children, redirectTo }: PathProps) {
-    const tokens = JSON.parse(localStorage.getItem(tokensLocalStorage))
+    const tokens = localStorage.getItem(tokensLocalStorage)
 
     return tokens === null ? children : <Navigate to={redirectTo} />
 }

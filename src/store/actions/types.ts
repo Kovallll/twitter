@@ -1,4 +1,4 @@
-import { ActionTypes } from '@constants'
+import { ActionTypes, Themes } from '@constants'
 import { ActionInterface, EditModalData, SignUpDate, UserData } from '@types'
 
 export type UpdateSignUpEmailAction = ActionInterface<
@@ -99,4 +99,9 @@ export type UpdateIsSidebarOpen = ActionInterface<
 export type UpdateIsTweetModalOpen = ActionInterface<
     typeof ActionTypes.isTweetModalOpen,
     boolean
+>
+
+export type UpdateUserTheme = ActionInterface<
+    typeof ActionTypes.UserTheme,
+    Themes
 >

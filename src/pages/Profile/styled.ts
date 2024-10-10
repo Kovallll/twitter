@@ -17,13 +17,13 @@ export const SearchTweetText = styled(Link)`
     ${({ theme }) => {
         return css`
             text-decoration: none;
-            color: ${theme.palette.common.black};
+            color: ${theme.palette.text};
             width: ${theme.fullSize + '%'};
             cursor: pointer;
             font-size: ${theme.fontSizes.md + 'px'};
             margin-top: ${theme.spaces.sm + 'px'};
             border-bottom: ${theme.profileMainContentStyles.border +
-            theme.palette.gray};
+            theme.palette.secondary};
 
             &:last-child {
                 border-bottom: 0;

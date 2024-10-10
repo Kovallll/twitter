@@ -13,7 +13,7 @@ export const Container = styled.div<ContainerProps>`
             border-radius: ${theme.toggleThemeStyles.borderRadius + 'px'};
             outline: none;
             cursor: pointer;
-            border: ${theme.toggleThemeStyles.border + theme.palette.gray};
+            border: ${theme.toggleThemeStyles.border + theme.palette.secondary};
 
             &::after {
                 content: '';
@@ -25,7 +25,8 @@ export const Container = styled.div<ContainerProps>`
                 height: ${theme.toggleThemeStyles.lg.circleHeight + 'px'};
                 transition: ${theme.toggleThemeStyles.transition};
                 right: ${theme.spaces.xxs + 'px'};
-                border: ${theme.toggleThemeStyles.border + theme.palette.gray};
+                border: ${theme.toggleThemeStyles.border +
+                theme.palette.secondary};
                 transform: translateX(
                     ${$isToggle
                         ? theme.toggleThemeStyles.lg.transform + 'px'

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
     bottomLinks,
@@ -27,10 +27,11 @@ import {
     GoogleIcon,
     Image,
     Login,
+    LoginLink,
     Policy,
     SignEmailText,
     SignUpInfo,
-    SingUpLink,
+    SignUpLink,
     Subtitle,
     Title,
     TopContent,
@@ -41,7 +42,7 @@ import { images, notifyTimeout, Paths } from '@constants'
 import { goggleAuth } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import { updateNotifyText } from '@store'
-import { Button, LinkStyle, Logo } from '@styles/global'
+import { Button, Logo } from '@styles/global'
 import { getNotifyError } from '@utils'
 
 const SignUp = () => {
@@ -97,17 +98,15 @@ const SignUp = () => {
                     </ButtonsBlock>
                     <Policy>
                         {policyTextPart1}
-                        <SingUpLink> {policyTextPart2} </SingUpLink>
+                        <SignUpLink to=""> {policyTextPart2} </SignUpLink>
                         {policyTextPart3}
-                        <SingUpLink>{policyTextPart4}</SingUpLink>
+                        <SignUpLink to="">{policyTextPart4}</SignUpLink>
                         {policyTextPart5}
-                        <SingUpLink> {policyTextPart6}</SingUpLink>
+                        <SignUpLink to=""> {policyTextPart6}</SignUpLink>
                     </Policy>
                     <Login>
                         {loginText}
-                        <Link style={LinkStyle} to={Paths.Login}>
-                            {loginLinkText}
-                        </Link>
+                        <LoginLink to={Paths.Login}>{loginLinkText}</LoginLink>
                     </Login>
                 </SignUpInfo>
             </TopContent>

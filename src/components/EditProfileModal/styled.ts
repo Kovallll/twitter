@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import { Input } from '@components/Input'
-import { Button, LinkStyle, ProfileIcon } from '@styles/global'
+import { Button, ProfileIcon } from '@styles/global'
 import mixins from '@styles/mixins'
 
 export const Container = styled.div`
@@ -59,6 +59,8 @@ export const ModalButton = styled(Button)`
         return css`
             margin-bottom: 0;
             padding: ${theme.spaces.md + 'px' + ' 0px'};
+            background-color: ${theme.palette.primary};
+            color: ${theme.palette.common.white};
         `
     }}
 `
@@ -85,9 +87,8 @@ export const Image = styled(ProfileIcon)`
 export const ForgotPassword = styled.p`
     ${({ theme }) => {
         return css`
-            ${mixins.flexRowEnd}
-
-            ${LinkStyle}
+            ${mixins.flexRowEnd};
+            ${mixins.linkStyles(theme)};
 
             width: ${theme.fullSize + '%'};
             margin: ${theme.spaces.md + 'px' + ' 0px'};

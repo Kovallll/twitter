@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { Button, ProfileIcon } from '@styles/global'
@@ -57,7 +58,7 @@ export const Wrap = styled.div`
                 left: 0;
                 top: 0;
                 z-index: ${theme.sidebarStyles.zIndex};
-                background: ${theme.palette.common.white};
+                background: ${theme.palette.bgColor};
             }
         `
     }}
@@ -95,7 +96,7 @@ export const LogoWrap = styled.div`
     }}
 `
 
-export const SidebarLink = styled.a`
+export const SidebarLink = styled(Link)`
     ${({ theme }) => {
         return css`
             ${mixins.flexRowStart}
@@ -125,7 +126,7 @@ export const Title = styled.p`
     ${({ theme }) => {
         return css`
             margin-left: ${theme.spaces.lg + 'px'};
-            color: ${theme.palette.common.black};
+            color: ${theme.palette.text};
             font-size: ${theme.fontSizes.sm + 'px'};
             font-weight: ${theme.boldFont};
 
@@ -273,7 +274,7 @@ export const TabletIconWrap = styled.div`
 export const PostIconWrap = styled(TabletIconWrap)`
     ${({ theme }) => {
         return css`
-            background-color: ${theme.palette.blue};
+            background-color: ${theme.palette.primary};
         `
     }}
 `
@@ -281,7 +282,7 @@ export const PostIconWrap = styled(TabletIconWrap)`
 export const LogOutIconWrap = styled(TabletIconWrap)`
     ${({ theme }) => {
         return css`
-            background-color: ${theme.palette.gray};
+            background-color: ${theme.palette.secondary};
             margin-top: ${theme.spaces.md + 'px'};
         `
     }}
@@ -299,6 +300,22 @@ export const TabletIcon = styled.img`
 export const SidebarButton = styled(Button)`
     ${({ theme }) => {
         return css`
+            background-color: ${theme.palette.primary};
+            color: ${theme.palette.common.white};
+
+            @media (${theme.media.md}) {
+                display: none;
+            }
+        `
+    }}
+`
+
+export const LogOutButton = styled(Button)`
+    ${({ theme }) => {
+        return css`
+            background-color: ${theme.palette.secondary};
+            color: ${theme.palette.common.white};
+
             @media (${theme.media.md}) {
                 display: none;
             }

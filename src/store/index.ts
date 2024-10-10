@@ -47,6 +47,7 @@ export {
     updateLoadingInitialData,
     updateIsSidebarOpen,
     updateIsTweetModalOpen,
+    updateUserTheme,
 } from './actions'
 
 export { type AllActionsType } from './redusers/types'

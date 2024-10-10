@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { AccountsProps } from './types'
 
-import { Button, LinkStyle, ProfileIcon } from '@styles/global'
+import { Button, ProfileIcon } from '@styles/global'
 import mixins from '@styles/mixins'
 
 export const AccountsSection = styled.section`
@@ -154,7 +154,8 @@ export const FollowButton = styled(Button)`
 export const ShowMoreLink = styled.button`
     ${({ theme }) => {
         return css`
-            ${LinkStyle}
+            ${mixins.linkStyles(theme)};
+
             background: transparent;
             border: 0;
             margin-top: ${theme.spaces.md + 'px'};

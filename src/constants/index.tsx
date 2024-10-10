@@ -1,26 +1,102 @@
-import bookmarksIcon from '@assets/icons/bookmarks.svg'
+import bookmarksDarkIcon from '@assets/icons/bookmarksDark.svg'
+import bookmarksLightIcon from '@assets/icons/bookmarksLight.svg'
 import closeIcon from '@assets/icons/close.svg'
-import dotsIcon from '@assets/icons/dots.svg'
-import exploreIcon from '@assets/icons/explore.svg'
-import eyeSee from '@assets/icons/eyeSee.svg'
-import eyeSlash from '@assets/icons/eyeSlash.svg'
+import dotsDarkIcon from '@assets/icons/dotsDark.svg'
+import dotsLightIcon from '@assets/icons/dotsLight.svg'
+import exploreDarkIcon from '@assets/icons/exploreDark.svg'
+import exploreLightIcon from '@assets/icons/exploreLight.svg'
+import eyeSeeDarkIcon from '@assets/icons/eyeSeeDark.svg'
+import eyeSeeLightIcon from '@assets/icons/eyeSeeLight.svg'
+import eyeSlashDarkIcon from '@assets/icons/eyeSlashDark.svg'
+import eyeSlashLightIcon from '@assets/icons/eyeSlashLight.svg'
 import googleIcon from '@assets/icons/googleIcon.svg'
-import homeIcon from '@assets/icons/homeOutline.svg'
+import homeOutlineDarkIcon from '@assets/icons/homeOutlineDark.svg'
+import homeOutlineLightIcon from '@assets/icons/homeOutlineLight.svg'
 import uploadImage from '@assets/icons/image.svg'
-import likeFill from '@assets/icons/likeFill.svg'
-import likeOutline from '@assets/icons/likeOutline.svg'
-import listsIcon from '@assets/icons/lists.svg'
+import likeFillIcon from '@assets/icons/likeFill.svg'
+import likeOutlineIcon from '@assets/icons/likeOutline.svg'
+import listsDarkIcon from '@assets/icons/listsDark.svg'
+import listsLightIcon from '@assets/icons/listsLight.svg'
 import logoutIcon from '@assets/icons/logout.svg'
-import messagesIcon from '@assets/icons/messages.svg'
-import moreIcon from '@assets/icons/more.svg'
-import notificationIcon from '@assets/icons/notification.svg'
+import messagesDarkIcon from '@assets/icons/messagesDark.svg'
+import messagesLightIcon from '@assets/icons/messagesLight.svg'
+import moreDarkIcon from '@assets/icons/moreDark.svg'
+import moreLightIcon from '@assets/icons/moreLight.svg'
+import notificationDarkIcon from '@assets/icons/notificationDark.svg'
+import notificationLightIcon from '@assets/icons/notificationLight.svg'
 import postIcon from '@assets/icons/post.svg'
-import profileIcon from '@assets/icons/profileOutline.svg'
+import profileFillDarkIcon from '@assets/icons/profileFillDark.svg'
+import profileFillLightIcon from '@assets/icons/profileFillLight.svg'
+import profileOutlineDarkIcon from '@assets/icons/profileOutlineDark.svg'
+import profileOutlineLightIcon from '@assets/icons/profileOutlineLight.svg'
 import searchIcon from '@assets/icons/search.svg'
 import logoIcon from '@assets/icons/twitterLogo.svg'
 import profileBackground from '@assets/images/profileBackground.png'
 import profileImage from '@assets/images/profileImage.svg'
 import twitterImage from '@assets/images/signupTwitter.png'
+import { LocalStorage } from '@utils'
+
+const localStorage = new LocalStorage()
+
+export enum Themes {
+    Dark = 'dark',
+    Light = 'light',
+}
+
+export const tweetPath = '/tweet'
+
+export enum Paths {
+    SignUp = '/',
+    Login = '/login',
+    SingUpCredential = '/signup-credential',
+    Profile = '/profile',
+    Home = '/home',
+    Tweet = `${tweetPath}/:tweetId`,
+    NotFound = '*',
+}
+
+export const sidebarLinks = [
+    {
+        icon: { light: homeOutlineLightIcon, dark: homeOutlineDarkIcon },
+        title: 'Home',
+        link: Paths.Home,
+    },
+    {
+        icon: { light: exploreLightIcon, dark: exploreDarkIcon },
+        title: 'Explore',
+        link: '/',
+    },
+    {
+        icon: { light: notificationLightIcon, dark: notificationDarkIcon },
+        title: 'Notification',
+        link: '/',
+    },
+    {
+        icon: { light: messagesLightIcon, dark: messagesDarkIcon },
+        title: 'Messages',
+        link: '/',
+    },
+    {
+        icon: { light: bookmarksLightIcon, dark: bookmarksDarkIcon },
+        title: 'Bookmarks',
+        link: '/',
+    },
+    {
+        icon: { light: listsLightIcon, dark: listsDarkIcon },
+        title: 'Lists',
+        link: '/',
+    },
+    {
+        icon: { light: profileOutlineLightIcon, dark: profileOutlineDarkIcon },
+        title: 'Profile',
+        link: Paths.Profile,
+    },
+    {
+        icon: { light: moreLightIcon, dark: moreDarkIcon },
+        title: 'More',
+        link: '/',
+    },
+]
 
 export enum Month {
     January = 'January',
@@ -72,6 +148,7 @@ export enum ActionTypes {
     UserTotal = 'user/total',
     UserFollowing = 'user/following',
     UserLiked = 'user/liked',
+    UserTheme = 'user/theme',
     NotifyText = 'notify/text',
     TotalAccounts = 'total/accounts',
     SeacrhValue = 'search/value',
@@ -100,7 +177,23 @@ export const loginDefaultData = {
 }
 
 export const images = {
+    exploreDarkIcon,
+    exploreLightIcon,
+    messagesDarkIcon,
+    notificationDarkIcon,
+    profileFillLightIcon,
+    profileFillDarkIcon,
+    notificationLightIcon,
+    profileOutlineDarkIcon,
+    profileOutlineLightIcon,
+    messagesLightIcon,
+    moreDarkIcon,
+    moreLightIcon,
+    listsLightIcon,
+    listsDarkIcon,
     closeIcon,
+    bookmarksDarkIcon,
+    bookmarksLightIcon,
     profileBackground,
     profileImage,
     googleIcon,
@@ -108,11 +201,16 @@ export const images = {
     twitterImage,
     uploadImage,
     searchIcon,
-    dotsIcon,
-    eyeSee,
-    eyeSlash,
-    likeFill,
-    likeOutline,
+    dotsLightIcon,
+    dotsDarkIcon,
+    eyeSeeDarkIcon,
+    eyeSeeLightIcon,
+    eyeSlashDarkIcon,
+    eyeSlashLightIcon,
+    likeFillIcon,
+    homeOutlineDarkIcon,
+    homeOutlineLightIcon,
+    likeOutlineIcon,
     postIcon,
     logoutIcon,
 }
@@ -141,6 +239,7 @@ export const userDefaultData = {
     user: defaultUser,
     following: [],
     liked: [],
+    theme: localStorage.getItem('theme') || Themes.Light,
 }
 
 export const notifyDefaultData = {
@@ -198,29 +297,6 @@ export const hours = 86400000
 export const days = 2592000000
 
 export const countTweetsImages = 6
-
-export const tweetPath = '/tweet'
-
-export enum Paths {
-    SignUp = '/',
-    Login = '/login',
-    SingUpCredential = '/signup-credential',
-    Profile = '/profile',
-    Home = '/home',
-    Tweet = `${tweetPath}/:tweetId`,
-    NotFound = '*',
-}
-
-export const sidebarLinks = [
-    { icon: homeIcon, title: 'Home', link: Paths.Home },
-    { icon: exploreIcon, title: 'Explore', link: '/' },
-    { icon: notificationIcon, title: 'Notification', link: '/' },
-    { icon: messagesIcon, title: 'Messages', link: '/' },
-    { icon: bookmarksIcon, title: 'Bookmarks', link: '/' },
-    { icon: listsIcon, title: 'Lists', link: '/' },
-    { icon: profileIcon, title: 'Profile', link: Paths.Profile },
-    { icon: moreIcon, title: 'More', link: '/' },
-]
 
 export const tokensLocalStorage = 'tokens'
 

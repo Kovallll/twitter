@@ -11,7 +11,7 @@ export const TweetArticle = styled.article`
             width: ${theme.fullSize + '%'};
             padding: ${theme.spaces.lg + 'px ' + theme.spaces.xxl + 'px'};
             border-bottom: ${theme.tweetStyles.borderBottom +
-            theme.palette.lightGray};
+            theme.palette.lineBoardColor};
 
             @media (${theme.media.lg}) {
                 padding: ${theme.spaces.md + 'px ' + theme.spaces.xl + 'px'};

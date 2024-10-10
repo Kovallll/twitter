@@ -25,11 +25,14 @@ export const Window = styled.div`
             ${mixins.flexColumnCenter}
 
             width: ${theme.modalStyles.lg.width + 'px'};
-            border: ${theme.buttonStyles.border};
+            border: ${theme.profileMainContentStyles.border +
+            theme.palette.lightSecondary};
             position: relative;
             color: ${theme.palette.common.black};
             background: ${theme.palette.common.white};
             border-radius: ${theme.modalStyles.borderRadius + 'px'};
+            background-color: ${theme.palette.bgColor};
+            color: ${theme.palette.text};
 
             @media (${theme.media.sm}) {
                 width: ${theme.modalStyles.md.width + 'px'};

@@ -8,6 +8,7 @@ import {
     Month,
     months,
     seconds,
+    Themes,
     tweetPath,
 } from '@constants'
 import { SearchTweetText } from '@pages/Profile/styled'
@@ -87,11 +88,10 @@ export const getIsValidDate = (date: SignUpDate) => {
 }
 
 export class LocalStorage {
-    getItem = (
-        key: string,
-        undefinedItem: object | null | [] = null
-    ): string => {
-        return window.localStorage.getItem(key) ?? JSON.stringify(undefinedItem)
+    getItem = (key: string, undefinedItem: object | null | [] = null): any => {
+        return JSON.parse(
+            window.localStorage.getItem(key) ?? JSON.stringify(undefinedItem)
+        )
     }
 
     setItem = (key: string, value: any) => {
@@ -148,4 +148,8 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
         })
         .filter((tweetText) => !!tweetText)
         .flat()
+}
+
+export const getIsLightTheme = (theme: Themes) => {
+    return theme === Themes.Light
 }

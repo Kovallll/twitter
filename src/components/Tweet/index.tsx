@@ -31,9 +31,9 @@ import { TweetProps } from './types'
 import { ConfirmModal } from '@components/Modal/ConfirmModal'
 import { images } from '@constants'
 import { clickLikeTweet, dowloadImagesFromStorage } from '@firebase'
-import { useAppDispatch, useDebounce } from '@hooks'
+import { useAppDispatch, useAppSelector, useDebounce } from '@hooks'
 import { CreatedTweetImageType } from '@types'
-import { getTimePostTweet } from '@utils'
+import { getIsLightTheme, getTimePostTweet } from '@utils'
 
 export const Tweet = ({
     data,
@@ -51,6 +51,7 @@ export const Tweet = ({
     >(null)
 
     const dispatch = useAppDispatch()
+    const { theme } = useAppSelector((state) => state.user)
 
     useEffect(() => {
         dowloadImagesFromStorage(imagesData, handleChangeTweetImages)
@@ -80,8 +81,11 @@ export const Tweet = ({
         setIsLiked((prev) => !prev)
         clickLikeTweet(user, tweetId, isLiked, dispatch)
     }, 200)
-    const likeIcon = isLiked ? images.likeFill : images.likeOutline
+    const likeIcon = isLiked ? images.likeFillIcon : images.likeOutlineIcon
     const timePostTweet = getTimePostTweet(timePost)
+    const moreIcon = getIsLightTheme(theme)
+        ? images.dotsLightIcon
+        : images.dotsDarkIcon
     return (
         <TweetArticle>
             <TweetInfoBlock>
@@ -96,7 +100,7 @@ export const Tweet = ({
                 </InfoBlock>
                 {isUserTweet && (
                     <MoreBlock onClick={handleChangeIsMore}>
-                        <MoreIcon src={images.dotsIcon} alt={moreIconAltText} />
+                        <MoreIcon src={moreIcon} alt={moreIconAltText} />
                         {isMoreOpen && (
                             <MorePopup
                                 onDelete={handleChangeIsDelete}

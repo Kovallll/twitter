@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
+import { Button } from '@styles/global'
 import mixins from '@styles/mixins'
 
 export const Container = styled.div`
@@ -37,6 +39,14 @@ export const LogoWrap = styled.div`
             ${mixins.flexRowCenter}
 
             width: ${theme.fullSize + '%'};
+        `
+    }}
+`
+
+export const SignUpLink = styled(Link)`
+    ${({ theme }) => {
+        return css`
+            ${mixins.linkStyles(theme)};
         `
     }}
 `
@@ -119,6 +129,15 @@ export const DateBlock = styled.div`
             @media (${theme.media.xs}) {
                 margin-bottom: ${theme.fontSizes.xs + 'px'};
             }
+        `
+    }}
+`
+
+export const SumbitButton = styled(Button)`
+    ${({ theme }) => {
+        return css`
+            background-color: ${theme.palette.primary};
+            color: ${theme.palette.common.white};
         `
     }}
 `

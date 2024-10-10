@@ -16,7 +16,7 @@ export const MorePopupBlock = styled.div`
 export const DeleteOption = styled.p`
     ${({ theme }) => {
         return css`
-            color: ${theme.palette.red};
+            color: ${theme.palette.errorColor};
         `
     }}
 `

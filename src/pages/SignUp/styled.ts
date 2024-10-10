@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { LinkStyle } from '@styles/global'
 import mixins from '@styles/mixins'
 
 export const Container = styled.div`
@@ -51,6 +51,14 @@ export const Image = styled.img`
             @media (${theme.media.xs}) {
                 display: none;
             }
+        `
+    }}
+`
+
+export const LoginLink = styled(Link)`
+    ${({ theme }) => {
+        return css`
+            ${mixins.linkStyles(theme)}
         `
     }}
 `
@@ -193,8 +201,12 @@ export const BottomContent = styled.div`
     }}
 `
 
-export const SingUpLink = styled.a`
-    ${LinkStyle}
+export const SignUpLink = styled(Link)`
+    ${({ theme }) => {
+        return css`
+            ${mixins.linkStyles(theme)};
+        `
+    }}
 `
 
 export const BottomLink = styled.a`

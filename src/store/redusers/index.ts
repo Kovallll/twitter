@@ -65,6 +65,8 @@ export const updateUserData = (state = userDefaultData, action: UserAction) => {
             return { ...state, following: [...state.following, action.payload] }
         case ActionTypes.UserLiked:
             return { ...state, liked: action.payload }
+        case ActionTypes.UserTheme:
+            return { ...state, theme: action.payload }
         default:
             return state
     }
