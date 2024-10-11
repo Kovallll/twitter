@@ -1,50 +1,18 @@
 import { useEffect, useState } from 'react'
 
-import {
-    defaultDescription,
-    defaultSocial,
-    editText,
-    followersText,
-    followingText,
-    imageAltText,
-    profileIconAltText,
-    successText,
-    tweetsText,
-} from './config'
-import { ProfileLoader } from './Loader'
-import {
-    EditBlock,
-    EditButton,
-    Follow,
-    FollowCount,
-    Image,
-    ImageWrap,
-    InfoBlock,
-    ProfileBottomInfo,
-    ProfileContent,
-    ProfileDescription,
-    ProfileFollowBlock,
-    ProfileImage,
-    ProfileName,
-    ProfileSocial,
-    ProfileTopInfo,
-    Tweets,
-    TweetsHeader,
-    TweetSpinner,
-} from './styled'
+import { imageAltText, successText, tweetsText } from './config'
+import { ProfileInfo } from './ProfileInfo'
+import { ProfileTweets } from './ProfileTweets'
+import { Image, ProfileContent, Tweets, TweetsHeader } from './styled'
+import { ProfileMainContentProps } from './types'
 
 import { EditProfileModal } from '@components/EditProfileModal'
 import { Header } from '@components/Header'
 import Modal from '@components/Modal'
 import Notify from '@components/Notify'
-import { Tweet } from '@components/Tweet'
 import { TweetCreator } from '@components/TweetCreator'
 import { images, notifyTimeout } from '@constants'
-import {
-    deleteTweetFromStorage,
-    uploadProfileAvatar,
-    uploadUserDataToStorage,
-} from '@firebase'
+import { uploadProfileAvatar, uploadUserDataToStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import {
     booleanStatesSelector,
@@ -52,15 +20,16 @@ import {
     updateIsTweetModalOpen,
     updateLoadingInitialData,
     updateNotifyText,
+    updateTotalUser,
     userSelector,
 } from '@store'
 import { EditModalData } from '@types'
 
-export const ProfileMainContent = () => {
+export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
     const dispatch = useAppDispatch()
-    const { user } = useAppSelector(userSelector)
+    const { user: currentUser } = useAppSelector(userSelector)
     const { text } = useAppSelector(notifySelector)
     const { isLoadingInitialData, isTweetModalOpen } = useAppSelector(
         booleanStatesSelector
@@ -96,7 +65,9 @@ export const ProfileMainContent = () => {
     }
 
     const handleEditProfile = (data: EditModalData, file: File | null) => {
+        const { description, name, social } = data
         handleChangeIsOpenModal()
+        dispatch(updateTotalUser({ ...currentUser, description, social, name }))
         if (file) {
             const image = {
                 id: user.avatar.id,
@@ -108,82 +79,24 @@ export const ProfileMainContent = () => {
         dispatch(updateNotifyText(successText))
     }
 
-    const handleDeleteTweet = (tweetId: string) => {
-        deleteTweetFromStorage(user.tweets!, tweetId, user.docId, dispatch)
-    }
-
     const handleOpenModalTweet = () => {
         dispatch(updateIsTweetModalOpen(false))
     }
 
-    const userSocial =
-        user.social && user.social !== '' ? user.social : defaultSocial
-    const userDescription =
-        user.description && user.description !== ''
-            ? user.description
-            : defaultDescription
+    const isUserTweet = currentUser.userId === user.userId
     return (
         <>
             <ProfileContent>
-                <Header />
+                <Header user={user} />
                 <Image src={images.profileBackground} alt={imageAltText} />
-                {isLoadingInitialData ? (
-                    <ProfileLoader />
-                ) : (
-                    <InfoBlock>
-                        <ProfileTopInfo>
-                            <ImageWrap>
-                                <ProfileImage
-                                    src={user.avatar.url}
-                                    alt={profileIconAltText}
-                                />
-                            </ImageWrap>
-                            <EditBlock>
-                                <EditButton
-                                    $withBorder={true}
-                                    onClick={handleChangeIsOpenModal}
-                                >
-                                    {editText}
-                                </EditButton>
-                            </EditBlock>
-                        </ProfileTopInfo>
-                        <ProfileBottomInfo>
-                            <ProfileName>{user.name}</ProfileName>
-                            <ProfileSocial>{userSocial}</ProfileSocial>
-                            <ProfileDescription>
-                                {userDescription}
-                            </ProfileDescription>
-                            <ProfileFollowBlock>
-                                <Follow>
-                                    <FollowCount>
-                                        {user.following.length}
-                                    </FollowCount>
-                                    {followingText}
-                                </Follow>
-                                <Follow>
-                                    <FollowCount>
-                                        {user.followers.length}
-                                    </FollowCount>
-                                    {followersText}
-                                </Follow>
-                            </ProfileFollowBlock>
-                        </ProfileBottomInfo>
-                    </InfoBlock>
-                )}
-                <TweetCreator />
+                <ProfileInfo
+                    user={user}
+                    handleChangeIsOpenModal={handleChangeIsOpenModal}
+                />
+                {isUserTweet && <TweetCreator />}
                 <Tweets>
                     <TweetsHeader>{tweetsText}</TweetsHeader>
-                    {isLoadingInitialData ? (
-                        <TweetSpinner />
-                    ) : (
-                        user.tweets?.map((data) => (
-                            <Tweet
-                                data={{ tweetData: data, account: user }}
-                                handleDeleteTweet={handleDeleteTweet}
-                                isUserTweet={true}
-                            />
-                        ))
-                    )}
+                    <ProfileTweets user={user} />
                 </Tweets>
             </ProfileContent>
             {isEditModalOpen && (

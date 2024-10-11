@@ -17,14 +17,18 @@ export const SearchBlock = () => {
             ? tweetsPlaceholder
             : usersPlaceholder
 
-    const handleChangeIsSearch = () => {
-        setIsSeacrh((prev) => !prev)
+    const handleStartIsSearch = () => {
+        setIsSeacrh(true)
+    }
+
+    const handleEndIsSearch = () => {
+        setIsSeacrh(false)
     }
 
     return (
         <Container>
-            <Search onClick={handleChangeIsSearch} placeholder={placeholder} />
-            {isSearch && <SearchPopup onClose={handleChangeIsSearch} />}
+            <Search onClick={handleStartIsSearch} placeholder={placeholder} />
+            {isSearch && <SearchPopup onClose={handleEndIsSearch} />}
         </Container>
     )
 }

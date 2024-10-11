@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import { ProfileContent } from '@pages/Profile/ProfileMainContent/styled'
-import mixins from '@styles/mixins'
+import { MainPageContent, mixins } from '@styles'
 
 export const Container = styled.div`
     ${mixins.flexRowCenter}
@@ -9,7 +8,7 @@ export const Container = styled.div`
     align-items: start;
 `
 
-export const HomeSection = styled(ProfileContent)`
+export const HomeSection = styled(MainPageContent)`
     ${({ theme }) => {
         return css`
             width: ${theme.fullSize + '%'};

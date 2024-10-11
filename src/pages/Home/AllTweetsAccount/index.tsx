@@ -6,7 +6,7 @@ export const AllTweetsAccount = ({ account }: AllTweetsAccountProps) => {
     return (
         <>
             {account.tweets?.map((tweet) => (
-                <Tweet data={{ tweetData: tweet, user: account }} />
+                <Tweet data={{ tweetData: tweet, account: account }} />
             ))}
         </>
     )

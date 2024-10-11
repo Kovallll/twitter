@@ -1,3 +1,4 @@
+import { AccountCard } from '@components/AccountCard'
 import {
     countDays,
     countYears,
@@ -173,4 +174,14 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
         })
         .filter((tweetText) => !!tweetText)
         .flat()
+}
+
+export const getUsersNames = (accounts: UserData[], searchValue: string) => {
+    return accounts
+        .map((account) => {
+            if (account.name.toLowerCase().includes(searchValue)) {
+                return <AccountCard account={account} key={account.userId} />
+            }
+        })
+        .filter((userName) => !!userName)
 }

@@ -14,6 +14,7 @@ import Root from '@pages/Root'
 import SignUp from '@pages/SignUp'
 import SingUpCredential from '@pages/SingUpCredential'
 import TweetPage from '@pages/TweetPage'
+import UserPage from '@pages/UserPage'
 
 const routes = [
     { path: Paths.NotFound, element: <NotFound /> },
@@ -60,9 +61,17 @@ const routes = [
     {
         path: Paths.Home,
         element: (
-            <RequireAuth redirectTo="/login">
+            <ProtectedRoute redirectTo="/login">
                 <Home />
-            </RequireAuth>
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: Paths.User,
+        element: (
+            <ProtectedRoute redirectTo="/login">
+                <UserPage />
+            </ProtectedRoute>
         ),
     },
 ]

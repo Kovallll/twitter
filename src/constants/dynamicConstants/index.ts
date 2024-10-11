@@ -24,6 +24,7 @@ import twitterImage from '@assets/images/signupTwitter.png'
 import { UserData } from '@types'
 
 export const tweetPath = '/tweet'
+export const userPath = '/user'
 
 export enum Paths {
     SignUp = '/',
@@ -32,6 +33,7 @@ export enum Paths {
     Profile = '/profile',
     Home = '/home',
     Tweet = `${tweetPath}/:tweetId`,
+    User = `${userPath}/:userId`,
     NotFound = '*',
 }
 

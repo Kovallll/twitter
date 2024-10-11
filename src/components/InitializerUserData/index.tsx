@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import { InitializerUserDataProps } from './types'
 
+import { Paths } from '@constants'
 import { initUserData, setTotalAccountsFromStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import {
@@ -11,10 +13,13 @@ import {
     updateSearchData,
     userSelector,
 } from '@store'
-import { getTweetsTexts } from '@utils'
+import { getTweetsTexts, getUsersNames } from '@utils'
 
 export const InitializerUserData = ({ children }: InitializerUserDataProps) => {
     const [prevSearchValue, setPrevSearchValue] = useState<string | null>(null)
+
+    const location = useLocation()
+    const isProfilePage = location.pathname === Paths.Profile
 
     const dispatch = useAppDispatch()
     const { user } = useAppSelector(userSelector)
@@ -30,9 +35,14 @@ export const InitializerUserData = ({ children }: InitializerUserDataProps) => {
         }
     }, [dispatch, user.userId])
 
-    if (prevSearchValue !== searchValue) {
+    if (prevSearchValue !== searchValue && isProfilePage) {
         const tweetsTexts = getTweetsTexts(accounts, searchValue)
         dispatch(updateSearchData(tweetsTexts))
+        setPrevSearchValue(searchValue)
+    }
+    if (prevSearchValue !== searchValue && !isProfilePage) {
+        const usersNames = getUsersNames(accounts, searchValue)
+        dispatch(updateSearchData(usersNames))
         setPrevSearchValue(searchValue)
     }
 

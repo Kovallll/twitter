@@ -7,15 +7,17 @@ import { Sidebar } from '@components/Sidebar'
 import { TweetCreator } from '@components/TweetCreator'
 import { TwitterUsersContent } from '@components/TwitterUsersContent'
 import { useAppSelector } from '@hooks'
+import { totalSelector, userSelector } from '@store'
 
 const Home = () => {
-    const { accounts } = useAppSelector((state) => state.total)
+    const { accounts } = useAppSelector(totalSelector)
+    const { user } = useAppSelector(userSelector)
 
     return (
         <Container>
             <Sidebar />
             <HomeSection>
-                <Header title={title} />
+                <Header title={title} user={user} />
                 <TweetCreator />
                 {accounts.map((account) => (
                     <AllTweetsAccount account={account} />

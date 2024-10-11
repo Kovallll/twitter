@@ -82,6 +82,7 @@ export const theme: Theme = {
             imageTop: '70',
             maxWidth: '1400',
             minWidth: '1040',
+            editHeight: '60',
         },
         md: {
             twitterHeaderWidth: '200',
@@ -89,6 +90,7 @@ export const theme: Theme = {
             imageSize: '100',
             imageTop: '60',
             minWidth: '800',
+            editHeight: '50',
         },
     },
     usersStyles: {

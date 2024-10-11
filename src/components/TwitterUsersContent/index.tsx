@@ -10,7 +10,6 @@ import { Paths } from '@constants'
 
 export const TwitterUsersContent = () => {
     const location = useLocation()
-    const isPathHome = location.pathname === Paths.Home
     const isPathProfile = location.pathname === Paths.Profile
 
     return (
@@ -18,7 +17,7 @@ export const TwitterUsersContent = () => {
             <SearchBlock />
             {isPathProfile && <TweetImageBoard />}
             <TwitterAccountsBoard />
-            {isPathHome && <InfoLinks />}
+            {!isPathProfile && <InfoLinks />}
         </ContentSection>
     )
 }

@@ -1,36 +1,18 @@
 import { useState } from 'react'
 
-import { avatarIconAltText, follow, showMore, title, unfollow } from './config'
+import { showMore, title } from './config'
 import { Loader } from './Loader'
-import {
-    AccountAvatar,
-    AccountCard,
-    AccountInfo,
-    AccountName,
-    Accounts,
-    AccountSocial,
-    AccountsSection,
-    FollowButton,
-    ShowMoreLink,
-    Title,
-} from './styled'
+import { Accounts, AccountsSection, ShowMoreLink, Title } from './styled'
 
-import { followOrUnfollowAccount } from '@firebase'
-import { useAppDispatch, useAppSelector } from '@hooks'
-import { booleanStatesSelector, totalSelector, userSelector } from '@store'
-import { UserData } from '@types'
+import { AccountCard } from '@components/AccountCard'
+import { useAppSelector } from '@hooks'
+import { booleanStatesSelector, totalSelector } from '@store'
 
 export const TwitterAccountsBoard = () => {
     const [isShow, setIsShow] = useState(false)
 
-    const dispatch = useAppDispatch()
     const { accounts } = useAppSelector(totalSelector)
-    const { user } = useAppSelector(userSelector)
     const { isLoadingInitialData } = useAppSelector(booleanStatesSelector)
-
-    const handleFollowAccount = (account: UserData) => () => {
-        followOrUnfollowAccount(user, account, dispatch)
-    }
 
     const handleClickShowMore = () => {
         setIsShow((prev) => !prev)
@@ -44,28 +26,9 @@ export const TwitterAccountsBoard = () => {
                 <AccountsSection>
                     <Title>{title}</Title>
                     <Accounts $isShow={isShow}>
-                        {accounts.map((account) => {
-                            const { userId, avatar, name, social } = account
-                            return (
-                                <AccountCard key={userId}>
-                                    <AccountAvatar
-                                        src={avatar.url}
-                                        alt={avatarIconAltText}
-                                    />
-                                    <AccountInfo>
-                                        <AccountName>{name}</AccountName>
-                                        <AccountSocial>{social}</AccountSocial>
-                                    </AccountInfo>
-                                    <FollowButton
-                                        onClick={handleFollowAccount(account)}
-                                    >
-                                        {user.following.includes(userId)
-                                            ? unfollow
-                                            : follow}
-                                    </FollowButton>
-                                </AccountCard>
-                            )
-                        })}
+                        {accounts.map((account) => (
+                            <AccountCard account={account} />
+                        ))}
                     </Accounts>
                     <ShowMoreLink onClick={handleClickShowMore}>
                         {showMore}

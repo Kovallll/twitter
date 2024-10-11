@@ -8,13 +8,11 @@ import { useAppDispatch, useAppSelector } from '@hooks'
 import {
     booleanStatesSelector,
     updateIsSidebarOpen,
-    userSelector,
 } from '@store'
 
-export const Header = ({ title }: HeaderProps) => {
+export const Header = ({ title, user }: HeaderProps) => {
     const dispatch = useAppDispatch()
     const { isLoadingInitialData } = useAppSelector(booleanStatesSelector)
-    const { user } = useAppSelector(userSelector)
 
     const handleClickProfileIcon = () => {
         dispatch(updateIsSidebarOpen(true))
@@ -28,8 +26,8 @@ export const Header = ({ title }: HeaderProps) => {
         <HeaderWrap>
             <HeaderContentBlock>
                 <HeaderContent
-                    title={title}
                     user={user}
+                    title={title}
                     handleClickProfileIcon={handleClickProfileIcon}
                 />
             </HeaderContentBlock>

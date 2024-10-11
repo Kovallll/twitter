@@ -9,12 +9,12 @@ import { Sidebar } from '@components/Sidebar'
 import { Tweet } from '@components/Tweet'
 import { TwitterUsersContent } from '@components/TwitterUsersContent'
 import { useAppSelector } from '@hooks'
-import { totalSelector } from '@store'
+import { totalSelector, userSelector } from '@store'
 
 const TweetPage = () => {
     const { tweetId } = useParams()
     const { accounts } = useAppSelector(totalSelector)
-
+    const { user } = useAppSelector(userSelector)
     const tweetData = useMemo(() => {
         return accounts
             .map((account) => {
@@ -34,7 +34,7 @@ const TweetPage = () => {
                 <Container>
                     <Sidebar />
                     <TweetSection>
-                        <Header title={title} />
+                        <Header title={title} user={user} />
                         <Tweet data={tweetData} />
                     </TweetSection>
                     <TwitterUsersContent />
