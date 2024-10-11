@@ -50,7 +50,7 @@ export const phoneRegex = /^\+375 \(\d{2}\) \d{2}-\d{2}-\d{3,}$/
 export const codeRegex = /\d/g
 export const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
-export const maxUploadSizeImage = 41943040 //40mb
+export const maxUploadSizeImage = 15728640//15mb
 
 export const notifyTimeout = 4000
 

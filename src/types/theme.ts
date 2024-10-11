@@ -113,6 +113,9 @@ export interface Theme {
         textWidth: string
         textHeight: string
     }
+    notFoundStyles: {
+        width: string
+    }
     notifyStyles: {
         zIndex: string
         borderRadius: string
