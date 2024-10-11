@@ -7,8 +7,7 @@ import { router } from './routes'
 
 import ErrorBoundary from '@components/ErrorBoundary'
 import { store } from '@store'
-import { GlobalStyle } from '@styles/global'
-import { theme } from '@styles/theme'
+import { GlobalStyle, theme } from '@styles'
 
 createRoot(document.getElementById('root')!).render(
     <ErrorBoundary>

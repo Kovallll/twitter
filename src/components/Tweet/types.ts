@@ -8,5 +8,5 @@ export interface TweetProps {
 
 export interface TweetData {
     tweetData: ReadyToTweetStorageType
-    user: UserData
+    account: UserData
 }

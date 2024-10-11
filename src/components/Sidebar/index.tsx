@@ -5,16 +5,15 @@ import {
     logoAltText,
     logOutIconAltText,
     logOutText,
-    navIconAltText,
     postIconAltText,
     profileImageAltText,
     tweetText,
 } from './config'
+import { SidebarLink } from './SidebarLink'
 import { SidebarProfileLoader } from './SidebarProfileLoader'
 import {
     Container,
     DesktopText,
-    Icon,
     IconWrap,
     LogOutIconWrap,
     LogoWrap,
@@ -23,11 +22,9 @@ import {
     Profile,
     SidebarButton,
     SidebarImage,
-    SidebarLink,
     SocialText,
     TabletIcon,
     TextBlock,
-    Title,
     Wrap,
 } from './styled'
 
@@ -35,10 +32,19 @@ import logo from '@assets/icons/twitterLogo.svg'
 import { ConfirmModal } from '@components/Modal/ConfirmModal'
 import { hiddenSidebarWidth, images, sidebarLinks } from '@constants'
 import { signOutFirebaseAccount } from '@firebase'
-import { useAppDispatch, useAppSelector, useClickOutside } from '@hooks'
-import { updateIsSidebarOpen, updateIsTweetModalOpen } from '@store'
-import { Logo } from '@styles/global'
-import { theme } from '@styles/theme'
+import {
+    useAppDispatch,
+    useAppSelector,
+    useClickOutside,
+    useWindowSize,
+} from '@hooks'
+import {
+    booleanStatesSelector,
+    updateIsSidebarOpen,
+    updateIsTweetModalOpen,
+    userSelector,
+} from '@store'
+import { Logo, theme } from '@styles'
 
 export const Sidebar = () => {
     const sidebarRef = useRef(null)
@@ -46,19 +52,21 @@ export const Sidebar = () => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { user } = useAppSelector((state) => state.user)
+    const { user } = useAppSelector(userSelector)
     const { isLoadingInitialData, isSidebarOpen } = useAppSelector(
-        (state) => state.boolean
+        booleanStatesSelector
     )
+
+    const { width } = useWindowSize()
 
     const { name, avatar, social } = user
 
-    if (window.innerWidth >= hiddenSidebarWidth && !isSidebarOpen) {
+    if (width >= hiddenSidebarWidth && !isSidebarOpen) {
         dispatch(updateIsSidebarOpen(true))
     }
 
     useClickOutside(sidebarRef, () => {
-        if (window.innerWidth <= hiddenSidebarWidth) {
+        if (width <= hiddenSidebarWidth) {
             dispatch(updateIsSidebarOpen(false))
         }
     })
@@ -84,11 +92,11 @@ export const Sidebar = () => {
                         <LogoWrap>
                             <Logo src={logo} alt={logoAltText} />
                         </LogoWrap>
-                        {sidebarLinks.map((link, index) => (
-                            <SidebarLink to={link.link} key={index}>
-                                <Icon src={link.icon} alt={navIconAltText} />
-                                <Title>{link.title}</Title>
-                            </SidebarLink>
+                        {sidebarLinks.map((linkData) => (
+                            <SidebarLink
+                                key={linkData.title}
+                                linkData={linkData}
+                            />
                         ))}
                         <SidebarButton
                             $backgroundColor={theme.palette.blue}

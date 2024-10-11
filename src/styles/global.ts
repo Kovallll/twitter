@@ -1,35 +1,40 @@
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import mixins from './mixins'
+import { mixins } from './mixins'
 import { theme } from './theme'
 
 import { ButtonProps } from '@types'
 
 export const GlobalStyle = createGlobalStyle`
-  * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-    body {
-        font-family: 'Arial', sans-serif;
-        ::-webkit-scrollbar {
-            cursor: pointer;
-            height: 10px; 
-            width: 10px; 
-            border: 1px solid #d5d5d5;
+${({ theme }) => {
+    return css`
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        ::-webkit-scrollbar-track {
-            background: white;    
-            cursor: pointer; 
+        body {
+            font-family: 'Arial', sans-serif;
+            ::-webkit-scrollbar {
+                cursor: pointer;
+                height: 10px;
+                width: 10px;
+                border: 1px solid ${theme.palette.gray};
+            }
+            ::-webkit-scrollbar-track {
+                background: ${theme.palette.common.white};
+                cursor: pointer;
+            }
+            ::-webkit-scrollbar-thumb {
+                background-color: ${theme.palette.blue};
+                cursor: pointer;
+                border-radius: 20px;
+                border: 3px solid ${theme.palette.common.white};
+            }
         }
-        ::-webkit-scrollbar-thumb {
-            background-color: ${theme.palette.blue};  
-            cursor: pointer; 
-            border-radius: 20px;   
-            border: 3px solid white; 
-        }
-    }
+    `
+}}
+  
 `
 
 export const Logo = styled.img`
@@ -119,7 +124,7 @@ export const ErrorText = styled.p`
     ${({ theme }) => {
         return css`
             width: ${theme.fullSize + '%'};
-            color: ${theme.palette.errorColor};
+            color: ${theme.palette.red};
             height: ${theme.errorTextHeight + 'px'};
         `
     }}
@@ -129,6 +134,7 @@ export const Spinner = styled.div`
     ${({ theme }) => {
         return css`
             ${mixins.flexRowCenter}
+
             height: ${theme.fullSize + 'vh'};
             width: ${theme.fullSize + '%'};
             color: ${theme.palette.common.black};
@@ -167,6 +173,30 @@ export const ProfileIcon = styled.img`
             @media (${theme.media.lg}) {
                 width: ${theme.profileIconStyles.md.size + 'px'};
                 height: ${theme.profileIconStyles.md.size + 'px'};
+            }
+        `
+    }}
+`
+
+export const MainPageContent = styled.section`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexColumnCenter}
+
+            width: ${theme.fullSize + '%'};
+            max-width: ${theme.profileMainContentStyles.lg.maxWidth + 'px'};
+            min-width: ${theme.profileMainContentStyles.lg.minWidth + 'px'};
+            position: relative;
+            border: ${theme.profileMainContentStyles.border +
+            theme.palette.lineBoardColor};
+            border-bottom: 0;
+
+            @media (${theme.media.xl}) {
+                min-width: ${theme.profileMainContentStyles.md.minWidth + 'px'};
+            }
+
+            @media (${theme.media.lg}) {
+                min-width: 0;
             }
         `
     }}

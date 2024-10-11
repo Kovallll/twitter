@@ -4,47 +4,29 @@ import {
     UpdateIsTweetModalOpen,
     UpdateLoadingInititalData,
     UpdateLoadingTweet,
-    UpdateLoginEmailAction,
-    UpdateLoginPasswordAction,
     UpdateNotifyText,
     UpdateSearchData,
     UpdateSearchValue,
-    UpdateSignUpConfrimPasswordAction,
-    UpdateSignUpDate,
-    UpdateSignUpEmailAction,
-    UpdateSignUpNameAction,
-    UpdateSignUpPasswordAction,
-    UpdateSignUpPhoneAction,
     UpdateTotalUser,
     UpdateUserData,
+    UpdateUserDate,
     UpdateUserFollowing,
     UpdateUserLiked,
 } from '../actions/types'
 
 export type AllActionsType =
-    | SingUpAction
-    | LoginAction
     | UserAction
     | NotifyAction
     | TotalDataAction
     | SearchAction
     | BooleanAction
 
-export type SingUpAction =
-    | UpdateSignUpEmailAction
-    | UpdateSignUpNameAction
-    | UpdateSignUpPhoneAction
-    | UpdateSignUpPasswordAction
-    | UpdateSignUpConfrimPasswordAction
-    | UpdateSignUpDate
-
-export type LoginAction = UpdateLoginEmailAction | UpdateLoginPasswordAction
-
 export type UserAction =
     | UpdateUserData
     | UpdateTotalUser
     | UpdateUserFollowing
     | UpdateUserLiked
+    | UpdateUserDate
 
 export type NotifyAction = UpdateNotifyText
 

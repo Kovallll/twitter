@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-export default {
+export const mixins = {
     flexRowSE: () => css`
         display: flex;
         justify-content: space-evenly;

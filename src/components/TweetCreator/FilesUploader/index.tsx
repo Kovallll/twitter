@@ -77,7 +77,7 @@ const FileUploader = (props: FileUploaderProps) => {
     const handleChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         if (handleChangeTweetText) {
             const { value } = e.target
-            handleChangeTweetText(value)!
+            handleChangeTweetText(value)
         }
     }
     const letterCountText = tweetText?.length + slashText + maxLengthTweetText

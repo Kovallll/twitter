@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const Container = styled.div`
     ${({ theme }) => {
         return css`
             ${mixins.flexColumnCenter}
+
             height: ${theme.fullSize + '%'};
             position: fixed;
             top: ${theme.modalStyles.top + '%'};

@@ -4,7 +4,7 @@ import {
     Route,
 } from 'react-router-dom'
 
-import { AuthenticatedProtect, RequireAuth } from '@components/ProtectedPaths'
+import { ProtectedRoute, UnauthorizedRoute } from '@components/ProtectedPaths'
 import { Paths } from '@constants'
 import Home from '@pages/Home'
 import Login from '@pages/Login'
@@ -20,41 +20,41 @@ const routes = [
     {
         path: Paths.SignUp,
         element: (
-            <AuthenticatedProtect redirectTo="/profile">
+            <UnauthorizedRoute redirectTo="/profile">
                 <SignUp />
-            </AuthenticatedProtect>
+            </UnauthorizedRoute>
         ),
     },
     {
         path: Paths.Login,
         element: (
-            <AuthenticatedProtect redirectTo="/profile">
+            <UnauthorizedRoute redirectTo="/profile">
                 <Login />
-            </AuthenticatedProtect>
+            </UnauthorizedRoute>
         ),
     },
     {
         path: Paths.SingUpCredential,
         element: (
-            <AuthenticatedProtect redirectTo="/profile">
+            <UnauthorizedRoute redirectTo="/profile">
                 <SingUpCredential />
-            </AuthenticatedProtect>
+            </UnauthorizedRoute>
         ),
     },
     {
         path: Paths.Profile,
         element: (
-            <RequireAuth redirectTo="/login">
+            <ProtectedRoute redirectTo="/login">
                 <Profile />
-            </RequireAuth>
+            </ProtectedRoute>
         ),
     },
     {
         path: Paths.Tweet,
         element: (
-            <RequireAuth redirectTo="/login">
+            <ProtectedRoute redirectTo="/login">
                 <TweetPage />
-            </RequireAuth>
+            </ProtectedRoute>
         ),
     },
     {

@@ -23,7 +23,7 @@ import { jwtDecode } from 'jwt-decode'
 
 import {
     countTweetsImages,
-    tokensLocalStorage,
+    tokenLocalStorage,
     usersCollection,
 } from '@constants'
 import {
@@ -33,7 +33,6 @@ import {
     updateTotalUser,
     updateUserData,
     updateUserFollowing,
-    updateUserTweetLiked,
 } from '@store'
 import {
     AvatarImage,
@@ -56,7 +55,7 @@ export const initUserData = async (
 ) => {
     const localStorage = new LocalStorage()
     const docsRef = collection(database, usersCollection)
-    const token = JSON.parse(localStorage.getItem(tokensLocalStorage))
+    const token = localStorage.getItem(tokenLocalStorage)
 
     const decodedToken = jwtDecode(token.access) as { user_id: string }
 
@@ -64,9 +63,15 @@ export const initUserData = async (
     allDocs.forEach((userDoc) => {
         const data = userDoc.data() as UserData
         if (userId === '' && data.userId === decodedToken.user_id) {
+            const correctTweets =
+                data.tweets?.map((tweet) => ({
+                    ...tweet,
+                    liked: [...new Set(tweet.liked)],
+                })) ?? null
             const userData = {
                 ...data,
                 docId: userDoc.id,
+                tweets: correctTweets,
             }
             const docRef = doc(database, usersCollection, userDoc.id)
             updateDoc(docRef, userData)
@@ -294,25 +299,22 @@ export const followOrUnfollowAccount = (
 
 export const clickLikeTweet = (
     user: UserData,
+    account: UserData,
     tweetId: string,
     isLiked: boolean,
-    dispatch: Dispatch<AllActionsType>
+    handleChangeCountLikes: (likes: number) => void
 ) => {
-    const docRef = doc(database, usersCollection, user.docId)
+    const docRef = doc(database, usersCollection, account.docId)
 
-    const updatedTweets = user.tweets!.map((tweet) => {
+    const updatedTweets = account.tweets!.map((tweet) => {
         if (tweet.tweetId === tweetId) {
-            if (isLiked) {
-                const tweetLiked = tweet.liked.filter(
-                    (id) => user.userId !== id
-                )
-                dispatch(updateUserTweetLiked(tweetLiked))
-                return { ...tweet, liked: tweetLiked }
-            } else {
-                const tweetLiked = [...tweet.liked, user.userId!]
-                dispatch(updateUserTweetLiked(tweetLiked))
-                return { ...tweet, liked: tweetLiked }
-            }
+            const tweetLiked = isLiked
+                ? tweet.liked.filter((id) => user.userId !== id)
+                : [...tweet.liked, user.userId]
+
+            const uniqueTweetLiked = [...new Set(tweetLiked)]
+            handleChangeCountLikes(uniqueTweetLiked.length)
+            return { ...tweet, liked: uniqueTweetLiked }
         } else {
             return tweet
         }
@@ -320,14 +322,5 @@ export const clickLikeTweet = (
 
     updateDoc(docRef, {
         tweets: updatedTweets,
-    })
-        .then(() => {
-            dispatch(
-                updateTotalUser({
-                    ...user,
-                    tweets: updatedTweets,
-                })
-            )
-        })
-        .catch((err) => console.error(err))
+    }).catch((err) => console.error(err))
 }

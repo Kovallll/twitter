@@ -9,8 +9,7 @@ export interface Theme {
         gray: string
         lightGray: string
         red: string
-        errorColor: string
-        successColor: string
+        green: string
         accountsBgColor: string
         searchBgColor: string
         lineBoardColor: string
@@ -53,6 +52,7 @@ export interface Theme {
             followWidth: string
             imageSize: string
             imageTop: string
+            minWidth: string
             maxWidth: string
         }
         md: {
@@ -60,10 +60,7 @@ export interface Theme {
             followWidth: string
             imageSize: string
             imageTop: string
-            maxWidth: string
-        }
-        sm: {
-            maxWidth: string
+            minWidth: string
         }
     }
     twitterAccountStyles: {
@@ -237,18 +234,21 @@ export interface Theme {
             topCloseButton: string
             rightCloseButton: string
             sizeCloseButton: string
+            buttonWidth: string
         }
         md: {
             width: string
             topCloseButton: string
             rightCloseButton: string
             sizeCloseButton: string
+            buttonWidth: string
         }
         sm: {
             width: string
             topCloseButton: string
             rightCloseButton: string
             sizeCloseButton: string
+            buttonWidth: string
         }
     }
     passwordInputStyles: {

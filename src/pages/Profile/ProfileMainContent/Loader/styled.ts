@@ -8,7 +8,7 @@ import {
     ProfileSocial,
 } from '../styled'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const SkeletonIcon = styled(ProfileImage)`
     ${({ theme }) => {

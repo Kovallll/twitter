@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { v4 } from 'uuid'
 
-import { avtarIconAltText, tweetButtonText } from './config'
+import { avtarIconAltText, tweetErrorText, tweetSuccesText } from './config'
 import {
     ButtonWrap,
     CreatorSpinner,
@@ -16,8 +16,8 @@ import { TweetCreatorProps } from './types'
 import FileUploader from '@components/TweetCreator/FilesUploader'
 import { uploadTweetsToStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { updateLoadingTweet } from '@store'
-import { theme } from '@styles/theme'
+import { booleanStatesSelector, updateLoadingTweet, userSelector } from '@store'
+import { theme } from '@styles'
 import { TweetImageType, TweetStorageType } from '@types'
 
 export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
@@ -27,15 +27,16 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
     >(null)
 
     const dispatch = useAppDispatch()
-    const { user } = useAppSelector((state) => state.user)
-    const { isLoadingTweet } = useAppSelector((state) => state.boolean)
-
+    const { user } = useAppSelector(userSelector)
+    const { isLoadingTweet } = useAppSelector(booleanStatesSelector)
     const handleChangeTweetText = (value: string) => {
         setTweetText(value)
     }
 
     const handleDeleteTweetImage = (id: string) => {
-        setCreatedTweetImages((prev) => prev!.filter((file) => file.id !== id))
+        setCreatedTweetImages((prev) =>
+            prev ? prev.filter((file) => file.id !== id) : prev
+        )
     }
 
     const uploadTweets = () => {
@@ -47,11 +48,11 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
     const addTweetImage = (
         event: ProgressEvent<FileReader>,
         file: File,
-        id?: string
+        id: string
     ) => {
         const url = event.target?.result as string
         const tweetImage = {
-            id: id ?? '',
+            id: id,
             url,
             file,
         }
@@ -88,6 +89,7 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
     const tweetButtonBg = isTweetDisabled
         ? theme.palette.gray
         : theme.palette.lightBlue
+    const tweetButtonText = isTweetDisabled ? tweetErrorText : tweetSuccesText
     return (
         <TweetCreatorBlock $isModal={isModal}>
             <ImageWrap>

@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
-import { ProfileContent } from '@pages/Profile/ProfileMainContent/styled'
-import mixins from '@styles/mixins'
+import { MainPageContent, mixins } from '@styles'
 
 export const Container = styled.div`
     ${mixins.flexRowCenter}
@@ -9,4 +8,4 @@ export const Container = styled.div`
     align-items: start;
 `
 
-export const TweetSection = styled(ProfileContent)``
+export const TweetSection = styled(MainPageContent)``

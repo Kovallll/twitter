@@ -31,8 +31,8 @@ import {
 } from '@constants'
 import { resetPassword } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { updateNotifyText, updateUserData } from '@store'
-import { theme } from '@styles/theme'
+import { updateNotifyText, updateUserData, userSelector } from '@store'
+import { theme } from '@styles'
 
 export const EditProfileModal = (props: EditProfileModalProps) => {
     const [file, setFile] = useState<File | null>(null)
@@ -40,7 +40,7 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
     const { handleChangeIsOpenModal, handleEditProfile, email } = props
 
     const dispatch = useAppDispatch()
-    const { editData } = useAppSelector((state) => state.user)
+    const { editData } = useAppSelector(userSelector)
 
     const { description, social, name, photoUrl } = editData
 

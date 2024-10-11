@@ -1,8 +1,6 @@
-import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { Button, ProfileIcon } from '@styles/global'
-import mixins from '@styles/mixins'
+import { Button, mixins, ProfileIcon } from '@styles'
 
 export const Wrap = styled.div`
     ${({ theme }) => {
@@ -11,45 +9,25 @@ export const Wrap = styled.div`
 
             width: ${theme.fullSize + '%'};
             height: ${theme.fullSize + '%'};
-            padding: ${theme.spaces.md +
-            'px ' +
-            theme.spaces.xl +
-            'px ' +
-            '0 ' +
-            theme.spaces.md +
-            'px'};
+            padding: ${theme.spaces.md + 'px'} ${theme.spaces.xl + 'px'} 0px
+                ${theme.spaces.md + 'px'};
 
             @media (${theme.media.xl}) {
                 max-width: ${theme.sidebarStyles.lg.maxWidth + 'px'};
-                padding: ${theme.spaces.sm +
-                'px ' +
-                theme.spaces.lg +
-                'px ' +
-                '0 ' +
-                theme.spaces.sm +
-                'px'};
+                padding: ${theme.spaces.sm + 'px'} ${theme.spaces.lg + 'px'} 0px
+                    ${theme.spaces.sm + 'px'};
             }
 
             @media (${theme.media.lg}) {
                 max-width: ${theme.sidebarStyles.md.maxWidth + 'px'};
-                padding: ${theme.spaces.xs +
-                'px ' +
-                theme.spaces.md +
-                'px ' +
-                '0 ' +
-                theme.spaces.xs +
-                'px'};
+                padding: ${theme.spaces.xs + 'px'} ${theme.spaces.md + 'px'} 0px
+                    ${theme.spaces.xs + 'px'};
             }
 
             @media (${theme.media.md}) {
                 max-width: ${theme.sidebarStyles.sm.maxWidth + 'px'};
-                padding: ${theme.spaces.xxs +
-                'px ' +
-                theme.spaces.sm +
-                'px ' +
-                '0 ' +
-                theme.spaces.xxs +
-                'px'};
+                padding: ${theme.spaces.xxs + 'px'} ${theme.spaces.sm + 'px'}
+                    0px ${theme.spaces.xxs + 'px'};
             }
 
             @media (${theme.media.xxs}) {
@@ -91,52 +69,6 @@ export const LogoWrap = styled.div`
 
             @media (${theme.media.sm}) {
                 margin-bottom: ${theme.spaces.xl + 'px'};
-            }
-        `
-    }}
-`
-
-export const SidebarLink = styled(Link)`
-    ${({ theme }) => {
-        return css`
-            ${mixins.flexRowStart}
-
-            margin-bottom: ${theme.spaces.xxl + 'px'};
-            text-decoration: none;
-
-            @media (${theme.media.xl}) {
-                margin-bottom: ${theme.spaces.xl + 'px'};
-            }
-            @media (${theme.media.md}) {
-                ${mixins.flexRowCenter}
-
-                width: ${theme.fullSize + '%'};
-                margin-bottom: ${theme.spaces.lg + 'px'};
-            }
-            @media (${theme.media.sm}) {
-                margin-bottom: ${theme.spaces.md + 'px'};
-            }
-        `
-    }}
-`
-
-export const Icon = styled.img``
-
-export const Title = styled.p`
-    ${({ theme }) => {
-        return css`
-            margin-left: ${theme.spaces.lg + 'px'};
-            color: ${theme.palette.common.black};
-            font-size: ${theme.fontSizes.sm + 'px'};
-            font-weight: ${theme.boldFont};
-
-            @media (${theme.media.xl}) {
-                margin-left: ${theme.spaces.md + 'px'};
-                font-size: ${theme.fontSizes.xs + 'px'};
-            }
-
-            @media (${theme.media.md}) {
-                display: none;
             }
         `
     }}
@@ -253,6 +185,7 @@ export const IconWrap = styled.div`
 
             @media (${theme.media.md}) {
                 ${mixins.flexRowCenter}
+
                 width: ${theme.fullSize + '%'};
             }
         `

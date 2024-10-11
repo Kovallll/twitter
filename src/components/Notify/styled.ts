@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { NotifyModuleProps } from './types'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const NotifyModule = styled.p<NotifyModuleProps>`
     ${({ theme, $isSuccess }) => {
@@ -17,9 +17,7 @@ export const NotifyModule = styled.p<NotifyModuleProps>`
             theme.notifyStyles.lg.paddingLR +
             'px'};
             z-index: ${theme.notifyStyles.zIndex};
-            background: ${$isSuccess
-                ? theme.palette.successColor
-                : theme.palette.errorColor};
+            background: ${$isSuccess ? theme.palette.green : theme.palette.red};
             font-size: ${theme.fontSizes.lg + 'px'};
             border-radius: ${theme.notifyStyles.borderRadius + 'px'};
             color: ${theme.palette.common.white};
