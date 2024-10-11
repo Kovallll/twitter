@@ -1,0 +1,5 @@
+export const likeIconAltText = 'likeIcon'
+export const deleteText = 'Delete'
+export const avatarIconAltText = 'avatarIcon'
+export const imageIconAltText = 'image'
+export const moreIconAltText = 'moreIcon'

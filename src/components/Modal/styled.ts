@@ -1,30 +1,21 @@
 import styled, { css } from 'styled-components'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const Container = styled.div`
     ${({ theme }) => {
         return css`
             ${mixins.flexColumnCenter}
 
-            top: ${theme.modalStyles.lg.top + 'px'};
-            right: calc(50% - ${Number(theme.modalStyles.lg.width) / 2 + 'px'});
-            position: absolute;
-            z-index: 10;
-
-            @media (${theme.media.sm}) {
-                top: ${theme.modalStyles.md.top + 'px'};
-                right: calc(
-                    50% - ${Number(theme.modalStyles.md.width) / 2 + 'px'}
-                );
-            }
-
-            @media (${theme.media.xs}) {
-                top: ${theme.modalStyles.sm.top + 'px'};
-                right: calc(
-                    50% - ${Number(theme.modalStyles.sm.width) / 2 + 'px'}
-                );
-            }
+            height: ${theme.fullSize + '%'};
+            position: fixed;
+            top: ${theme.modalStyles.top + '%'};
+            left: ${theme.modalStyles.half + '%'};
+            transform: translate(
+                -${theme.modalStyles.half + '%'},
+                -${theme.modalStyles.half + '%'}
+            );
+            z-index: ${theme.modalStyles.zIndex};
         `
     }}
 `
@@ -59,6 +50,7 @@ export const CloseButton = styled.button`
             background: transparent;
             border: ${theme.noneBorder};
             cursor: pointer;
+            z-index: 10;
             top: ${theme.modalStyles.lg.topCloseButton + 'px'};
             right: ${theme.modalStyles.lg.rightCloseButton + 'px'};
 
@@ -67,7 +59,7 @@ export const CloseButton = styled.button`
                 height: ${theme.modalStyles.lg.sizeCloseButton + 'px'};
             }
 
-            @media (${theme.media.sm}) {
+            @media (${theme.media.xl}) {
                 top: ${theme.modalStyles.md.topCloseButton + 'px'};
                 right: ${theme.modalStyles.md.rightCloseButton + 'px'};
 

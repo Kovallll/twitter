@@ -1,27 +1,28 @@
-import { FieldValues } from 'react-hook-form'
-
-import { InputModule } from './styled'
+import { InputModule, LettersCount, Wrap } from './styled'
 import { InputProps } from './types'
 
-import { ErrorText } from '@styles/global'
+import { ErrorText } from '@styles'
 
-export const Input = <T extends FieldValues>(props: InputProps<T>) => {
-    const { value, label, register, error, onChangeInput, ...otherProps } =
-        props
+export const Input = (props: InputProps) => {
+    const { value, error, onChangeInput, maxLength, ...otherProps } = props
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target
-        onChangeInput(value)
+        onChangeInput(e.target.value)
     }
-    const validRegister =
-        !!register && !!label
-            ? register(label, { onChange: handleInputChange })
-            : []
 
+    const letterCountText = `${value?.length ?? 0}/${maxLength}`
     return (
         <>
-            <ErrorText role="alert">{error}</ErrorText>
-            <InputModule {...validRegister} {...otherProps} value={value} />
+            {error !== undefined && <ErrorText role="alert">{error}</ErrorText>}
+            <Wrap>
+                <InputModule
+                    {...otherProps}
+                    value={value}
+                    maxLength={maxLength}
+                    onChange={handleInputChange}
+                />
+                {maxLength && <LettersCount>{letterCountText}</LettersCount>}
+            </Wrap>
         </>
     )
 }

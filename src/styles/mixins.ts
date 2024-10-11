@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-export default {
+export const mixins = {
     flexRowSE: () => css`
         display: flex;
         justify-content: space-evenly;
@@ -9,6 +9,11 @@ export default {
     flexRowEnd: () => css`
         display: flex;
         justify-content: end;
+        align-items: center;
+    `,
+    flexRowStart: () => css`
+        display: flex;
+        justify-content: start;
         align-items: center;
     `,
     flexRowSB: () => css`
@@ -38,5 +43,23 @@ export default {
         justify-content: center;
         align-items: start;
         flex-direction: column;
+    `,
+    flexColumnEnd: () => css`
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        flex-direction: column;
+    `,
+    loadingAnimation: () => css`
+        animation: skeleton-loading 1.2s linear infinite alternate;
+
+        @keyframes skeleton-loading {
+            0% {
+                background-color: hsl(200, 20%, 80%);
+            }
+            100% {
+                background-color: hsl(200, 20%, 95%);
+            }
+        }
     `,
 }
