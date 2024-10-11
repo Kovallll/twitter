@@ -5,6 +5,7 @@ import exploreIcon from '@assets/icons/explore.svg'
 import eyeOpen from '@assets/icons/eyeSee.svg'
 import eyeSlash from '@assets/icons/eyeSlash.svg'
 import googleIcon from '@assets/icons/googleIcon.svg'
+import homeActiveIcon from '@assets/icons/homeActive.svg'
 import homeIcon from '@assets/icons/homeOutline.svg'
 import uploadImage from '@assets/icons/image.svg'
 import likeFill from '@assets/icons/likeFill.svg'
@@ -15,6 +16,7 @@ import messagesIcon from '@assets/icons/messages.svg'
 import moreIcon from '@assets/icons/more.svg'
 import notificationIcon from '@assets/icons/notification.svg'
 import postIcon from '@assets/icons/post.svg'
+import profileActiveIcon from '@assets/icons/profileActive.svg'
 import profileIcon from '@assets/icons/profileOutline.svg'
 import searchIcon from '@assets/icons/search.svg'
 import logoIcon from '@assets/icons/twitterLogo.svg'
@@ -121,12 +123,44 @@ export const booleanStatesDefaultData = {
 }
 
 export const sidebarLinks = [
-    { icon: homeIcon, title: 'Home', link: Paths.Home },
-    { icon: exploreIcon, title: 'Explore', link: '/' },
-    { icon: notificationIcon, title: 'Notification', link: '/' },
-    { icon: messagesIcon, title: 'Messages', link: '/' },
-    { icon: bookmarksIcon, title: 'Bookmarks', link: '/' },
-    { icon: listsIcon, title: 'Lists', link: '/' },
-    { icon: profileIcon, title: 'Profile', link: Paths.Profile },
-    { icon: moreIcon, title: 'More', link: '/' },
+    {
+        icon: { default: homeIcon, active: homeActiveIcon },
+        title: 'Home',
+        link: Paths.Home,
+    },
+    {
+        icon: { default: exploreIcon, active: exploreIcon },
+        title: 'Explore',
+        link: '/',
+    },
+    {
+        icon: { default: notificationIcon, active: notificationIcon },
+        title: 'Notification',
+        link: '/',
+    },
+    {
+        icon: { default: messagesIcon, active: messagesIcon },
+        title: 'Messages',
+        link: '/',
+    },
+    {
+        icon: { default: bookmarksIcon, active: bookmarksIcon },
+        title: 'Bookmarks',
+        link: '/',
+    },
+    {
+        icon: { default: listsIcon, active: listsIcon },
+        title: 'Lists',
+        link: '/',
+    },
+    {
+        icon: { default: profileIcon, active: profileActiveIcon },
+        title: 'Profile',
+        link: Paths.Profile,
+    },
+    {
+        icon: { default: moreIcon, active: moreIcon },
+        title: 'More',
+        link: '/',
+    },
 ]
