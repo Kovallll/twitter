@@ -16,7 +16,7 @@ import { SignUpDate, UserData } from '@types'
 export const getSelectYears = () => {
     const currentYear = new Date().getFullYear()
     const yearsArray = []
-    for (let i = currentYear - 1; i > currentYear - countYears; i--) {
+    for (let i = currentYear - 1; i >= currentYear - countYears; i--) {
         yearsArray.push(i.toString())
     }
 
@@ -108,7 +108,7 @@ export class LocalStorage {
         }
     }
 
-    getItem = (key: string): any => {
+    getItem = (key: string) => {
         if (this.checkIsLocalStorageAvailable()) {
             return JSON.parse(
                 window.localStorage.getItem(key) ?? JSON.stringify(null)
@@ -119,6 +119,12 @@ export class LocalStorage {
     setItem = (key: string, value: any) => {
         if (this.checkIsLocalStorageAvailable()) {
             window.localStorage.setItem(key, JSON.stringify(value))
+        }
+    }
+
+    removeItem = (key: string) => {
+        if (this.checkIsLocalStorageAvailable()) {
+            window.localStorage.removeItem(key)
         }
     }
 }

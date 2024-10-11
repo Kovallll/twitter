@@ -22,8 +22,6 @@ export interface SignUpFormInput {
 
 export type DateType = 'year' | 'month' | 'day'
 
-export type DateLabel = 'date.year' | 'date.month' | 'date.day'
-
 export type SignUpDate = Record<DateType, string>
 
 export interface SelectProps {

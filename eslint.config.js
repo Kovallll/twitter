@@ -47,6 +47,7 @@ export default [
             'import/no-duplicates': 'error',
             'prefer-const': 'warn',
             'react-hooks/exhaustive-deps': 'warn',
+            '@typescript-eslint/no-namespace': 'off',
             '@typescript-eslint/no-empty-object-type': 'off',
             '@typescript-eslint/no-unused-vars': [
                 'error',
