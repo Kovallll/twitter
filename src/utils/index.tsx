@@ -114,7 +114,9 @@ export class LocalStorage {
         key: T
     ): LocalStorageSchema[T] | null => {
         if (this.checkIsLocalStorageAvailable()) {
-            return JSON.parse(window.localStorage.getItem(key) ?? 'null')
+            const storageValue = window.localStorage.getItem(key)
+            if (!storageValue) return null
+            else return JSON.parse(storageValue)
         } else return null
     }
 
