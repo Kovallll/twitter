@@ -56,7 +56,7 @@ export const initUserData = async (
     const docsRef = collection(database, usersCollection)
     const token = localStorage.getItem(tokenLocalStorage)
 
-    const decodedToken = jwtDecode(token.access) as { user_id: string }
+    const decodedToken = jwtDecode(token?.access ?? '') as { user_id: string }
 
     const allDocs = await getDocs(docsRef)
     allDocs.forEach((userDoc) => {

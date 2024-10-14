@@ -1,3 +1,3 @@
 export interface LocalStorageSchema {
-    token: { access: string }
+    token: { access: string } | null
 }
