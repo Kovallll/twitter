@@ -1,5 +1,3 @@
-import { UseFormRegister } from 'react-hook-form'
-
 export { type Theme, type ColorTheme } from './theme'
 
 export interface ButtonProps {
@@ -32,8 +30,7 @@ export interface SelectProps {
     data: string[]
     error: string | undefined
     type: DateType
-    register?: UseFormRegister<SignUpFormInput>
-    onChangeDate: (value: string, type: DateType) => void
+    onChangeDate: (value: string) => void
     value: string
 }
 
@@ -44,7 +41,7 @@ export interface ActionInterface<T, P> {
 
 export type TweetImageType = { id: string; file: File; url: string }
 
-export type AvatarImage = { id: string; file: File }
+export type AvatarImage = { id: string; file: File | null }
 
 export type CreatedTweetImageType = { id: string; url: string }
 
@@ -71,8 +68,8 @@ export interface UserData {
     userId: string
     email: string
     name: string
-    social?: string
-    description?: string
+    social: string | null
+    description: string | null
     avatar: CreatedTweetImageType
     followers: string[]
     following: string[]
@@ -80,10 +77,10 @@ export interface UserData {
 }
 
 export interface EditModalData {
-    description: string | undefined
-    social: string | undefined
+    description: string | null
+    social: string | null
     name: string
-    photoUrl?: string
+    avatarUrl?: string
 }
 
 export interface UserCredential {

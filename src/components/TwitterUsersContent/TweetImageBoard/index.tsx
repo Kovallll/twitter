@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { imageAltText } from './config'
 import { Loader } from './Loader'
@@ -7,6 +7,7 @@ import { Image, ImagesSection, ImageWrap } from './styled'
 import { countTweetsImages } from '@constants'
 import { uploadTweetImagesFromStorage } from '@firebase'
 import { useAppSelector } from '@hooks'
+import { loaderStatesSelector, userSelector } from '@store'
 import { CreatedTweetImageType } from '@types'
 
 export const TweetImageBoard = () => {
@@ -17,8 +18,8 @@ export const TweetImageBoard = () => {
         setTweetsImages((prev) => (prev ? [...prev, tweetImage] : [tweetImage]))
     }
 
-    const { user } = useAppSelector((state) => state.user)
-    const { isLoadingInitialData } = useAppSelector((state) => state.boolean)
+    const { user } = useAppSelector(userSelector)
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
 
     useEffect(() => {
         if (user.userId) {
@@ -30,15 +31,20 @@ export const TweetImageBoard = () => {
         }
     }, [user.userId])
 
+    const tweetsBoardImages = useMemo(
+        () => tweetsImages?.slice(0, countTweetsImages),
+        [tweetsImages]
+    )
+
     return (
         <>
             {isLoadingInitialData ? (
                 <Loader />
             ) : (
                 <ImagesSection>
-                    {tweetsImages?.slice(0, countTweetsImages).map((image) => (
-                        <ImageWrap key={image.id}>
-                            <Image src={image.url} alt={imageAltText} />
+                    {tweetsBoardImages?.map(({ id, url }) => (
+                        <ImageWrap key={id}>
+                            <Image src={url} alt={imageAltText} />
                         </ImageWrap>
                     ))}
                 </ImagesSection>

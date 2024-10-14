@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const Wrap = styled.div`
     ${({ theme }) => {
         return css`
             ${mixins.flexColumnCenter}
+
             width: ${theme.selectStyles.halfWidth + '%'};
             margin-right: ${theme.selectStyles.lg.marginRight + 'px'};
 

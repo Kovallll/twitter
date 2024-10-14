@@ -8,7 +8,7 @@ export interface FileUploaderProps {
     handleUpdateImage: (
         e: ProgressEvent<FileReader>,
         file: File,
-        id?: string
+        id: string
     ) => void
     isTweet: boolean
     isModal?: boolean

@@ -43,6 +43,7 @@ export interface Theme {
             followWidth: string
             imageSize: string
             imageTop: string
+            minWidth: string
             maxWidth: string
         }
         md: {
@@ -50,10 +51,7 @@ export interface Theme {
             followWidth: string
             imageSize: string
             imageTop: string
-            maxWidth: string
-        }
-        sm: {
-            maxWidth: string
+            minWidth: string
         }
     }
     twitterAccountStyles: {
@@ -105,6 +103,9 @@ export interface Theme {
         subtitleHeight: string
         textWidth: string
         textHeight: string
+    }
+    notFoundStyles: {
+        width: string
     }
     notifyStyles: {
         zIndex: string
@@ -227,18 +228,21 @@ export interface Theme {
             topCloseButton: string
             rightCloseButton: string
             sizeCloseButton: string
+            buttonWidth: string
         }
         md: {
             width: string
             topCloseButton: string
             rightCloseButton: string
             sizeCloseButton: string
+            buttonWidth: string
         }
         sm: {
             width: string
             topCloseButton: string
             rightCloseButton: string
             sizeCloseButton: string
+            buttonWidth: string
         }
     }
     passwordInputStyles: {

@@ -36,6 +36,7 @@ export const LettersCount = styled.p`
             right: ${theme.spaces.sm + 'px'};
             color: ${theme.palette.lightPrimary};
             font-size: ${theme.fontSizes.xs + 'px'};
+
             @media (${theme.media.md}) {
                 font-size: ${theme.fontSizes.xxs + 'px'};
             }

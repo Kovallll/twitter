@@ -41,14 +41,14 @@ import Notify from '@components/Notify'
 import { images, notifyTimeout, Paths } from '@constants'
 import { goggleAuth } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { updateNotifyText } from '@store'
-import { Button, Logo } from '@styles/global'
+import { notifySelector, updateNotifyText } from '@store'
+import { Button, Logo } from '@styles'
 import { getNotifyError } from '@utils'
 
 const SignUp = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { text } = useAppSelector((state) => state.notify)
+    const { text } = useAppSelector(notifySelector)
 
     const handleGoggleAuthClick = () => {
         goggleAuth(dispatch, navigate)

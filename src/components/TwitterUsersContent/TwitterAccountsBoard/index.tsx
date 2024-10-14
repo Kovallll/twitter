@@ -17,15 +17,16 @@ import {
 
 import { followOrUnfollowAccount } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
+import { loaderStatesSelector, totalSelector, userSelector } from '@store'
 import { UserData } from '@types'
 
 export const TwitterAccountsBoard = () => {
     const [isShow, setIsShow] = useState(false)
 
     const dispatch = useAppDispatch()
-    const { accounts } = useAppSelector((state) => state.total)
-    const { user } = useAppSelector((state) => state.user)
-    const { isLoadingInitialData } = useAppSelector((state) => state.boolean)
+    const { accounts } = useAppSelector(totalSelector)
+    const { user } = useAppSelector(userSelector)
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
 
     const handleFollowAccount = (account: UserData) => () => {
         followOrUnfollowAccount(user, account, dispatch)
@@ -43,29 +44,28 @@ export const TwitterAccountsBoard = () => {
                 <AccountsSection>
                     <Title>{title}</Title>
                     <Accounts $isShow={isShow}>
-                        {accounts.map((account) => (
-                            <AccountCard key={account.userId}>
-                                <AccountAvatar
-                                    src={account.avatar.url}
-                                    alt={avatarIconAltText}
-                                />
-                                <AccountInfo>
-                                    <AccountName>{account.name}</AccountName>
-                                    <AccountSocial>
-                                        {account.social}
-                                    </AccountSocial>
-                                </AccountInfo>
-                                <FollowButton
-                                    onClick={handleFollowAccount(account)}
-                                >
-                                    {(user.following as string[]).includes(
-                                        account.userId!
-                                    )
-                                        ? unfollow
-                                        : follow}
-                                </FollowButton>
-                            </AccountCard>
-                        ))}
+                        {accounts.map((account) => {
+                            const { userId, avatar, name, social } = account
+                            return (
+                                <AccountCard key={userId}>
+                                    <AccountAvatar
+                                        src={avatar.url}
+                                        alt={avatarIconAltText}
+                                    />
+                                    <AccountInfo>
+                                        <AccountName>{name}</AccountName>
+                                        <AccountSocial>{social}</AccountSocial>
+                                    </AccountInfo>
+                                    <FollowButton
+                                        onClick={handleFollowAccount(account)}
+                                    >
+                                        {user.following.includes(userId)
+                                            ? unfollow
+                                            : follow}
+                                    </FollowButton>
+                                </AccountCard>
+                            )
+                        })}
                     </Accounts>
                     <ShowMoreLink onClick={handleClickShowMore}>
                         {showMore}

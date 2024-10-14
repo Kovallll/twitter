@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import { ProfileIcon } from '@styles/global'
-import mixins from '@styles/mixins'
+import { mixins, ProfileIcon } from '@styles'
 
 export const TweetArticle = styled.article`
     ${({ theme }) => {
@@ -65,6 +64,7 @@ export const TweetSocial = styled.p`
             font-size: ${theme.fontSizes.xxs + 'px'};
             margin-right: ${theme.spaces.xs + 'px'};
             word-wrap: break-word;
+
             @media (${theme.media.xxs}) {
                 white-space: nowrap;
                 width: ${theme.tweetStyles.socialWidth + 'px'};

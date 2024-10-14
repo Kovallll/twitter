@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 
 import {
+    defaultDescription,
+    defaultSocial,
     editText,
     followersText,
     followingText,
     imageAltText,
     profileIconAltText,
+    successText,
     tweetsText,
 } from './config'
 import { ProfileLoader } from './Loader'
@@ -37,28 +40,27 @@ import Notify from '@components/Notify'
 import { Tweet } from '@components/Tweet'
 import { TweetCreator } from '@components/TweetCreator'
 import { images, notifyTimeout } from '@constants'
-import {
-    deleteTweetFromStorage,
-    uploadProfileAvatar,
-    uploadUserDataToStorage,
-} from '@firebase'
+import { deleteTweetFromStorage, uploadUserDataToStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import {
+    loaderStatesSelector,
+    notifySelector,
+    openedStatesSelector,
     updateIsTweetModalOpen,
     updateLoadingInitialData,
     updateNotifyText,
+    userSelector,
 } from '@store'
-import { EditModalData } from '@types'
+import { AvatarImage, EditModalData } from '@types'
 
 export const ProfileMainContent = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
     const dispatch = useAppDispatch()
-    const { user } = useAppSelector((state) => state.user)
-    const { text } = useAppSelector((state) => state.notify)
-    const { isLoadingInitialData, isTweetModalOpen } = useAppSelector(
-        (state) => state.boolean
-    )
+    const { user } = useAppSelector(userSelector)
+    const { text } = useAppSelector(notifySelector)
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
+    const { isTweetModalOpen } = useAppSelector(openedStatesSelector)
 
     useEffect(() => {
         let timeout: NodeJS.Timeout
@@ -77,8 +79,8 @@ export const ProfileMainContent = () => {
         setIsEditModalOpen((prev) => !prev)
     }
 
-    const uploadUserData = (data: EditModalData) => {
-        uploadUserDataToStorage(data, user.docId, dispatch)
+    const uploadUserData = (data: EditModalData, image: AvatarImage) => {
+        uploadUserDataToStorage(data, user.docId, image, dispatch)
     }
 
     if (user.userId === '' && !isLoadingInitialData) {
@@ -91,14 +93,12 @@ export const ProfileMainContent = () => {
 
     const handleEditProfile = (data: EditModalData, file: File | null) => {
         handleChangeIsOpenModal()
-        if (file) {
-            const image = {
-                id: user.avatar.id,
-                file,
-            }
-            uploadProfileAvatar(image, user, dispatch)
+        const image = {
+            id: user.avatar.id,
+            file,
         }
-        uploadUserData(data)
+        uploadUserData(data, image)
+        dispatch(updateNotifyText(successText))
     }
 
     const handleDeleteTweet = (tweetId: string) => {
@@ -108,6 +108,13 @@ export const ProfileMainContent = () => {
     const handleOpenModalTweet = () => {
         dispatch(updateIsTweetModalOpen(false))
     }
+
+    const userSocial =
+        user.social && user.social !== '' ? user.social : defaultSocial
+    const userDescription =
+        user.description && user.description !== ''
+            ? user.description
+            : defaultDescription
     return (
         <>
             <ProfileContent>
@@ -120,7 +127,7 @@ export const ProfileMainContent = () => {
                         <ProfileTopInfo>
                             <ImageWrap>
                                 <ProfileImage
-                                    src={user?.avatar.url}
+                                    src={user.avatar.url}
                                     alt={profileIconAltText}
                                 />
                             </ImageWrap>
@@ -134,21 +141,21 @@ export const ProfileMainContent = () => {
                             </EditBlock>
                         </ProfileTopInfo>
                         <ProfileBottomInfo>
-                            <ProfileName>{user?.name}</ProfileName>
-                            <ProfileSocial>{user?.social ?? ''}</ProfileSocial>
+                            <ProfileName>{user.name}</ProfileName>
+                            <ProfileSocial>{userSocial}</ProfileSocial>
                             <ProfileDescription>
-                                {user?.description ?? ''}
+                                {userDescription}
                             </ProfileDescription>
                             <ProfileFollowBlock>
                                 <Follow>
                                     <FollowCount>
-                                        {user?.following.length}
+                                        {user.following.length}
                                     </FollowCount>
                                     {followingText}
                                 </Follow>
                                 <Follow>
                                     <FollowCount>
-                                        {user?.followers.length}
+                                        {user.followers.length}
                                     </FollowCount>
                                     {followersText}
                                 </Follow>
@@ -164,7 +171,7 @@ export const ProfileMainContent = () => {
                     ) : (
                         user.tweets?.map((data) => (
                             <Tweet
-                                data={{ tweetData: data, user: user }}
+                                data={{ tweetData: data, account: user }}
                                 handleDeleteTweet={handleDeleteTweet}
                                 isUserTweet={true}
                             />
@@ -174,7 +181,6 @@ export const ProfileMainContent = () => {
             </ProfileContent>
             {isEditModalOpen && (
                 <EditProfileModal
-                    email={user.email}
                     handleChangeIsOpenModal={handleChangeIsOpenModal}
                     handleEditProfile={handleEditProfile}
                 />

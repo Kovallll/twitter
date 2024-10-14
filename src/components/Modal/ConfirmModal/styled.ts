@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import { Button } from '@styles/global'
-import mixins from '@styles/mixins'
+import { Button, mixins } from '@styles'
 
 export const Title = styled.h2`
     ${({ theme }) => {
@@ -11,7 +10,7 @@ export const Title = styled.h2`
     }}
 `
 
-export const Buttons = styled.div`
+export const ButtonsWrap = styled.div`
     ${({ theme }) => {
         return css`
             ${mixins.flexRowSE}
@@ -20,11 +19,30 @@ export const Buttons = styled.div`
         `
     }}
 `
-export const ConfrimButton = styled(Button)`
+
+export const CloseButton = styled(Button)`
     ${({ theme }) => {
         return css`
             color: ${theme.palette.text};
             background-color: ${theme.palette.bgColor};
+            width: ${theme.modalStyles.lg.buttonWidth + 'px'};
+            cursor: pointer;
+
+            @media (${theme.media.md}) {
+                width: ${theme.modalStyles.md.buttonWidth + 'px'};
+            }
+
+            @media (${theme.media.xs}) {
+                width: ${theme.modalStyles.sm.buttonWidth + 'px'};
+            }
+        `
+    }}
+`
+
+export const ConfirmButton = styled(CloseButton)`
+    ${({ theme }) => {
+        return css`
+            background-color: ${theme.palette.errorColor};
         `
     }}
 `

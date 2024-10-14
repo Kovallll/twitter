@@ -2,8 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { AccountsProps } from './types'
 
-import { Button, ProfileIcon } from '@styles/global'
-import mixins from '@styles/mixins'
+import { Button, mixins, ProfileIcon } from '@styles'
 
 export const AccountsSection = styled.section`
     ${({ theme }) => {

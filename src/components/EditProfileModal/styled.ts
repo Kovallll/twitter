@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components'
 
+import { ModalButtonProps } from './types'
+
 import { Input } from '@components/Input'
-import { Button, ProfileIcon } from '@styles/global'
-import mixins from '@styles/mixins'
+import { Button, mixins, ProfileIcon } from '@styles'
 
 export const Container = styled.div`
     ${({ theme }) => {
@@ -10,6 +11,14 @@ export const Container = styled.div`
             ${mixins.flexColumnCenter}
 
             padding: ${theme.spaces.xl + 'px'};
+
+            @media (${theme.media.xs}) {
+                padding: ${theme.spaces.lg + 'px'};
+            }
+
+            @media (${theme.media.xxs}) {
+                padding: ${theme.spaces.md + 'px'};
+            }
         `
     }}
 `
@@ -48,18 +57,20 @@ export const ModalInput = styled(Input)`
             font-size: ${theme.fontSizes.xs + 'px'};
 
             @media (${theme.media.md}) {
-                padding: ${theme.spaces.sm + 'px'} ${theme.spaces.sm + 'px'};
+                padding: ${theme.spaces.sm + 'px'};
             }
         `
     }}
 `
 
-export const ModalButton = styled(Button)`
-    ${({ theme }) => {
+export const ModalButton = styled(Button)<ModalButtonProps>`
+    ${({ theme, $isDisabled }) => {
         return css`
             margin-bottom: 0;
             padding: ${theme.spaces.md + 'px' + ' 0px'};
-            background-color: ${theme.palette.primary};
+            background-color: ${$isDisabled
+                ? theme.palette.primary
+                : theme.palette.secondary};
             color: ${theme.palette.common.white};
         `
     }}

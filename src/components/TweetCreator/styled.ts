@@ -2,8 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { TweetButtonProps, TweetCreatorBlockProps } from './types'
 
-import { Button, ProfileIcon, Spinner } from '@styles/global'
-import mixins from '@styles/mixins'
+import { Button, mixins, ProfileIcon, Spinner } from '@styles'
 
 export const TweetIcon = styled(ProfileIcon)`
     ${({ theme }) => {

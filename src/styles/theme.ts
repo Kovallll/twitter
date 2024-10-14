@@ -71,17 +71,15 @@ export const theme: Theme = {
             followWidth: '200',
             imageSize: '120',
             imageTop: '70',
-            maxWidth: '1200',
+            maxWidth: '1400',
+            minWidth: '1040',
         },
         md: {
             twitterHeaderWidth: '200',
             followWidth: '160',
             imageSize: '100',
             imageTop: '60',
-            maxWidth: '800',
-        },
-        sm: {
-            maxWidth: '600',
+            minWidth: '800',
         },
     },
     usersStyles: {
@@ -93,6 +91,9 @@ export const theme: Theme = {
         md: {
             cols: '2',
         },
+    },
+    notFoundStyles: {
+        width: '300',
     },
     loginStyles: {
         margin: '20',
@@ -187,18 +188,21 @@ export const theme: Theme = {
             topCloseButton: '16',
             rightCloseButton: '16',
             sizeCloseButton: '40',
+            buttonWidth: '200',
         },
         md: {
             width: '440',
             topCloseButton: '12',
             rightCloseButton: '12',
             sizeCloseButton: '32',
+            buttonWidth: '160',
         },
         sm: {
-            width: '340',
+            width: '320',
             topCloseButton: '8',
             rightCloseButton: '8',
             sizeCloseButton: '28',
+            buttonWidth: '120',
         },
     },
     googleIcon: {

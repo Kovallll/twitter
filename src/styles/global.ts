@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import mixins from './mixins'
+import { mixins } from './mixins'
 
 import { ButtonProps } from '@types'
 
@@ -36,6 +36,7 @@ ${({ theme }) => {
     `
 }}
  
+  
 `
 
 export const Logo = styled.img`
@@ -123,6 +124,7 @@ export const Spinner = styled.div`
     ${({ theme }) => {
         return css`
             ${mixins.flexRowCenter}
+
             height: ${theme.fullSize + 'vh'};
             width: ${theme.fullSize + '%'};
             color: ${theme.palette.text};
@@ -161,6 +163,30 @@ export const ProfileIcon = styled.img`
             @media (${theme.media.lg}) {
                 width: ${theme.profileIconStyles.md.size + 'px'};
                 height: ${theme.profileIconStyles.md.size + 'px'};
+            }
+        `
+    }}
+`
+
+export const MainPageContent = styled.section`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexColumnCenter}
+
+            width: ${theme.fullSize + '%'};
+            max-width: ${theme.profileMainContentStyles.lg.maxWidth + 'px'};
+            min-width: ${theme.profileMainContentStyles.lg.minWidth + 'px'};
+            position: relative;
+            border: ${theme.profileMainContentStyles.border +
+            theme.palette.lineBoardColor};
+            border-bottom: 0;
+
+            @media (${theme.media.xl}) {
+                min-width: ${theme.profileMainContentStyles.md.minWidth + 'px'};
+            }
+
+            @media (${theme.media.lg}) {
+                min-width: 0;
             }
         `
     }}

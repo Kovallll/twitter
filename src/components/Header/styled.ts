@@ -1,9 +1,8 @@
 import styled, { css } from 'styled-components'
 
-import { ProfileIcon } from '@styles/global'
-import mixins from '@styles/mixins'
+import { mixins, ProfileIcon } from '@styles'
 
-export const HeaderWrap = styled.div`
+export const HeaderWrap = styled.header`
     ${({ theme }) => {
         return css`
             ${mixins.flexRowSB}
@@ -21,7 +20,7 @@ export const HeaderWrap = styled.div`
         `
     }}
 `
-export const HeaderContent = styled.div`
+export const HeaderContentBlock = styled.div`
     ${mixins.flexRowCenter}
 `
 

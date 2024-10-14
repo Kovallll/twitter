@@ -23,7 +23,7 @@ import { jwtDecode } from 'jwt-decode'
 
 import {
     countTweetsImages,
-    tokensLocalStorage,
+    tokenLocalStorage,
     usersCollection,
 } from '@constants'
 import {
@@ -31,9 +31,7 @@ import {
     setTotalAccounts,
     updateLoadingTweet,
     updateTotalUser,
-    updateUserData,
     updateUserFollowing,
-    updateUserTweetLiked,
 } from '@store'
 import {
     AvatarImage,
@@ -56,29 +54,27 @@ export const initUserData = async (
 ) => {
     const localStorage = new LocalStorage()
     const docsRef = collection(database, usersCollection)
-    const token = localStorage.getItem(tokensLocalStorage)
+    const token = localStorage.getItem(tokenLocalStorage)
 
-    const decodedToken = jwtDecode(token.access) as { user_id: string }
+    const decodedToken = jwtDecode(token?.access ?? '') as { user_id: string }
 
     const allDocs = await getDocs(docsRef)
     allDocs.forEach((userDoc) => {
         const data = userDoc.data() as UserData
         if (userId === '' && data.userId === decodedToken.user_id) {
+            const correctTweets =
+                data.tweets?.map((tweet) => ({
+                    ...tweet,
+                    liked: [...new Set(tweet.liked)],
+                })) ?? null
             const userData = {
                 ...data,
                 docId: userDoc.id,
+                tweets: correctTweets,
             }
             const docRef = doc(database, usersCollection, userDoc.id)
             updateDoc(docRef, userData)
             dispatch(updateTotalUser(userData))
-            const { name, description, social, avatar } = userData
-            const editData = {
-                name,
-                description,
-                social,
-                photoUrl: avatar.url,
-            }
-            dispatch(updateUserData(editData))
         }
     })
 }
@@ -146,6 +142,7 @@ export const deleteTweetFromStorage = (
 export const uploadUserDataToStorage = (
     data: EditModalData,
     docId: string,
+    image: AvatarImage,
     dispatch: Dispatch<AllActionsType>
 ) => {
     const docRef = doc(database, usersCollection, docId)
@@ -161,6 +158,7 @@ export const uploadUserDataToStorage = (
             docId: data.id,
         } as UserData
         dispatch(updateTotalUser(userData))
+        uploadProfileAvatar(image, userData, dispatch)
     })
 }
 
@@ -169,23 +167,25 @@ export const uploadProfileAvatar = (
     user: UserData,
     dispatch: Dispatch<AllActionsType>
 ) => {
-    const imagesRef = ref(storage, `images/${image.id}`)
-    uploadBytes(imagesRef, image.file).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((downloadURL) => {
-            const docRef = doc(database, usersCollection, user.docId)
-            const newAvatar = { id: user.userId ?? '', url: downloadURL }
-            updateDoc(docRef, {
-                avatar: newAvatar,
-            }).then(() => {
-                dispatch(
-                    updateTotalUser({
-                        ...user,
-                        avatar: newAvatar,
-                    })
-                )
+    if (image.file) {
+        const imagesRef = ref(storage, `images/${image.id}`)
+        uploadBytes(imagesRef, image.file).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((downloadURL) => {
+                const docRef = doc(database, usersCollection, user.docId)
+                const newAvatar = { id: user.userId, url: downloadURL }
+                updateDoc(docRef, {
+                    avatar: newAvatar,
+                }).then(() => {
+                    dispatch(
+                        updateTotalUser({
+                            ...user,
+                            avatar: newAvatar,
+                        })
+                    )
+                })
             })
         })
-    })
+    }
 }
 
 export const uploadTweetImagesFromStorage = async (
@@ -244,7 +244,7 @@ export const followOrUnfollowAccount = (
 ) => {
     const userDocRef = doc(database, usersCollection, user.docId)
     const accountDocRef = doc(database, usersCollection, account.docId)
-    if (!user.following.includes(account.userId!)) {
+    if (!user.following.includes(account.userId)) {
         setDoc(
             userDocRef,
             {
@@ -294,25 +294,22 @@ export const followOrUnfollowAccount = (
 
 export const clickLikeTweet = (
     user: UserData,
+    account: UserData,
     tweetId: string,
     isLiked: boolean,
-    dispatch: Dispatch<AllActionsType>
+    handleChangeCountLikes: (likes: number) => void
 ) => {
-    const docRef = doc(database, usersCollection, user.docId)
+    const docRef = doc(database, usersCollection, account.docId)
 
-    const updatedTweets = user.tweets!.map((tweet) => {
+    const updatedTweets = account.tweets!.map((tweet) => {
         if (tweet.tweetId === tweetId) {
-            if (isLiked) {
-                const tweetLiked = tweet.liked.filter(
-                    (id) => user.userId !== id
-                )
-                dispatch(updateUserTweetLiked(tweetLiked))
-                return { ...tweet, liked: tweetLiked }
-            } else {
-                const tweetLiked = [...tweet.liked, user.userId!]
-                dispatch(updateUserTweetLiked(tweetLiked))
-                return { ...tweet, liked: tweetLiked }
-            }
+            const tweetLiked = isLiked
+                ? tweet.liked.filter((id) => user.userId !== id)
+                : [...tweet.liked, user.userId]
+
+            const uniqueTweetLiked = [...new Set(tweetLiked)]
+            handleChangeCountLikes(uniqueTweetLiked.length)
+            return { ...tweet, liked: uniqueTweetLiked }
         } else {
             return tweet
         }
@@ -320,14 +317,5 @@ export const clickLikeTweet = (
 
     updateDoc(docRef, {
         tweets: updatedTweets,
-    })
-        .then(() => {
-            dispatch(
-                updateTotalUser({
-                    ...user,
-                    tweets: updatedTweets,
-                })
-            )
-        })
-        .catch((err) => console.error(err))
+    }).catch((err) => console.error(err))
 }

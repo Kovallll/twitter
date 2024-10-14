@@ -4,49 +4,30 @@ import {
     UpdateIsTweetModalOpen,
     UpdateLoadingInititalData,
     UpdateLoadingTweet,
-    UpdateLoginEmailAction,
-    UpdateLoginPasswordAction,
     UpdateNotifyText,
     UpdateSearchData,
     UpdateSearchValue,
-    UpdateSignUpConfrimPasswordAction,
-    UpdateSignUpDate,
-    UpdateSignUpEmailAction,
-    UpdateSignUpNameAction,
-    UpdateSignUpPasswordAction,
-    UpdateSignUpPhoneAction,
     UpdateTotalUser,
-    UpdateUserData,
+    UpdateUserDate,
     UpdateUserFollowing,
     UpdateUserLiked,
     UpdateUserTheme,
 } from '../actions/types'
 
 export type AllActionsType =
-    | SingUpAction
-    | LoginAction
     | UserAction
     | NotifyAction
     | TotalDataAction
     | SearchAction
-    | BooleanAction
-
-export type SingUpAction =
-    | UpdateSignUpEmailAction
-    | UpdateSignUpNameAction
-    | UpdateSignUpPhoneAction
-    | UpdateSignUpPasswordAction
-    | UpdateSignUpConfrimPasswordAction
-    | UpdateSignUpDate
-
-export type LoginAction = UpdateLoginEmailAction | UpdateLoginPasswordAction
+    | LoaderAction
+    | OpenedAction
 
 export type UserAction =
-    | UpdateUserData
     | UpdateTotalUser
     | UpdateUserFollowing
     | UpdateUserLiked
     | UpdateUserTheme
+    | UpdateUserDate
 
 export type NotifyAction = UpdateNotifyText
 
@@ -54,8 +35,6 @@ export type TotalDataAction = SetTotalAccounts
 
 export type SearchAction = UpdateSearchData | UpdateSearchValue
 
-export type BooleanAction =
-    | UpdateLoadingTweet
-    | UpdateLoadingInititalData
-    | UpdateIsSidebarOpen
-    | UpdateIsTweetModalOpen
+export type LoaderAction = UpdateLoadingTweet | UpdateLoadingInititalData
+
+export type OpenedAction = UpdateIsSidebarOpen | UpdateIsTweetModalOpen

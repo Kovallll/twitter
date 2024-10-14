@@ -4,92 +4,22 @@ import {
     UpdateIsTweetModalOpen,
     UpdateLoadingInititalData,
     UpdateLoadingTweet,
-    UpdateLoginEmailAction,
-    UpdateLoginPasswordAction,
     UpdateNotifyText,
     UpdateSearchData,
     UpdateSearchValue,
-    UpdateSignUpConfrimPasswordAction,
-    UpdateSignUpDate,
-    UpdateSignUpEmailAction,
-    UpdateSignUpNameAction,
-    UpdateSignUpPasswordAction,
-    UpdateSignUpPhoneAction,
     UpdateTotalUser,
-    UpdateUserData,
+    UpdateUserDate,
     UpdateUserFollowing,
     UpdateUserLiked,
     UpdateUserTheme,
 } from './types'
 
 import { ActionTypes, Themes } from '@constants'
-import { EditModalData, SignUpDate, UserData } from '@types'
+import { SignUpDate, UserData } from '@types'
 
-export const updateSignUpEmail = (data: string): UpdateSignUpEmailAction => {
+export const updateUserDate = (data: SignUpDate): UpdateUserDate => {
     return {
-        type: ActionTypes.SignUpEmail,
-        payload: data,
-    }
-}
-
-export const updateSignUpName = (data: string): UpdateSignUpNameAction => {
-    return {
-        type: ActionTypes.SignUpName,
-        payload: data,
-    }
-}
-
-export const updateSignUpPhone = (data: string): UpdateSignUpPhoneAction => {
-    return {
-        type: ActionTypes.SignUpPhone,
-        payload: data,
-    }
-}
-
-export const updateSignUpPassword = (
-    data: string
-): UpdateSignUpPasswordAction => {
-    return {
-        type: ActionTypes.SignUpPassword,
-        payload: data,
-    }
-}
-
-export const updateSignUpConfrimPassword = (
-    data: string
-): UpdateSignUpConfrimPasswordAction => {
-    return {
-        type: ActionTypes.SignUpConfrimPassword,
-        payload: data,
-    }
-}
-
-export const updateSignUpDate = (data: SignUpDate): UpdateSignUpDate => {
-    return {
-        type: ActionTypes.SignUpDate,
-        payload: data,
-    }
-}
-
-export const updateLoginEmail = (data: string): UpdateLoginEmailAction => {
-    return {
-        type: ActionTypes.LoginEmail,
-        payload: data,
-    }
-}
-
-export const updateLoginPassword = (
-    data: string
-): UpdateLoginPasswordAction => {
-    return {
-        type: ActionTypes.LoginPassword,
-        payload: data,
-    }
-}
-
-export const updateUserData = (data: EditModalData): UpdateUserData => {
-    return {
-        type: ActionTypes.UserData,
+        type: ActionTypes.UserDate,
         payload: data,
     }
 }

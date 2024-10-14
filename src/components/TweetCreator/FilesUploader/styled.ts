@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { ModalProps } from './types'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const Container = styled.div<ModalProps>`
     ${({ theme, $isModal }) => {

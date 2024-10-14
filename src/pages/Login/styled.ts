@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { Button } from '@styles/global'
-import mixins from '@styles/mixins'
+import { Button, mixins } from '@styles'
 
 export const Container = styled.section`
     ${({ theme }) => {

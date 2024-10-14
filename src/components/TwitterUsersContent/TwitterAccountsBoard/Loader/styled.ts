@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { AccountAvatar, AccountName, AccountSocial } from '../styled'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const SkeletonAvatar = styled(AccountAvatar)`
     ${({ theme }) => {

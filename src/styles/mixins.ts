@@ -2,7 +2,7 @@ import { css } from 'styled-components'
 
 import { ColorTheme } from '@types'
 
-export default {
+export const mixins = {
     flexRowSE: () => css`
         display: flex;
         justify-content: space-evenly;

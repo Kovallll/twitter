@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import mixins from '@styles/mixins'
+import { mixins } from '@styles'
 
 export const Container = styled.div`
     ${({ theme }) => {
@@ -20,7 +20,7 @@ export const Container = styled.div`
     }}
 `
 
-export const PupupText = styled.div`
+export const TweetText = styled.p`
     ${({ theme }) => {
         return css`
             text-align: center;

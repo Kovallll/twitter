@@ -1,3 +1,5 @@
+import { LocalStorageSchema } from './types'
+
 import {
     countDays,
     countYears,
@@ -12,7 +14,7 @@ import {
     tweetPath,
 } from '@constants'
 import { SearchTweetText } from '@pages/Profile/styled'
-import { SignUpDate, UserData } from '@types'
+import { EditModalData, SignUpDate, UserData } from '@types'
 
 export const getSelectYears = () => {
     const currentYear = new Date().getFullYear()
@@ -88,14 +90,41 @@ export const getIsValidDate = (date: SignUpDate) => {
 }
 
 export class LocalStorage {
-    getItem = (key: string, undefinedItem: object | null | [] = null): any => {
-        return JSON.parse(
-            window.localStorage.getItem(key) ?? JSON.stringify(undefinedItem)
-        )
+    private static instance: LocalStorage | null = null
+
+    static getInstance(): LocalStorage {
+        if (this.instance === null) {
+            this.instance = new LocalStorage()
+        }
+        return this.instance
     }
 
-    setItem = (key: string, value: any) => {
-        window.localStorage.setItem(key, JSON.stringify(value))
+    checkIsLocalStorageAvailable = () => {
+        const test = 'test'
+        try {
+            localStorage.setItem(test, test)
+            localStorage.removeItem(test)
+            return true
+        } catch {
+            throw new Error('localStorage не доступен')
+        }
+    }
+
+    getItem = <T extends keyof LocalStorageSchema>(
+        key: T
+    ): LocalStorageSchema[T] | null => {
+        if (this.checkIsLocalStorageAvailable()) {
+            return JSON.parse(window.localStorage.getItem(key) ?? 'null')
+        } else return null
+    }
+
+    setItem = <T extends keyof LocalStorageSchema>(
+        key: T,
+        value: LocalStorageSchema[T]
+    ): void => {
+        if (this.checkIsLocalStorageAvailable()) {
+            window.localStorage.setItem(key, JSON.stringify(value))
+        }
     }
 }
 
@@ -137,6 +166,7 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
                             return (
                                 <SearchTweetText
                                     to={`${tweetPath}/${tweet.tweetId}`}
+                                    key={tweet.tweetId}
                                 >
                                     {tweet.text}
                                 </SearchTweetText>
@@ -152,4 +182,21 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
 
 export const getIsLightTheme = (theme: Themes) => {
     return theme === Themes.Light
+}
+
+export const isEditDataChanged = (
+    initialData: EditModalData,
+    newData: EditModalData
+) => {
+    const isDescriptionChanged = initialData.description === newData.description
+    const isSocialChanged = initialData.social === newData.social
+    const isPhotoChanged = initialData.avatarUrl === newData.avatarUrl
+    const isNameChanged = initialData.name === newData.name
+
+    return (
+        isDescriptionChanged &&
+        isSocialChanged &&
+        isPhotoChanged &&
+        isNameChanged
+    )
 }

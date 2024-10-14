@@ -49,6 +49,7 @@ export const Container = styled.div<ContainerProps>`
                     );
                 }
             }
+
             @media (${theme.media.xs}) {
                 width: ${theme.toggleThemeStyles.sm.buttonWidth + 'px'};
                 height: ${theme.toggleThemeStyles.sm.buttonHeight + 'px'};
