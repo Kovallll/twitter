@@ -436,15 +436,15 @@ export interface ColorTheme extends Theme {
             black: string
             white: string
         }
-        text: string
+        textColor: string
         bgColor: string
-        primary: string
-        lightPrimary: string
-        secondary: string
-        lightSecondary: string
-        errorColor: string
+        blue: string
+        lightBlue: string
+        gray: string
+        lightGray: string
+        red: string
+        green: string
         accountsBgColor: string
-        successColor: string
         inputBgColor: string
         searchBgColor: string
         lineBoardColor: string

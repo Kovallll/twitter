@@ -77,7 +77,7 @@ export const SubmitButton = styled(Button)`
         return css`
             ${mixins.flexRowCenter};
 
-            background-color: ${theme.palette.primary};
+            background-color: ${theme.palette.blue};
             color: ${theme.palette.common.white};
             width: ${theme.fullSize + '%'};
         `

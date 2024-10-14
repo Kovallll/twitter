@@ -51,8 +51,8 @@ export const TweetButton = styled(Button)<TweetButtonProps>`
             margin-bottom: 0;
             padding: ${theme.spaces.md + 'px' + ' 0px'};
             background-color: ${$isTweetDisabled
-                ? theme.palette.secondary
-                : theme.palette.lightPrimary};
+                ? theme.palette.gray
+                : theme.palette.lightBlue};
 
             color: ${theme.palette.common.white};
 

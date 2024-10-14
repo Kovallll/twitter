@@ -26,7 +26,7 @@ export const TweetText = styled.p`
             text-align: center;
             cursor: default;
             border-bottom: 0;
-            color: ${theme.palette.text};
+            color: ${theme.palette.textColor};
             width: ${theme.fullSize + '%'};
             cursor: pointer;
             font-size: ${theme.fontSizes.md + 'px'};

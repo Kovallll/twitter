@@ -105,7 +105,7 @@ export const Title = styled.p`
     ${({ theme }) => {
         return css`
             margin-left: ${theme.spaces.lg + 'px'};
-            color: ${theme.palette.text};
+            color: ${theme.palette.textColor};
             font-size: ${theme.fontSizes.sm + 'px'};
             font-weight: ${theme.boldFont};
 
@@ -254,7 +254,7 @@ export const TabletIconWrap = styled.div`
 export const PostIconWrap = styled(TabletIconWrap)`
     ${({ theme }) => {
         return css`
-            background-color: ${theme.palette.primary};
+            background-color: ${theme.palette.blue};
         `
     }}
 `
@@ -262,7 +262,7 @@ export const PostIconWrap = styled(TabletIconWrap)`
 export const LogOutIconWrap = styled(TabletIconWrap)`
     ${({ theme }) => {
         return css`
-            background-color: ${theme.palette.secondary};
+            background-color: ${theme.palette.gray};
             margin-top: ${theme.spaces.md + 'px'};
         `
     }}
@@ -280,7 +280,7 @@ export const TabletIcon = styled.img`
 export const SidebarButton = styled(Button)`
     ${({ theme }) => {
         return css`
-            background-color: ${theme.palette.primary};
+            background-color: ${theme.palette.blue};
             color: ${theme.palette.common.white};
 
             @media (${theme.media.md}) {
@@ -293,7 +293,7 @@ export const SidebarButton = styled(Button)`
 export const LogOutButton = styled(Button)`
     ${({ theme }) => {
         return css`
-            background-color: ${theme.palette.secondary};
+            background-color: ${theme.palette.gray};
             color: ${theme.palette.common.white};
 
             @media (${theme.media.md}) {

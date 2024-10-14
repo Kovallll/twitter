@@ -23,7 +23,7 @@ export const ButtonsWrap = styled.div`
 export const CloseButton = styled(Button)`
     ${({ theme }) => {
         return css`
-            color: ${theme.palette.text};
+            color: ${theme.palette.textColor};
             background-color: ${theme.palette.bgColor};
             width: ${theme.modalStyles.lg.buttonWidth + 'px'};
             cursor: pointer;
@@ -42,7 +42,7 @@ export const CloseButton = styled(Button)`
 export const ConfirmButton = styled(CloseButton)`
     ${({ theme }) => {
         return css`
-            background-color: ${theme.palette.errorColor};
+            background-color: ${theme.palette.red};
         `
     }}
 `

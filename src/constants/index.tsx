@@ -8,6 +8,7 @@ export {
     defaultUser,
     images,
     notifyDefaultData,
+    themeStoragekey,
     searchDefaultData,
     sidebarLinks,
     totalDefaultData,

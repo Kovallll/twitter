@@ -32,7 +32,7 @@ export const Title = styled.h1`
 export const BackButton = styled(Button)`
     ${({ theme }) => {
         return css`
-            background-color: ${theme.palette.primary};
+            background-color: ${theme.palette.blue};
             color: ${theme.palette.common.white};
         `
     }}

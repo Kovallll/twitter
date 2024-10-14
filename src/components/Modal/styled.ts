@@ -27,13 +27,13 @@ export const Window = styled.div`
 
             width: ${theme.modalStyles.lg.width + 'px'};
             border: ${theme.profileMainContentStyles.border +
-            theme.palette.lightSecondary};
+            theme.palette.lightGray};
             position: relative;
             color: ${theme.palette.common.black};
             background: ${theme.palette.common.white};
             border-radius: ${theme.modalStyles.borderRadius + 'px'};
             background-color: ${theme.palette.bgColor};
-            color: ${theme.palette.text};
+            color: ${theme.palette.textColor};
 
             @media (${theme.media.sm}) {
                 width: ${theme.modalStyles.md.width + 'px'};

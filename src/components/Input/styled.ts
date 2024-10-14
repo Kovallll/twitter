@@ -10,11 +10,11 @@ export const InputModule = styled.input`
             width: ${theme.fullSize + '%'};
             padding: ${theme.spaces.lg + 'px'} ${theme.spaces.md + 'px'};
             border-radius: ${theme.spaces.sm + 'px'};
-            border: ${theme.inputStyles.border + theme.palette.secondary};
+            border: ${theme.inputStyles.border + theme.palette.gray};
             font-size: ${theme.fontSizes.sm + 'px'};
             margin-bottom: ${theme.spaces.sm + 'px'};
             background-color: ${theme.palette.inputBgColor};
-            color: ${theme.palette.text};
+            color: ${theme.palette.textColor};
 
             @media (${theme.media.md}) {
                 padding: ${theme.spaces.md + 'px'} ${theme.spaces.sm + 'px'};
@@ -34,7 +34,7 @@ export const LettersCount = styled.p`
             position: absolute;
             top: 0;
             right: ${theme.spaces.sm + 'px'};
-            color: ${theme.palette.lightPrimary};
+            color: ${theme.palette.lightBlue};
             font-size: ${theme.fontSizes.xs + 'px'};
 
             @media (${theme.media.md}) {

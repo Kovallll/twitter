@@ -15,7 +15,7 @@ export const SearchInput = styled.input`
             padding: ${theme.spaces.lg + 'px ' + theme.spaces.xxl + 'px'};
             border-radius: ${theme.spaces.xxl + 'px'};
             background-color: ${theme.palette.searchBgColor};
-            color: ${theme.palette.text};
+            color: ${theme.palette.textColor};
             border: 0;
             width: ${theme.fullSize + '%'};
             font-size: ${theme.fontSizes.md + 'px'};

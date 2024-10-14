@@ -7,6 +7,7 @@ import {
     logOutText,
     postIconAltText,
     profileImageAltText,
+    tweetText,
 } from './config'
 import { SidebarLink } from './SidebarLink'
 import { SidebarProfileLoader } from './SidebarProfileLoader'
@@ -94,7 +95,9 @@ export const Sidebar = () => {
                         {sidebarLinks.map((linkData) => (
                             <SidebarLink linkData={linkData} />
                         ))}
-                        <SidebarButton onClick={handleOpenModalTweet} />
+                        <SidebarButton onClick={handleOpenModalTweet}>
+                            {tweetText}
+                        </SidebarButton>
                         <IconWrap onClick={handleOpenModalTweet}>
                             <PostIconWrap>
                                 <TabletIcon

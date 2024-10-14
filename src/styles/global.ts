@@ -14,7 +14,7 @@ ${({ theme }) => {
         }
         body {
             font-family: 'Arial', sans-serif;
-            color: ${theme.palette.text};
+            color: ${theme.palette.textColor};
             background-color: ${theme.palette.bgColor};
             ::-webkit-scrollbar {
                 cursor: pointer;
@@ -27,7 +27,7 @@ ${({ theme }) => {
                 cursor: pointer;
             }
             ::-webkit-scrollbar-thumb {
-                background-color: ${theme.palette.primary};
+                background-color: ${theme.palette.blue};
                 cursor: pointer;
                 border-radius: 20px;
                 border: 3px solid ${theme.palette.bgColor};
@@ -114,7 +114,7 @@ export const ErrorText = styled.p`
     ${({ theme }) => {
         return css`
             width: ${theme.fullSize + '%'};
-            color: ${theme.palette.errorColor};
+            color: ${theme.palette.red};
             height: ${theme.errorTextHeight + 'px'};
         `
     }}
@@ -127,7 +127,7 @@ export const Spinner = styled.div`
 
             height: ${theme.fullSize + 'vh'};
             width: ${theme.fullSize + '%'};
-            color: ${theme.palette.text};
+            color: ${theme.palette.textColor};
 
             &:after {
                 content: ' ';

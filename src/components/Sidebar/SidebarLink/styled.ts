@@ -40,8 +40,8 @@ export const Title = styled.p<TitleProps>`
             font-size: ${theme.fontSizes.sm + 'px'};
             font-weight: ${theme.boldFont};
             color: ${$isActiveLink
-                ? theme.palette.primary
-                : theme.palette.common.black};
+                ? theme.palette.blue
+                : theme.palette.textColor};
 
             @media (${theme.media.xl}) {
                 margin-left: ${theme.spaces.md + 'px'};

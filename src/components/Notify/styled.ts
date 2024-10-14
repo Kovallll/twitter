@@ -17,7 +17,7 @@ export const NotifyModule = styled.p<NotifyModuleProps>`
             theme.notifyStyles.lg.paddingLR +
             'px'};
             z-index: ${theme.notifyStyles.zIndex};
-            background: ${$isSuccess ? theme.palette.successColor : theme.palette.errorColor};
+            background: ${$isSuccess ? theme.palette.green : theme.palette.red};
             font-size: ${theme.fontSizes.lg + 'px'};
             border-radius: ${theme.notifyStyles.borderRadius + 'px'};
             color: ${theme.palette.common.white};

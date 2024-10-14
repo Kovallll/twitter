@@ -69,8 +69,8 @@ export const ModalButton = styled(Button)<ModalButtonProps>`
             margin-bottom: 0;
             padding: ${theme.spaces.md + 'px' + ' 0px'};
             background-color: ${$isDisabled
-                ? theme.palette.primary
-                : theme.palette.secondary};
+                ? theme.palette.gray
+                : theme.palette.blue};
             color: ${theme.palette.common.white};
         `
     }}

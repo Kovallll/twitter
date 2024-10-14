@@ -136,7 +136,7 @@ export const DateBlock = styled.div`
 export const SumbitButton = styled(Button)`
     ${({ theme }) => {
         return css`
-            background-color: ${theme.palette.primary};
+            background-color: ${theme.palette.blue};
             color: ${theme.palette.common.white};
         `
     }}

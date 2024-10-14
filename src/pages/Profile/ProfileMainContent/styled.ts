@@ -166,7 +166,7 @@ export const EditButton = styled(Button)`
             margin-top: ${theme.spaces.md + 'px'};
             padding: ${theme.spaces.md + 'px' + ' 0px'};
             background-color: ${theme.palette.bgColor};
-            color: ${theme.palette.text};
+            color: ${theme.palette.textColor};
 
             @media (${theme.media.lg}) {
                 padding: ${theme.spaces.sm + 'px' + ' 0px'};

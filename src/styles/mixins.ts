@@ -54,7 +54,7 @@ export const mixins = {
     `,
     linkStyles: (theme: ColorTheme) => css`
         cursor: pointer;
-        color: ${theme.palette.primary};
+        color: ${theme.palette.blue};
         text-decoration: none;
     `,
 
