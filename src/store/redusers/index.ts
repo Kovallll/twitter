@@ -1,6 +1,11 @@
 import {
-    BooleanAction,
+    loaderStatesDefaultData,
+    openedStatesDefaultData,
+} from 'src/constants/defaultValues'
+import {
+    LoaderAction,
     NotifyAction,
+    OpenedAction,
     SearchAction,
     TotalDataAction,
     UserAction,
@@ -8,7 +13,6 @@ import {
 
 import {
     ActionTypes,
-    booleanStatesDefaultData,
     notifyDefaultData,
     searchDefaultData,
     totalDefaultData,
@@ -19,8 +23,6 @@ export const updateUserData = (state = userDefaultData, action: UserAction) => {
     switch (action.type) {
         case ActionTypes.UserTotal:
             return { ...state, user: action.payload }
-        case ActionTypes.UserData:
-            return { ...state, editData: action.payload }
         case ActionTypes.UserFollowing:
             return { ...state, following: [...state.following, action.payload] }
         case ActionTypes.UserLiked:
@@ -75,15 +77,25 @@ export const updateSearch = (
     }
 }
 
-export const updateBooleanStates = (
-    state = booleanStatesDefaultData,
-    action: BooleanAction
+export const updateLoaderStates = (
+    state = loaderStatesDefaultData,
+    action: LoaderAction
 ) => {
     switch (action.type) {
         case ActionTypes.LoadingTweet:
             return { ...state, isLoadingTweet: action.payload }
         case ActionTypes.LoadingInititalData:
             return { ...state, isLoadingInitialData: action.payload }
+        default:
+            return state
+    }
+}
+
+export const updateOpenedStates = (
+    state = openedStatesDefaultData,
+    action: OpenedAction
+) => {
+    switch (action.type) {
         case ActionTypes.isSidebarOpen:
             return { ...state, isSidebarOpen: action.payload }
         case ActionTypes.isTweetModalOpen:

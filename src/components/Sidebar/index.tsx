@@ -39,7 +39,8 @@ import {
     useWindowSize,
 } from '@hooks'
 import {
-    booleanStatesSelector,
+    loaderStatesSelector,
+    openedStatesSelector,
     updateIsSidebarOpen,
     updateIsTweetModalOpen,
     userSelector,
@@ -53,9 +54,8 @@ export const Sidebar = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { user } = useAppSelector(userSelector)
-    const { isLoadingInitialData, isSidebarOpen } = useAppSelector(
-        booleanStatesSelector
-    )
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
+    const { isSidebarOpen } = useAppSelector(openedStatesSelector)
 
     const { width } = useWindowSize()
 

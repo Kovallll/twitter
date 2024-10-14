@@ -5,15 +5,11 @@ import { HeaderProps } from './types'
 
 import { ToggleButton } from '@components/ToggleThemeButton'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import {
-    booleanStatesSelector,
-    updateIsSidebarOpen,
-    userSelector,
-} from '@store'
+import { loaderStatesSelector, updateIsSidebarOpen, userSelector } from '@store'
 
 export const Header = ({ title }: HeaderProps) => {
     const dispatch = useAppDispatch()
-    const { isLoadingInitialData } = useAppSelector(booleanStatesSelector)
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
     const { user } = useAppSelector(userSelector)
 
     const handleClickProfileIcon = () => {

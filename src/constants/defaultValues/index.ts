@@ -57,7 +57,6 @@ export const images = {
 
 export enum ActionTypes {
     UserDate = 'user/date',
-    UserData = 'user/data',
     UserTotal = 'user/total',
     UserFollowing = 'user/following',
     UserLiked = 'user/liked',
@@ -94,7 +93,7 @@ export const userDefaultData = {
         description: null,
         social: null,
         name: '',
-        photoUrl: images.profileImage,
+        avatarUrl: images.profileImage,
     },
     date: defaultDate,
     user: defaultUser,
@@ -115,9 +114,12 @@ export const totalDefaultData = {
     accounts: [],
 }
 
-export const booleanStatesDefaultData = {
+export const loaderStatesDefaultData = {
     isLoadingTweet: false,
     isLoadingInitialData: false,
+}
+
+export const openedStatesDefaultData = {
     isSidebarOpen: false,
     isTweetModalOpen: false,
 }

@@ -2,7 +2,8 @@ export {
     ActionTypes,
     Paths,
     basePhoneCode,
-    booleanStatesDefaultData,
+    loaderStatesDefaultData,
+    openedStatesDefaultData,
     defaultDate,
     defaultUser,
     images,
@@ -12,7 +13,7 @@ export {
     totalDefaultData,
     tweetPath,
     userDefaultData,
-} from './dynamicConstants'
+} from './defaultValues'
 
 export enum Month {
     January = 'January',
@@ -50,7 +51,7 @@ export const phoneRegex = /^\+375 \(\d{2}\) \d{2}-\d{2}-\d{3,}$/
 export const codeRegex = /\d/g
 export const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
-export const maxUploadSizeImage = 15728640//15mb
+export const maxUploadSizeImage = 15728640 //15mb
 
 export const notifyTimeout = 4000
 

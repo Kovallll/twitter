@@ -20,10 +20,11 @@ export const ButtonsWrap = styled.div`
     }}
 `
 
-export const ConfirmButton = styled(Button)`
+export const CloseButton = styled(Button)`
     background-color: ${theme.palette.blue};
     color: ${theme.palette.common.white};
     width: ${theme.modalStyles.lg.buttonWidth + 'px'};
+    cursor: pointer;
 
     @media (${theme.media.md}) {
         width: ${theme.modalStyles.md.buttonWidth + 'px'};
@@ -32,4 +33,8 @@ export const ConfirmButton = styled(Button)`
     @media (${theme.media.xs}) {
         width: ${theme.modalStyles.sm.buttonWidth + 'px'};
     }
+`
+
+export const ConfirmButton = styled(CloseButton)`
+    background-color: ${theme.palette.red};
 `

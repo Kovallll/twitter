@@ -16,7 +16,7 @@ import { TweetCreatorProps } from './types'
 import FileUploader from '@components/TweetCreator/FilesUploader'
 import { uploadTweetsToStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { booleanStatesSelector, updateLoadingTweet, userSelector } from '@store'
+import { loaderStatesSelector, updateLoadingTweet, userSelector } from '@store'
 import { theme } from '@styles'
 import { TweetImageType, TweetStorageType } from '@types'
 
@@ -28,7 +28,7 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
 
     const dispatch = useAppDispatch()
     const { user } = useAppSelector(userSelector)
-    const { isLoadingTweet } = useAppSelector(booleanStatesSelector)
+    const { isLoadingTweet } = useAppSelector(loaderStatesSelector)
     const handleChangeTweetText = (value: string) => {
         setTweetText(value)
     }
