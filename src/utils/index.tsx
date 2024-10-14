@@ -109,15 +109,20 @@ export class LocalStorage {
         }
     }
 
-    getItem = <T extends keyof LocalStorageSchema>(key: T): LocalStorageSchema[T] | null => {
+    getItem = <T extends keyof LocalStorageSchema>(
+        key: T
+    ): LocalStorageSchema[T] | null => {
         if (this.checkIsLocalStorageAvailable()) {
-            return JSON.parse(
-                window.localStorage.getItem(key) ?? 'null'
-            )
+            const storageValue = window.localStorage.getItem(key)
+            if (!storageValue) return null
+            else return JSON.parse(storageValue)
         } else return null
     }
 
-    setItem = <T extends keyof LocalStorageSchema>(key: T, value: LocalStorageSchema[T]): void => {
+    setItem = <T extends keyof LocalStorageSchema>(
+        key: T,
+        value: LocalStorageSchema[T]
+    ): void => {
         if (this.checkIsLocalStorageAvailable()) {
             window.localStorage.setItem(key, JSON.stringify(value))
         }
