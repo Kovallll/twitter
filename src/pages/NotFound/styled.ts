@@ -1,9 +1,39 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-import mixins from '@styles/mixins'
+import { Button, mixins } from '@styles'
 
 export const Container = styled.div`
-    ${mixins.flexRowCenter}
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexRowCenter}
+
+            margin: ${theme.spaces.md + 'px'};
+        `
+    }}
 `
 
-export const Title = styled.h1``
+export const Content = styled.div`
+    ${({ theme }) => {
+        return css`
+            width: ${theme.notFoundStyles.width + 'px'};
+        `
+    }}
+`
+
+export const Title = styled.h1`
+    ${({ theme }) => {
+        return css`
+            text-align: center;
+            margin-bottom: ${theme.spaces.md + 'px'};
+        `
+    }}
+`
+
+export const BackButton = styled(Button)`
+    ${({ theme }) => {
+        return css`
+            background-color: ${theme.palette.blue};
+            color: ${theme.palette.common.white};
+        `
+    }}
+`

@@ -1,91 +1,107 @@
 import {
-    UpdateLoginEmailAction,
-    UpdateLoginError,
-    UpdateLoginPasswordAction,
-    UpdateSignUpConfrimPasswordAction,
-    UpdateSignUpDate,
-    UpdateSignUpEmailAction,
-    UpdateSignUpError,
-    UpdateSignUpNameAction,
-    UpdateSignUpPasswordAction,
-    UpdateSignUpPhoneAction,
+    SetTotalAccounts,
+    UpdateIsSidebarOpen,
+    UpdateIsTweetModalOpen,
+    UpdateLoadingInititalData,
+    UpdateLoadingTweet,
+    UpdateNotifyText,
+    UpdateSearchData,
+    UpdateSearchValue,
+    UpdateTotalUser,
+    UpdateUserDate,
+    UpdateUserFollowing,
+    UpdateUserLiked,
 } from './types'
 
 import { ActionTypes } from '@constants'
-import { SignUpDate } from '@types'
+import { SignUpDate, UserData } from '@types'
 
-export const updateSignUpEmail = (data: string): UpdateSignUpEmailAction => {
+export const updateUserDate = (data: SignUpDate): UpdateUserDate => {
     return {
-        type: ActionTypes.SignUpEmail,
+        type: ActionTypes.UserDate,
         payload: data,
     }
 }
 
-export const updateSignUpName = (data: string): UpdateSignUpNameAction => {
+export const updateUserFollowing = (data: string[]): UpdateUserFollowing => {
     return {
-        type: ActionTypes.SignUpName,
+        type: ActionTypes.UserFollowing,
         payload: data,
     }
 }
 
-export const updateSignUpPhone = (data: string): UpdateSignUpPhoneAction => {
+export const updateUserTweetLiked = (data: string[]): UpdateUserLiked => {
     return {
-        type: ActionTypes.SignUpPhone,
+        type: ActionTypes.UserLiked,
         payload: data,
     }
 }
 
-export const updateSignUpPassword = (
-    data: string
-): UpdateSignUpPasswordAction => {
+export const updateNotifyText = (data: string): UpdateNotifyText => {
     return {
-        type: ActionTypes.SignUpPassword,
+        type: ActionTypes.NotifyText,
         payload: data,
     }
 }
 
-export const updateSignUpConfrimPassword = (
-    data: string
-): UpdateSignUpConfrimPasswordAction => {
+export const setTotalAccounts = (
+    data: UserData | never[]
+): SetTotalAccounts => {
     return {
-        type: ActionTypes.SignUpConfrimPassword,
+        type: ActionTypes.TotalAccounts,
         payload: data,
     }
 }
 
-export const updateSignUpError = (data: string): UpdateSignUpError => {
+export const updateSearchValue = (data: string): UpdateSearchValue => {
     return {
-        type: ActionTypes.SignUpError,
+        type: ActionTypes.SeacrhValue,
         payload: data,
     }
 }
 
-export const updateSignUpDate = (data: SignUpDate): UpdateSignUpDate => {
+export const updateSearchData = (data: JSX.Element[]): UpdateSearchData => {
     return {
-        type: ActionTypes.SignUpDate,
+        type: ActionTypes.SearchData,
         payload: data,
     }
 }
 
-export const updateLoginEmail = (data: string): UpdateLoginEmailAction => {
+export const updateTotalUser = (data: UserData): UpdateTotalUser => {
     return {
-        type: ActionTypes.LoginEmail,
+        type: ActionTypes.UserTotal,
         payload: data,
     }
 }
 
-export const updateLoginPassword = (
-    data: string
-): UpdateLoginPasswordAction => {
+export const updateLoadingTweet = (data: boolean): UpdateLoadingTweet => {
     return {
-        type: ActionTypes.LoginPassword,
+        type: ActionTypes.LoadingTweet,
         payload: data,
     }
 }
 
-export const updateLoginError = (data: string): UpdateLoginError => {
+export const updateLoadingInitialData = (
+    data: boolean
+): UpdateLoadingInititalData => {
     return {
-        type: ActionTypes.LoginError,
+        type: ActionTypes.LoadingInititalData,
+        payload: data,
+    }
+}
+
+export const updateIsSidebarOpen = (data: boolean): UpdateIsSidebarOpen => {
+    return {
+        type: ActionTypes.isSidebarOpen,
+        payload: data,
+    }
+}
+
+export const updateIsTweetModalOpen = (
+    data: boolean
+): UpdateIsTweetModalOpen => {
+    return {
+        type: ActionTypes.isTweetModalOpen,
         payload: data,
     }
 }

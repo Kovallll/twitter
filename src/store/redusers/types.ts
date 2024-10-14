@@ -1,26 +1,38 @@
 import {
-    UpdateLoginEmailAction,
-    UpdateLoginError,
-    UpdateLoginPasswordAction,
-    UpdateSignUpConfrimPasswordAction,
-    UpdateSignUpDate,
-    UpdateSignUpEmailAction,
-    UpdateSignUpError,
-    UpdateSignUpNameAction,
-    UpdateSignUpPasswordAction,
-    UpdateSignUpPhoneAction,
+    SetTotalAccounts,
+    UpdateIsSidebarOpen,
+    UpdateIsTweetModalOpen,
+    UpdateLoadingInititalData,
+    UpdateLoadingTweet,
+    UpdateNotifyText,
+    UpdateSearchData,
+    UpdateSearchValue,
+    UpdateTotalUser,
+    UpdateUserDate,
+    UpdateUserFollowing,
+    UpdateUserLiked,
 } from '../actions/types'
 
-export type SingUpAction =
-    | UpdateSignUpEmailAction
-    | UpdateSignUpNameAction
-    | UpdateSignUpPhoneAction
-    | UpdateSignUpPasswordAction
-    | UpdateSignUpConfrimPasswordAction
-    | UpdateSignUpError
-    | UpdateSignUpDate
+export type AllActionsType =
+    | UserAction
+    | NotifyAction
+    | TotalDataAction
+    | SearchAction
+    | LoaderAction
+    | OpenedAction
 
-export type LoginAction =
-    | UpdateLoginEmailAction
-    | UpdateLoginError
-    | UpdateLoginPasswordAction
+export type UserAction =
+    | UpdateTotalUser
+    | UpdateUserFollowing
+    | UpdateUserLiked
+    | UpdateUserDate
+
+export type NotifyAction = UpdateNotifyText
+
+export type TotalDataAction = SetTotalAccounts
+
+export type SearchAction = UpdateSearchData | UpdateSearchValue
+
+export type LoaderAction = UpdateLoadingTweet | UpdateLoadingInititalData
+
+export type OpenedAction = UpdateIsSidebarOpen | UpdateIsTweetModalOpen

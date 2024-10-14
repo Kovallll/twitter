@@ -1,6 +1,7 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
 import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth'
 import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
+import { connectStorageEmulator, getStorage } from 'firebase/storage'
 
 let firebaseApp: FirebaseApp
 
@@ -30,6 +31,7 @@ export const setupFirebase = () => {
 
 let auth: Auth
 let firestore: ReturnType<typeof getFirestore>
+let storage: ReturnType<typeof getStorage>
 
 async function setupAuthEmulator(auth: Auth) {
     const authUrl = 'http://localhost:9099'
@@ -56,4 +58,16 @@ export const getFirebaseStore = () => {
     }
 
     return firestore
+}
+
+export const getFirebaseStorage = () => {
+    if (!storage) {
+        storage = getStorage(firebaseApp)
+
+        if (window.location.hostname === 'localhost') {
+            connectStorageEmulator(storage, 'localhost', 9199)
+        }
+    }
+
+    return storage
 }

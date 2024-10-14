@@ -14,10 +14,14 @@ export const dateText = `Facilisi sem pulvinar velit nunc, gravida scelerisque
                         eget. Pretium id ullamcorper blandit viverra dignissim
                         eget tellus. Nibh mi massa in molestie a sit. Elit
                         congue.`
-export const nameLabel = 'name'
-export const emailLabel = 'email'
-export const passwordLabel = 'password'
-export const confirmPasswordLabel = 'confirmPassword'
+export const nameControlName = 'name'
+export const phoneControlName = 'phone'
+export const passwordControlName = 'password'
+export const emailControlName = 'email'
+export const dayControlName = 'date.day'
+export const monthControlName = 'date.month'
+export const yearControlName = 'date.year'
+export const confirmPasswordControlName = 'confirmPassword'
 export const confirmPasswordError = "passwords don't match"
 export const passwordError = 'Please create a stronger password'
 export const emailError = 'Enter the correct email'
