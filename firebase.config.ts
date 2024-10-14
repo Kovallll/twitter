@@ -23,6 +23,7 @@ export const setupFirebase = () => {
             storageBucket: VITE_FIREBASE_STORAGEBUCKET,
             messagingSenderId: VITE_FIREBASE_MESSAGINGSENDERID,
             appId: VITE_FIREBASE_APPID,
+
         })
     } catch (error) {
         console.error({ error })
@@ -53,7 +54,7 @@ export const getFirebaseStore = () => {
         firestore = getFirestore()
 
         if (window.location.hostname === 'localhost') {
-            connectFirestoreEmulator(firestore, 'localhost', 8080)
+            connectFirestoreEmulator(firestore, 'localhost', 8090)
         }
     }
 

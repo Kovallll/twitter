@@ -105,14 +105,14 @@ export const emailAndPasswordAuth = (
                 social: null,
                 tweets: null,
             }
+            handleChangeIsLoading(false)
             handleResetForm()
             const docsRef = collection(database, usersCollection)
-            addDoc(docsRef, userInfo)
+            addDoc(docsRef, userInfo).catch((e) => console.log(e, 'e sign up'))
             navigate(Paths.Profile)
         })
         .catch((error) => {
             const errorCode = error.code
-            handleChangeIsLoading(false)
             dispatch(updateNotifyText(errorCode))
             console.error(error.code + error.message)
         })

@@ -108,6 +108,7 @@ const Login = () => {
                         $backgroundColor={theme.palette.blue}
                         $color={theme.palette.common.white}
                         type="submit"
+                        data-cy="login"
                     >
                         {loginButtonText}
                     </Button>
