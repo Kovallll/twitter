@@ -142,15 +142,20 @@ export const ProfileMainContent = () => {
                                 <EditButton
                                     $withBorder={true}
                                     onClick={handleChangeIsOpenModal}
+                                    data-cy="edit-button"
                                 >
                                     {editText}
                                 </EditButton>
                             </EditBlock>
                         </ProfileTopInfo>
                         <ProfileBottomInfo>
-                            <ProfileName>{user.name}</ProfileName>
-                            <ProfileSocial>{userSocial}</ProfileSocial>
-                            <ProfileDescription>
+                            <ProfileName data-cy="profile-name">
+                                {user.name}
+                            </ProfileName>
+                            <ProfileSocial data-cy="profile-social">
+                                {userSocial}
+                            </ProfileSocial>
+                            <ProfileDescription data-cy="profile-description">
                                 {userDescription}
                             </ProfileDescription>
                             <ProfileFollowBlock>

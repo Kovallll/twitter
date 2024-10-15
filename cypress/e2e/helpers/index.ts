@@ -21,3 +21,15 @@ export const getConfirmPasswordInput = () => {
 export const getLoginButton = () => {
     return cy.get('button[data-cy="login"]')
 }
+
+export const getProfileName = () => {
+    return cy.get('p[data-cy="profile-name"]')
+}
+
+export const getProfileDescription = () => {
+    return cy.get('p[data-cy="profile-description"]')
+}
+
+export const getProfileSocial = () => {
+    return cy.get('p[data-cy="profile-social"]')
+}

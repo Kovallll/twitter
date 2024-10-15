@@ -13,7 +13,7 @@ const Modal = ({ onCloseModal, children }: ModalProps) => {
     useClickOutside(modalRef, () => onCloseModal())
 
     return createPortal(
-        <Container>
+        <Container data-cy="modal">
             <Window ref={modalRef}>
                 <CloseButton onClick={onCloseModal}>
                     <Image src={images.closeIcon} alt={closeAltText} />

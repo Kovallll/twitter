@@ -1,9 +1,38 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "lib": ["es5", "dom"],
-        "types": ["cypress", "node"],
-        "baseUrl": "http://localhost:5173"
+        "lib": ["dom", "dom.iterable", "es5"],
+        "types": ["cypress", "node", "vite/client", "jest"],
+        "baseUrl": "http://localhost:5173",
+        "jsx": "react-jsx",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "outDir": "./dist",
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": false,
+        "allowUmdGlobalAccess": true,
+        "downlevelIteration": true,
+        "paths": {
+            "@types": ["src/types"],
+            "@components/*": ["src/components/*"],
+            "@assets/*": ["src/assets/*"],
+            "@constants": ["src/constants"],
+            "@styles": ["src/styles"],
+            "@utils": ["../src/utils"],
+            "@hooks": ["src/hooks"],
+            "@pages/*": ["src/pages/*"],
+            "@store": ["src/store"],
+            "@firebase": ["src/firebase"],
+            "@mocks": ["src/mocks"]
+        }
     },
     "include": ["**/*.ts", "e2e/signUp.cy.ts"]
 }

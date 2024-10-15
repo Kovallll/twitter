@@ -108,7 +108,7 @@ export const emailAndPasswordAuth = (
             handleChangeIsLoading(false)
             handleResetForm()
             const docsRef = collection(database, usersCollection)
-            addDoc(docsRef, userInfo).catch((e) => console.log(e, 'e sign up'))
+            addDoc(docsRef, userInfo)
             navigate(Paths.Profile)
         })
         .catch((error) => {

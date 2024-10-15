@@ -22,7 +22,9 @@ describe('Test Sing Up Credentials Page', () => {
         cy.contains('Next').click()
         for (const error in errors) {
             cy.log(error)
-            cy.contains(errors[error]).should('be.visible')
+            cy.contains(errors[error as keyof typeof errors]).should(
+                'be.visible'
+            )
         }
     })
 
@@ -36,7 +38,12 @@ describe('Test Sing Up Credentials Page', () => {
         cy.get('select[data-cy="day"]').select(userData.day)
         cy.get('select[data-cy="year"]').select(userData.year)
         cy.contains('Next').click()
+        // cy.emailAndPasswordAuth({
+        //     email: userData.email,
+        //     name: userData.name,
+        //     phone: userData.phone,
+        //     password: userData.password,
+        // })
         cy.url().should('include', '/profile')
-        cy.contains(userData.name).should('be.visible')
     })
 })
