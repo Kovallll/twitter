@@ -31,46 +31,59 @@ import {
 } from '@constants'
 import { resetPassword } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { updateNotifyText, updateUserData, userSelector } from '@store'
+import { updateNotifyText, userSelector } from '@store'
 import { theme } from '@styles'
+import { isEditDataChanged } from '@utils'
 
 export const EditProfileModal = (props: EditProfileModalProps) => {
+    const dispatch = useAppDispatch()
+    const { user } = useAppSelector(userSelector)
+
+    const editInitialData = {
+        description: user.description,
+        social: user.social,
+        name: user.name,
+        avatarUrl: user.avatar.url,
+    }
+
+    const [editData, setEditData] = useState(editInitialData)
     const [file, setFile] = useState<File | null>(null)
 
-    const { handleChangeIsOpenModal, handleEditProfile, email } = props
-
-    const dispatch = useAppDispatch()
-    const { editData } = useAppSelector(userSelector)
-
-    const { description, social, name, photoUrl } = editData
+    const { handleChangeIsOpenModal, handleEditProfile } = props
 
     const handleChangeDescription = (value: string) => {
-        dispatch(updateUserData({ ...editData, description: value }))
+        setEditData((prev) => ({ ...prev, description: value }))
     }
 
     const handleChangeName = (value: string) => {
-        dispatch(updateUserData({ ...editData, name: value }))
+        setEditData((prev) => ({ ...prev, name: value }))
     }
 
     const handleChangeSocial = (value: string) => {
-        dispatch(updateUserData({ ...editData, social: value }))
+        setEditData((prev) => ({ ...prev, social: value }))
     }
 
     const handleChangePhoto = (e: ProgressEvent<FileReader>, file: File) => {
         const url = e.target?.result as string
         setFile(file)
-        dispatch(updateUserData({ ...editData, photoUrl: url }))
+        setEditData((prev) => ({ ...prev, avatarUrl: url }))
     }
 
     const handleClickEditButton = () => {
-        const data = { description, name, social }
+        const data = {
+            description: editData.description,
+            name: editData.name,
+            social: editData.social,
+        }
         handleEditProfile(data, file)
     }
 
     const handleClickResetPassword = () => {
-        resetPassword(email)
+        resetPassword(user.email)
         dispatch(updateNotifyText(resetNotifyMessage))
     }
+
+    const isEditButtonDisabled = isEditDataChanged(editInitialData, editData)
 
     return (
         <Modal onCloseModal={handleChangeIsOpenModal}>
@@ -80,13 +93,13 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
                     isTweet={false}
                     handleUpdateImage={handleChangePhoto}
                 >
-                    <Image src={photoUrl} alt={profileImageAltText} />
+                    <Image src={editData.avatarUrl} alt={profileImageAltText} />
                 </FileUploader>
 
                 <InfoBlock>
                     <Text>{nameText}</Text>
                     <ModalInput
-                        value={name}
+                        value={editData.name}
                         onChangeInput={handleChangeName}
                         maxLength={maxLengthName}
                     />
@@ -94,7 +107,7 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
                 <InfoBlock>
                     <Text>{descriptionText}</Text>
                     <ModalInput
-                        value={description ?? ''}
+                        value={editData.description ?? ''}
                         onChangeInput={handleChangeDescription}
                         maxLength={maxLengthDescription}
                     />
@@ -102,7 +115,7 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
                 <InfoBlock>
                     <Text>{socialText}</Text>
                     <ModalInput
-                        value={social ?? ''}
+                        value={editData.social ?? ''}
                         onChangeInput={handleChangeSocial}
                         maxLength={maxLengthSocial}
                     />
@@ -114,6 +127,8 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
                     $backgroundColor={theme.palette.blue}
                     $color={theme.palette.common.white}
                     onClick={handleClickEditButton}
+                    disabled={isEditButtonDisabled}
+                    $isDisabled={isEditButtonDisabled}
                 >
                     {editText}
                 </ModalButton>

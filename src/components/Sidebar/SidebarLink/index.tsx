@@ -10,9 +10,10 @@ export const SidebarLink = ({ linkData }: SidebarLinkProps) => {
     const { icon, link, title } = linkData
 
     const isActiveLink = pathname === link
+    const linkIcon = isActiveLink ? icon.active : icon.default
     return (
         <NavLink to={link}>
-            <Icon src={icon} alt={navIconAltText} />
+            <Icon src={linkIcon} alt={navIconAltText} />
             <Title $isActiveLink={isActiveLink}>{title}</Title>
         </NavLink>
     )

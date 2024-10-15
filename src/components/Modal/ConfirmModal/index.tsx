@@ -1,6 +1,6 @@
 import Modal from '..'
 import { cancelText, checkTitleText } from './config'
-import { ButtonsWrap, ConfirmButton, Title } from './styled'
+import { ButtonsWrap, CloseButton, ConfirmButton, Title } from './styled'
 import { ConfirmModalProps } from './types'
 
 export const ConfirmModal = (props: ConfirmModalProps) => {
@@ -11,7 +11,7 @@ export const ConfirmModal = (props: ConfirmModalProps) => {
             <Title>{checkTitleText}</Title>
             <ButtonsWrap>
                 <ConfirmButton onClick={onConfirm}>{confirmText}</ConfirmButton>
-                <ConfirmButton onClick={onClose}>{cancelText}</ConfirmButton>
+                <CloseButton onClick={onClose}>{cancelText}</CloseButton>
             </ButtonsWrap>
         </Modal>
     )

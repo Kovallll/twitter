@@ -1,3 +1,5 @@
+import { LocalStorageSchema } from './types'
+
 import { AccountCard } from '@components/AccountCard'
 import {
     countDays,
@@ -12,7 +14,7 @@ import {
     tweetPath,
 } from '@constants'
 import { SearchTweetText } from '@pages/Profile/styled'
-import { SignUpDate, UserData } from '@types'
+import { EditModalData, SignUpDate, UserData } from '@types'
 
 export const getSelectYears = () => {
     const currentYear = new Date().getFullYear()
@@ -103,21 +105,25 @@ export class LocalStorage {
             localStorage.setItem(test, test)
             localStorage.removeItem(test)
             return true
-        } catch (e) {
-            console.error(e)
-            return false
+        } catch {
+            throw new Error('localStorage не доступен')
         }
     }
 
-    getItem = (key: string): any => {
+    getItem = <T extends keyof LocalStorageSchema>(
+        key: T
+    ): LocalStorageSchema[T] | null => {
         if (this.checkIsLocalStorageAvailable()) {
-            return JSON.parse(
-                window.localStorage.getItem(key) ?? JSON.stringify(null)
-            )
-        }
+            const storageValue = window.localStorage.getItem(key)
+            if (!storageValue) return null
+            else return JSON.parse(storageValue)
+        } else return null
     }
 
-    setItem = (key: string, value: any) => {
+    setItem = <T extends keyof LocalStorageSchema>(
+        key: T,
+        value: LocalStorageSchema[T]
+    ): void => {
         if (this.checkIsLocalStorageAvailable()) {
             window.localStorage.setItem(key, JSON.stringify(value))
         }
@@ -184,4 +190,21 @@ export const getUsersNames = (accounts: UserData[], searchValue: string) => {
             }
         })
         .filter((userName) => !!userName)
+}
+
+export const isEditDataChanged = (
+    initialData: EditModalData,
+    newData: EditModalData
+) => {
+    const isDescriptionChanged = initialData.description === newData.description
+    const isSocialChanged = initialData.social === newData.social
+    const isPhotoChanged = initialData.avatarUrl === newData.avatarUrl
+    const isNameChanged = initialData.name === newData.name
+
+    return (
+        isDescriptionChanged &&
+        isSocialChanged &&
+        isPhotoChanged &&
+        isNameChanged
+    )
 }

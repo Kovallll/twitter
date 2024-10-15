@@ -8,25 +8,17 @@ import {
     UpdateSearchData,
     UpdateSearchValue,
     UpdateTotalUser,
-    UpdateUserData,
     UpdateUserDate,
     UpdateUserFollowing,
     UpdateUserLiked,
 } from './types'
 
 import { ActionTypes } from '@constants'
-import { EditModalData, SignUpDate, UserData } from '@types'
+import { SignUpDate, UserData } from '@types'
 
 export const updateUserDate = (data: SignUpDate): UpdateUserDate => {
     return {
         type: ActionTypes.UserDate,
-        payload: data,
-    }
-}
-
-export const updateUserData = (data: EditModalData): UpdateUserData => {
-    return {
-        type: ActionTypes.UserData,
         payload: data,
     }
 }

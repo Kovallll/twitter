@@ -6,13 +6,13 @@ import { Accounts, AccountsSection, ShowMoreLink, Title } from './styled'
 
 import { AccountCard } from '@components/AccountCard'
 import { useAppSelector } from '@hooks'
-import { booleanStatesSelector, totalSelector } from '@store'
+import { loaderStatesSelector, totalSelector } from '@store'
 
 export const TwitterAccountsBoard = () => {
     const [isShow, setIsShow] = useState(false)
 
     const { accounts } = useAppSelector(totalSelector)
-    const { isLoadingInitialData } = useAppSelector(booleanStatesSelector)
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
 
     const handleClickShowMore = () => {
         setIsShow((prev) => !prev)

@@ -103,6 +103,9 @@ export const theme: Theme = {
             cols: '2',
         },
     },
+    notFoundStyles: {
+        width: '300',
+    },
     loginStyles: {
         margin: '20',
         marginTop: '60',

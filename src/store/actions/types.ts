@@ -1,14 +1,9 @@
 import { ActionTypes } from '@constants'
-import { ActionInterface, EditModalData, SignUpDate, UserData } from '@types'
+import { ActionInterface, SignUpDate, UserData } from '@types'
 
 export type UpdateUserDate = ActionInterface<
     typeof ActionTypes.UserDate,
     SignUpDate
->
-
-export type UpdateUserData = ActionInterface<
-    typeof ActionTypes.UserData,
-    EditModalData
 >
 
 export type UpdateTotalUser = ActionInterface<

@@ -41,7 +41,7 @@ export interface ActionInterface<T, P> {
 
 export type TweetImageType = { id: string; file: File; url: string }
 
-export type AvatarImage = { id: string; file: File }
+export type AvatarImage = { id: string; file: File | null }
 
 export type CreatedTweetImageType = { id: string; url: string }
 
@@ -80,7 +80,7 @@ export interface EditModalData {
     description: string | null
     social: string | null
     name: string
-    photoUrl?: string
+    avatarUrl?: string
 }
 
 export interface UserCredential {

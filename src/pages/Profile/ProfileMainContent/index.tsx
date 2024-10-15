@@ -12,18 +12,18 @@ import Modal from '@components/Modal'
 import Notify from '@components/Notify'
 import { TweetCreator } from '@components/TweetCreator'
 import { images, notifyTimeout } from '@constants'
-import { uploadProfileAvatar, uploadUserDataToStorage } from '@firebase'
+import { uploadUserDataToStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import {
-    booleanStatesSelector,
+    loaderStatesSelector,
     notifySelector,
+    openedStatesSelector,
     updateIsTweetModalOpen,
     updateLoadingInitialData,
     updateNotifyText,
-    updateTotalUser,
     userSelector,
 } from '@store'
-import { EditModalData } from '@types'
+import { AvatarImage, EditModalData } from '@types'
 
 export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -31,9 +31,8 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
     const dispatch = useAppDispatch()
     const { user: currentUser } = useAppSelector(userSelector)
     const { text } = useAppSelector(notifySelector)
-    const { isLoadingInitialData, isTweetModalOpen } = useAppSelector(
-        booleanStatesSelector
-    )
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
+    const { isTweetModalOpen } = useAppSelector(openedStatesSelector)
 
     useEffect(() => {
         let timeout: NodeJS.Timeout
@@ -52,8 +51,8 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
         setIsEditModalOpen((prev) => !prev)
     }
 
-    const uploadUserData = (data: EditModalData) => {
-        uploadUserDataToStorage(data, user.docId, dispatch)
+    const uploadUserData = (data: EditModalData, image: AvatarImage) => {
+        uploadUserDataToStorage(data, user.docId, image, dispatch)
     }
 
     if (user.userId === '' && !isLoadingInitialData) {
@@ -65,17 +64,12 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
     }
 
     const handleEditProfile = (data: EditModalData, file: File | null) => {
-        const { description, name, social } = data
         handleChangeIsOpenModal()
-        dispatch(updateTotalUser({ ...currentUser, description, social, name }))
-        if (file) {
-            const image = {
-                id: user.avatar.id,
-                file,
-            }
-            uploadProfileAvatar(image, user, dispatch)
+        const image = {
+            id: user.avatar.id,
+            file,
         }
-        uploadUserData(data)
+        uploadUserData(data, image)
         dispatch(updateNotifyText(successText))
     }
 
@@ -101,7 +95,6 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
             </ProfileContent>
             {isEditModalOpen && (
                 <EditProfileModal
-                    email={user.email}
                     handleChangeIsOpenModal={handleChangeIsOpenModal}
                     handleEditProfile={handleEditProfile}
                 />

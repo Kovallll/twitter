@@ -1,6 +1,6 @@
 export interface SidebarLinkProps {
     linkData: {
-        icon: string
+        icon: { default: string; active: string }
         title: string
         link: string
     }

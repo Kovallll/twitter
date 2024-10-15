@@ -7,7 +7,7 @@ import { Image, ImagesSection, ImageWrap } from './styled'
 import { countTweetsImages } from '@constants'
 import { uploadTweetImagesFromStorage } from '@firebase'
 import { useAppSelector } from '@hooks'
-import { booleanStatesSelector, userSelector } from '@store'
+import { loaderStatesSelector, userSelector } from '@store'
 import { CreatedTweetImageType } from '@types'
 
 export const TweetImageBoard = () => {
@@ -19,7 +19,7 @@ export const TweetImageBoard = () => {
     }
 
     const { user } = useAppSelector(userSelector)
-    const { isLoadingInitialData } = useAppSelector(booleanStatesSelector)
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
 
     useEffect(() => {
         if (user.userId) {
