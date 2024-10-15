@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import {
     defaultDescription,
     defaultSocial,
@@ -5,6 +7,7 @@ import {
     followersText,
     followingText,
     profileIconAltText,
+    successText,
 } from '../config'
 import { ProfileLoader } from './Loader'
 import {
@@ -24,15 +27,36 @@ import {
 } from './styled'
 import { ProfileInfoProps } from './types'
 
-import { useAppSelector } from '@hooks'
-import { booleanStatesSelector, userSelector } from '@store'
+import { EditProfileModal } from '@components/EditProfileModal'
+import { uploadUserDataToStorage } from '@firebase'
+import { useAppDispatch, useAppSelector } from '@hooks'
+import { loaderStatesSelector, updateNotifyText, userSelector } from '@store'
+import { AvatarImage, EditModalData } from '@types'
 
-export const ProfileInfo = ({
-    user,
-    handleChangeIsOpenModal,
-}: ProfileInfoProps) => {
-    const { isLoadingInitialData } = useAppSelector(booleanStatesSelector)
+export const ProfileInfo = ({ user }: ProfileInfoProps) => {
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+
+    const dispatch = useAppDispatch()
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
     const { user: currentuUser } = useAppSelector(userSelector)
+
+    const handleChangeIsOpenModal = () => {
+        setIsEditModalOpen((prev) => !prev)
+    }
+
+    const uploadUserData = (data: EditModalData, image: AvatarImage) => {
+        uploadUserDataToStorage(data, user.docId, image, dispatch)
+    }
+
+    const handleEditProfile = (data: EditModalData, file: File | null) => {
+        handleChangeIsOpenModal()
+        const image = {
+            id: user.avatar.id,
+            file,
+        }
+        uploadUserData(data, image)
+        dispatch(updateNotifyText(successText))
+    }
 
     const isUserTweet = currentuUser.userId === user.userId
     const userSocial =
@@ -81,6 +105,12 @@ export const ProfileInfo = ({
                     </Follow>
                 </ProfileFollowBlock>
             </ProfileBottomInfo>
+            {isEditModalOpen && (
+                <EditProfileModal
+                    handleChangeIsOpenModal={handleChangeIsOpenModal}
+                    handleEditProfile={handleEditProfile}
+                />
+            )}
         </InfoBlock>
     )
 }

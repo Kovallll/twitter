@@ -14,7 +14,13 @@ import {
     tweetPath,
 } from '@constants'
 import { SearchTweetText } from '@pages/Profile/styled'
-import { EditModalData, SignUpDate, UserData } from '@types'
+import {
+    EditModalData,
+    ReadyToTweetStorageType,
+    SignUpDate,
+    SortedTweet,
+    UserData,
+} from '@types'
 
 export const getSelectYears = () => {
     const currentYear = new Date().getFullYear()
@@ -207,4 +213,19 @@ export const isEditDataChanged = (
         isPhotoChanged &&
         isNameChanged
     )
+}
+
+export const getSortedTweetsByTimePost = (allAccounts: UserData[]) => {
+    const allTweets = allAccounts
+        .map((account) =>
+            account.tweets?.reduce(
+                (acc: SortedTweet[], cur: ReadyToTweetStorageType) =>
+                    (acc = [...acc, { tweet: cur, account }]),
+                []
+            )
+        )
+        .filter((tweet) => tweet !== undefined)
+        .flat()
+
+    return allTweets.sort((a, b) => b.tweet.timePost - a.tweet.timePost)
 }

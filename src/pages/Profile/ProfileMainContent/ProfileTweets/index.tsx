@@ -4,13 +4,13 @@ import { ProfileTweetsProps } from './types'
 import { Tweet } from '@components/Tweet'
 import { deleteTweetFromStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { booleanStatesSelector, userSelector } from '@store'
+import { loaderStatesSelector, userSelector } from '@store'
 
 export const ProfileTweets = ({ user }: ProfileTweetsProps) => {
     const { tweets, docId } = user
 
     const dispatch = useAppDispatch()
-    const { isLoadingInitialData } = useAppSelector(booleanStatesSelector)
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
     const { user: currentUser } = useAppSelector(userSelector)
 
     const handleDeleteTweet = (tweetId: string) => {

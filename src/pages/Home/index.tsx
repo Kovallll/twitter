@@ -1,4 +1,4 @@
-import { AllTweetsAccount } from './AllTweetsAccount'
+import { AllTweets } from './AllTweets'
 import { title } from './config'
 import { Container, HomeSection } from './styled'
 
@@ -13,15 +13,15 @@ const Home = () => {
     const { accounts } = useAppSelector(totalSelector)
     const { user } = useAppSelector(userSelector)
 
+    const allAccounts = [...accounts, user]
+
     return (
         <Container>
             <Sidebar />
             <HomeSection>
                 <Header title={title} user={user} />
                 <TweetCreator />
-                {accounts.map((account) => (
-                    <AllTweetsAccount account={account} />
-                ))}
+                <AllTweets allAccounts={allAccounts} />
             </HomeSection>
             <TwitterUsersContent />
         </Container>

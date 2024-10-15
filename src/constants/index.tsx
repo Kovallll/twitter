@@ -13,6 +13,7 @@ export {
     totalDefaultData,
     tweetPath,
     userDefaultData,
+    userPath,
 } from './defaultValues'
 
 export enum Month {

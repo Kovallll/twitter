@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { TweetCreatorBlockProps } from './types'
 
-import { Button, mixins, ProfileIcon, Spinner } from '@styles'
+import { mixins, ProfileIcon } from '@styles'
 
 export const TweetIcon = styled(ProfileIcon)`
     ${({ theme }) => {
@@ -34,30 +34,6 @@ export const TweetButtonBlock = styled.div`
     }}
 `
 
-export const ButtonWrap = styled.div`
-    ${({ theme }) => {
-        return css`
-            width: ${theme.tweetCreatorStyles.buttonWidth + 'px'};
-            position: absolute;
-            bottom: ${theme.spaces.md + 'px'};
-            right: ${theme.spaces.md + 'px'};
-        `
-    }}
-`
-
-export const TweetButton = styled(Button)`
-    ${({ theme }) => {
-        return css`
-            margin-bottom: 0;
-            padding: ${theme.spaces.md + 'px' + ' 0px'};
-
-            @media (${theme.media.lg}) {
-                padding: ${theme.spaces.sm + 'px' + ' 0px'};
-            }
-        `
-    }}
-`
-
 export const TweetCreatorBlock = styled.div<TweetCreatorBlockProps>`
     ${({ theme, $isModal }) => {
         return css`
@@ -80,14 +56,6 @@ export const TweetCreatorBlock = styled.div<TweetCreatorBlockProps>`
             @media (${theme.media.xs}) {
                 padding: ${theme.spaces.sm + 'px'};
             }
-        `
-    }}
-`
-
-export const CreatorSpinner = styled(Spinner)`
-    ${({ theme }) => {
-        return css`
-            height: ${theme.tweetCreatorStyles.spinnerHeight + 'px'};
         `
     }}
 `

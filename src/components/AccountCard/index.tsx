@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 
-import { userPath } from 'src/constants/dynamicConstants'
 import { avatarIconAltText, follow, unfollow } from './config'
 import {
     AccountAvatar,
@@ -12,6 +11,7 @@ import {
 } from './styled'
 import { AccountCardProps } from './types'
 
+import { userPath } from '@constants'
 import { followOrUnfollowAccount } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import { userSelector } from '@store'

@@ -87,3 +87,8 @@ export interface UserCredential {
     password: string
     email: string
 }
+
+export interface SortedTweet {
+    tweet: ReadyToTweetStorageType
+    account: UserData
+}

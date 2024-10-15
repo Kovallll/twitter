@@ -18,23 +18,22 @@ export const TwitterAccountsBoard = () => {
         setIsShow((prev) => !prev)
     }
 
+    if (isLoadingInitialData) {
+        return <Loader />
+    }
     return (
         <>
-            {isLoadingInitialData ? (
-                <Loader />
-            ) : (
-                <AccountsSection>
-                    <Title>{title}</Title>
-                    <Accounts $isShow={isShow}>
-                        {accounts.map((account) => (
-                            <AccountCard account={account} />
-                        ))}
-                    </Accounts>
-                    <ShowMoreLink onClick={handleClickShowMore}>
-                        {showMore}
-                    </ShowMoreLink>
-                </AccountsSection>
-            )}
+            <AccountsSection>
+                <Title>{title}</Title>
+                <Accounts $isShow={isShow}>
+                    {accounts.map((account) => (
+                        <AccountCard account={account} />
+                    ))}
+                </Accounts>
+                <ShowMoreLink onClick={handleClickShowMore}>
+                    {showMore}
+                </ShowMoreLink>
+            </AccountsSection>
         </>
     )
 }

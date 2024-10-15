@@ -7,9 +7,11 @@ import { Paths } from '@constants'
 import { initUserData, setTotalAccountsFromStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import {
+    loaderStatesSelector,
     searchSelector,
     setTotalAccounts,
     totalSelector,
+    updateLoadingInitialData,
     updateSearchData,
     userSelector,
 } from '@store'
@@ -25,6 +27,7 @@ export const InitializerUserData = ({ children }: InitializerUserDataProps) => {
     const { user } = useAppSelector(userSelector)
     const { accounts } = useAppSelector(totalSelector)
     const { value: searchValue } = useAppSelector(searchSelector)
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
 
     useEffect(() => {
         initUserData(user.userId, dispatch)
@@ -34,6 +37,14 @@ export const InitializerUserData = ({ children }: InitializerUserDataProps) => {
             dispatch(setTotalAccounts([]))
         }
     }, [dispatch, user.userId])
+
+    if (user.userId === '' && !isLoadingInitialData) {
+        dispatch(updateLoadingInitialData(true))
+    }
+
+    if (user.userId !== '' && isLoadingInitialData) {
+        dispatch(updateLoadingInitialData(false))
+    }
 
     if (prevSearchValue !== searchValue && isProfilePage) {
         const tweetsTexts = getTweetsTexts(accounts, searchValue)
