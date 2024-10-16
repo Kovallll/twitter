@@ -1,29 +1,28 @@
-import bookmarksIcon from '@assets/icons/bookmarks.svg'
+import BookmarksIcon from '@assets/icons/bookmarks.svg?react'
 import closeIcon from '@assets/icons/close.svg'
-import dotsIcon from '@assets/icons/dots.svg'
-import exploreIcon from '@assets/icons/explore.svg'
-import eyeOpen from '@assets/icons/eyeSee.svg'
-import eyeSlash from '@assets/icons/eyeSlash.svg'
+import DotsIcon from '@assets/icons/dots.svg?react'
+import ExploreIcon from '@assets/icons/explore.svg?react'
+import EyeOpenIcon from '@assets/icons/eyeOpen.svg?react'
+import EyeSlashIcon from '@assets/icons/eyeSlash.svg?react'
 import googleIcon from '@assets/icons/googleIcon.svg'
-import homeActiveIcon from '@assets/icons/homeActive.svg'
-import homeIcon from '@assets/icons/homeOutline.svg'
+import HomeIcon from '@assets/icons/home.svg?react'
 import uploadImage from '@assets/icons/image.svg'
-import likeFill from '@assets/icons/likeFill.svg'
-import likeOutline from '@assets/icons/likeOutline.svg'
-import listsIcon from '@assets/icons/lists.svg'
+import likeFillIcon from '@assets/icons/likeFill.svg'
+import likeOutlineIcon from '@assets/icons/likeOutline.svg'
+import ListsIcon from '@assets/icons/lists.svg?react'
 import logoutIcon from '@assets/icons/logout.svg'
-import messagesIcon from '@assets/icons/messages.svg'
-import moreIcon from '@assets/icons/more.svg'
-import notificationIcon from '@assets/icons/notification.svg'
+import MessagesIcon from '@assets/icons/messages.svg?react'
+import MoreIcon from '@assets/icons/more.svg?react'
+import NotificationIcon from '@assets/icons/notification.svg?react'
 import postIcon from '@assets/icons/post.svg'
-import profileActiveIcon from '@assets/icons/profileActive.svg'
-import profileIcon from '@assets/icons/profileOutline.svg'
+import ProfileIcon from '@assets/icons/profile.svg?react'
 import searchIcon from '@assets/icons/search.svg'
 import logoIcon from '@assets/icons/twitterLogo.svg'
 import profileBackground from '@assets/images/profileBackground.png'
 import profileImage from '@assets/images/profileImage.svg'
 import twitterImage from '@assets/images/signupTwitter.png'
 import { UserData } from '@types'
+import { LocalStorage } from '@utils'
 
 export const tweetPath = '/tweet'
 
@@ -46,13 +45,18 @@ export const images = {
     twitterImage,
     uploadImage,
     searchIcon,
-    dotsIcon,
-    eyeOpen,
-    eyeSlash,
-    likeFill,
-    likeOutline,
+    DotsIcon,
+    EyeOpenIcon,
+    EyeSlashIcon,
+    likeFillIcon,
+    likeOutlineIcon,
     postIcon,
     logoutIcon,
+}
+
+export enum Themes {
+    Dark = 'dark',
+    Light = 'light',
 }
 
 export enum ActionTypes {
@@ -64,6 +68,7 @@ export enum ActionTypes {
     TotalAccounts = 'total/accounts',
     SeacrhValue = 'search/value',
     SearchData = 'search/data',
+    UserTheme = 'user/currentTheme',
     LoadingTweet = 'boolean/tweet',
     LoadingInititalData = 'boolean/initialData',
     isSidebarOpen = 'boolean/sidebar',
@@ -73,6 +78,8 @@ export enum ActionTypes {
 export const defaultDate = { year: '', month: '', day: '' }
 
 export const basePhoneCode = '+375'
+
+export const themeStoragekey = 'theme'
 
 export const defaultUser = {
     docId: '',
@@ -88,6 +95,7 @@ export const defaultUser = {
     description: null,
 } as UserData
 
+const localStorage = new LocalStorage()
 export const userDefaultData = {
     editData: {
         description: null,
@@ -99,6 +107,8 @@ export const userDefaultData = {
     user: defaultUser,
     following: [],
     liked: [],
+    currentTheme:
+        (localStorage.getItem(themeStoragekey) as Themes) || Themes.Light,
 }
 
 export const notifyDefaultData = {
@@ -126,42 +136,42 @@ export const openedStatesDefaultData = {
 
 export const sidebarLinks = [
     {
-        icon: { default: homeIcon, active: homeActiveIcon },
+        Icon: HomeIcon,
         title: 'Home',
         link: Paths.Home,
     },
     {
-        icon: { default: exploreIcon, active: exploreIcon },
+        Icon: ExploreIcon,
         title: 'Explore',
         link: '/',
     },
     {
-        icon: { default: notificationIcon, active: notificationIcon },
+        Icon: NotificationIcon,
         title: 'Notification',
         link: '/',
     },
     {
-        icon: { default: messagesIcon, active: messagesIcon },
+        Icon: MessagesIcon,
         title: 'Messages',
         link: '/',
     },
     {
-        icon: { default: bookmarksIcon, active: bookmarksIcon },
+        Icon: BookmarksIcon,
         title: 'Bookmarks',
         link: '/',
     },
     {
-        icon: { default: listsIcon, active: listsIcon },
+        Icon: ListsIcon,
         title: 'Lists',
         link: '/',
     },
     {
-        icon: { default: profileIcon, active: profileActiveIcon },
+        Icon: ProfileIcon,
         title: 'Profile',
         link: Paths.Profile,
     },
     {
-        icon: { default: moreIcon, active: moreIcon },
+        Icon: MoreIcon,
         title: 'More',
         link: '/',
     },

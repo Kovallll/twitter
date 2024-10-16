@@ -32,6 +32,8 @@ export const TweetText = styled.textarea`
             width: ${theme.tweetCreatorStyles.width + '%'};
             border: 0;
             resize: none;
+            background-color: ${theme.palette.bgColor};
+            color: ${theme.palette.textColor};
 
             &::placeholder {
                 font-weight: ${theme.boldFont};

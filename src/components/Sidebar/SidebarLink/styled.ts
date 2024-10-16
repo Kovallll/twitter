@@ -31,8 +31,6 @@ export const NavLink = styled(Link)`
     }}
 `
 
-export const Icon = styled.img``
-
 export const Title = styled.p<TitleProps>`
     ${({ theme, $isActiveLink }) => {
         return css`
@@ -41,7 +39,7 @@ export const Title = styled.p<TitleProps>`
             font-weight: ${theme.boldFont};
             color: ${$isActiveLink
                 ? theme.palette.blue
-                : theme.palette.common.black};
+                : theme.palette.textColor};
 
             @media (${theme.media.xl}) {
                 margin-left: ${theme.spaces.md + 'px'};

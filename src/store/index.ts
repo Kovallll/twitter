@@ -36,6 +36,7 @@ export {
     updateLoadingInitialData,
     updateIsSidebarOpen,
     updateIsTweetModalOpen,
+    updateUserTheme,
     updateUserDate,
 } from './actions'
 

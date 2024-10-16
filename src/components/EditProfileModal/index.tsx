@@ -32,7 +32,6 @@ import {
 import { resetPassword } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import { updateNotifyText, userSelector } from '@store'
-import { theme } from '@styles'
 import { isEditDataChanged } from '@utils'
 
 export const EditProfileModal = (props: EditProfileModalProps) => {
@@ -124,8 +123,6 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
                     {resetText}
                 </ForgotPassword>
                 <ModalButton
-                    $backgroundColor={theme.palette.blue}
-                    $color={theme.palette.common.white}
                     onClick={handleClickEditButton}
                     disabled={isEditButtonDisabled}
                     $isDisabled={isEditButtonDisabled}

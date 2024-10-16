@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import {
     logoAltText,
@@ -15,6 +15,7 @@ import {
     Container,
     DesktopText,
     IconWrap,
+    LogOutButton,
     LogOutIconWrap,
     LogoWrap,
     NameText,
@@ -28,9 +29,8 @@ import {
     Wrap,
 } from './styled'
 
-import logo from '@assets/icons/twitterLogo.svg'
 import { ConfirmModal } from '@components/Modal/ConfirmModal'
-import { hiddenSidebarWidth, images, sidebarLinks } from '@constants'
+import { hiddenSidebarWidth, images, Paths, sidebarLinks } from '@constants'
 import { signOutFirebaseAccount } from '@firebase'
 import {
     useAppDispatch,
@@ -45,12 +45,13 @@ import {
     updateIsTweetModalOpen,
     userSelector,
 } from '@store'
-import { Logo, theme } from '@styles'
+import { Logo } from '@styles'
 
 export const Sidebar = () => {
     const sidebarRef = useRef(null)
     const [isLogOut, setIsLogOut] = useState(false)
 
+    const { pathname } = useLocation()
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { user } = useAppSelector(userSelector)
@@ -84,27 +85,23 @@ export const Sidebar = () => {
         dispatch(updateIsSidebarOpen(false))
     }
 
+    const isProfilePage = pathname === Paths.Profile
     return (
         <>
             {isSidebarOpen && (
                 <Wrap ref={sidebarRef}>
                     <Container>
                         <LogoWrap>
-                            <Logo src={logo} alt={logoAltText} />
+                            <Logo src={images.logoIcon} alt={logoAltText} />
                         </LogoWrap>
                         {sidebarLinks.map((linkData) => (
-                            <SidebarLink
-                                key={linkData.title}
-                                linkData={linkData}
-                            />
+                            <SidebarLink linkData={linkData} />
                         ))}
-                        <SidebarButton
-                            $backgroundColor={theme.palette.blue}
-                            $color={theme.palette.common.white}
-                            onClick={handleOpenModalTweet}
-                        >
-                            {tweetText}
-                        </SidebarButton>
+                        {isProfilePage && (
+                            <SidebarButton onClick={handleOpenModalTweet}>
+                                {tweetText}
+                            </SidebarButton>
+                        )}
                         <IconWrap onClick={handleOpenModalTweet}>
                             <PostIconWrap>
                                 <TabletIcon
@@ -127,13 +124,9 @@ export const Sidebar = () => {
                                 </TextBlock>
                             </Profile>
                         )}
-                        <SidebarButton
-                            $backgroundColor={theme.palette.gray}
-                            $color={theme.palette.common.white}
-                            onClick={handleChangeIsLogOut}
-                        >
+                        <LogOutButton onClick={handleChangeIsLogOut}>
                             <DesktopText>{logOutText}</DesktopText>
-                        </SidebarButton>
+                        </LogOutButton>
                         <IconWrap onClick={handleChangeIsLogOut}>
                             <LogOutIconWrap>
                                 <TabletIcon

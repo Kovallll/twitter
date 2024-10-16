@@ -4,15 +4,6 @@ export interface Theme {
             black: string
             white: string
         }
-        blue: string
-        lightBlue: string
-        gray: string
-        lightGray: string
-        red: string
-        green: string
-        accountsBgColor: string
-        searchBgColor: string
-        lineBoardColor: string
     }
     boldFont: string
     fullSize: string
@@ -436,5 +427,26 @@ export interface Theme {
         sm: string
         xs: string
         xxs: string
+    }
+}
+
+export interface ColorTheme extends Theme {
+    palette: {
+        common: {
+            black: string
+            white: string
+        }
+        textColor: string
+        bgColor: string
+        blue: string
+        lightBlue: string
+        gray: string
+        lightGray: string
+        red: string
+        green: string
+        accountsBgColor: string
+        inputBgColor: string
+        searchBgColor: string
+        lineBoardColor: string
     }
 }

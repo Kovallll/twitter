@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
     loginButtonText,
@@ -9,7 +9,14 @@ import {
     signUpText,
 } from './config'
 import { loginSchema } from './schema'
-import { Container, SignUpLink, Title, Wrap } from './styled'
+import {
+    Container,
+    SignUpLink,
+    SignUpLinkWrap,
+    SubmitButton,
+    Title,
+    Wrap,
+} from './styled'
 
 import { Input } from '@components/Input'
 import { PasswordInput } from '@components/Input/PasswordInput'
@@ -25,7 +32,7 @@ import {
     passwordPlaceholder,
 } from '@pages/SingUpCredential/config'
 import { notifySelector, updateNotifyText } from '@store'
-import { Button, Form, LinkStyle, Logo, theme } from '@styles'
+import { Form, Logo } from '@styles'
 import { LoginFormInput } from '@types'
 import { getNotifyError } from '@utils'
 
@@ -104,19 +111,11 @@ const Login = () => {
                             />
                         )}
                     />
-                    <Button
-                        $backgroundColor={theme.palette.blue}
-                        $color={theme.palette.common.white}
-                        type="submit"
-                    >
-                        {loginButtonText}
-                    </Button>
+                    <SubmitButton type="submit">{loginButtonText}</SubmitButton>
                 </Form>
-                <SignUpLink>
-                    <Link to={Paths.SignUp} style={LinkStyle}>
-                        {signUpText}
-                    </Link>
-                </SignUpLink>
+                <SignUpLinkWrap>
+                    <SignUpLink to={Paths.SignUp}>{signUpText}</SignUpLink>
+                </SignUpLinkWrap>
             </Wrap>
             {text !== '' && <Notify text={notifyError} />}
         </Container>

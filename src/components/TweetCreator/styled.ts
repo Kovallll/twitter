@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import { TweetCreatorBlockProps } from './types'
+import { TweetButtonProps, TweetCreatorBlockProps } from './types'
 
 import { Button, mixins, ProfileIcon, Spinner } from '@styles'
 
@@ -45,11 +45,16 @@ export const ButtonWrap = styled.div`
     }}
 `
 
-export const TweetButton = styled(Button)`
-    ${({ theme }) => {
+export const TweetButton = styled(Button)<TweetButtonProps>`
+    ${({ theme, $isTweetDisabled }) => {
         return css`
             margin-bottom: 0;
             padding: ${theme.spaces.md + 'px' + ' 0px'};
+            background-color: ${$isTweetDisabled
+                ? theme.palette.gray
+                : theme.palette.lightBlue};
+
+            color: ${theme.palette.common.white};
 
             @media (${theme.media.lg}) {
                 padding: ${theme.spaces.sm + 'px' + ' 0px'};
@@ -65,8 +70,14 @@ export const TweetCreatorBlock = styled.div<TweetCreatorBlockProps>`
 
             position: relative;
             width: ${theme.fullSize + '%'};
-            border-top: ${$isModal ? '0' : '1px solid #d8d8d8'};
-            border-bottom: ${$isModal ? '0' : '1px solid #d8d8d8'};
+            border-top: ${$isModal
+                ? '0'
+                : theme.profileMainContentStyles.border +
+                  theme.palette.lineBoardColor};
+            border-bottom: ${$isModal
+                ? '0'
+                : theme.profileMainContentStyles.border +
+                  theme.palette.lineBoardColor};
             padding: ${theme.spaces.xl + 'px'};
 
             @media (${theme.media.md}) {

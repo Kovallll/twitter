@@ -11,9 +11,10 @@ import {
     UpdateUserDate,
     UpdateUserFollowing,
     UpdateUserLiked,
+    UpdateUserTheme,
 } from './types'
 
-import { ActionTypes } from '@constants'
+import { ActionTypes, Themes } from '@constants'
 import { SignUpDate, UserData } from '@types'
 
 export const updateUserDate = (data: SignUpDate): UpdateUserDate => {
@@ -33,6 +34,13 @@ export const updateUserFollowing = (data: string[]): UpdateUserFollowing => {
 export const updateUserTweetLiked = (data: string[]): UpdateUserLiked => {
     return {
         type: ActionTypes.UserLiked,
+        payload: data,
+    }
+}
+
+export const updateUserTheme = (data: Themes): UpdateUserTheme => {
+    return {
+        type: ActionTypes.UserTheme,
         payload: data,
     }
 }

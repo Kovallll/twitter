@@ -5,3 +5,7 @@ export interface TweetCreatorProps {
 export interface TweetCreatorBlockProps {
     $isModal: boolean
 }
+
+export interface TweetButtonProps {
+    $isTweetDisabled: boolean
+}

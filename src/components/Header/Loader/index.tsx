@@ -5,7 +5,7 @@ import {
     SkeletonIcon,
 } from './styles'
 
-import { ToggleButton } from '@components/ToggleThemeButton'
+import { ToggleThemeButton } from '@components/ToggleThemeButton'
 
 export const HeaderLoader = () => {
     return (
@@ -17,7 +17,7 @@ export const HeaderLoader = () => {
                     <SkeletonHeaderSubtitle />
                 </HeaderTextBlock>
             </HeaderContentBlock>
-            <ToggleButton />
+            <ToggleThemeButton />
         </HeaderWrap>
     )
 }

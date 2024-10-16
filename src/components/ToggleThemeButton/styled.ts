@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components'
 
-import { ContainerProps } from './types'
+import { ToggleButtonProps } from './types'
 
-export const Container = styled.div<ContainerProps>`
-    ${({ theme, $isToggle }) => {
+export const ToggleButton = styled.div<ToggleButtonProps>`
+    ${({ theme, $isDarkTheme }) => {
         return css`
             position: relative;
             right: ${theme.spaces.md + 'px'};
@@ -27,7 +27,7 @@ export const Container = styled.div<ContainerProps>`
                 right: ${theme.spaces.xxs + 'px'};
                 border: ${theme.toggleThemeStyles.border + theme.palette.gray};
                 transform: translateX(
-                    ${$isToggle
+                    ${$isDarkTheme
                         ? theme.toggleThemeStyles.lg.transform + 'px'
                         : '0'}
                 );
@@ -42,7 +42,7 @@ export const Container = styled.div<ContainerProps>`
                     width: ${theme.toggleThemeStyles.md.circleWidth + 'px'};
                     height: ${theme.toggleThemeStyles.md.circleHeight + 'px'};
                     transform: translateX(
-                        ${$isToggle
+                        ${$isDarkTheme
                             ? theme.toggleThemeStyles.md.transform + 'px'
                             : '0'}
                     );
@@ -58,7 +58,7 @@ export const Container = styled.div<ContainerProps>`
                     width: ${theme.toggleThemeStyles.sm.circleWidth + 'px'};
                     height: ${theme.toggleThemeStyles.sm.circleHeight + 'px'};
                     transform: translateX(
-                        ${$isToggle
+                        ${$isDarkTheme
                             ? theme.toggleThemeStyles.sm.transform + 'px'
                             : '0px'}
                     );

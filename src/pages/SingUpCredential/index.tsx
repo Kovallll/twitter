@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
     confirmPasswordControlName,
@@ -31,7 +31,9 @@ import {
     Container,
     DateBlock,
     LogoWrap,
+    SignUpLink,
     Subtitle,
+    SumbitButton,
     Text,
     Title,
     Wrap,
@@ -55,7 +57,7 @@ import { emailAndPasswordAuth } from '@firebase'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import { notifySelector, updateNotifyText, userSelector } from '@store'
-import { Button, Form, LinkStyle, Logo, Spinner, theme } from '@styles'
+import { Form, Logo, Spinner } from '@styles'
 import { SignUpFormInput } from '@types'
 import { getNotifyError, getSelectDays, getSelectYears } from '@utils'
 
@@ -203,9 +205,7 @@ const SingUpCredential = () => {
                             />
                         )}
                     />
-                    <Link to={Paths.SignUp} style={LinkStyle}>
-                        {linkText}
-                    </Link>
+                    <SignUpLink to={Paths.SignUp}>{linkText}</SignUpLink>
                     <Subtitle>{dateSubtitle}</Subtitle>
                     <Text>{dateText}</Text>
                     <DateBlock>
@@ -249,13 +249,9 @@ const SingUpCredential = () => {
                             )}
                         />
                     </DateBlock>
-                    <Button
-                        $backgroundColor={theme.palette.blue}
-                        $color={theme.palette.common.white}
-                        type="submit"
-                    >
+                    <SumbitButton type="submit">
                         {signUpSubmitText}
-                    </Button>
+                    </SumbitButton>
                 </Form>
             </Wrap>
             {text !== '' && <Notify text={notifyError} />}

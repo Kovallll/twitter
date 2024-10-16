@@ -1,4 +1,4 @@
-export { type Theme } from './theme'
+export { type Theme, type ColorTheme } from './theme'
 
 export interface ButtonProps {
     $withBorder?: boolean
