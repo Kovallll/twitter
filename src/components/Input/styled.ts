@@ -13,6 +13,8 @@ export const InputModule = styled.input`
             border: ${theme.inputStyles.border + theme.palette.gray};
             font-size: ${theme.fontSizes.sm + 'px'};
             margin-bottom: ${theme.spaces.sm + 'px'};
+            background-color: ${theme.palette.inputBgColor};
+            color: ${theme.palette.textColor};
 
             @media (${theme.media.md}) {
                 padding: ${theme.spaces.md + 'px'} ${theme.spaces.sm + 'px'};

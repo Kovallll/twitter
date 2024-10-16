@@ -17,6 +17,7 @@
         "test:cov": "jest --passWithNoTests --coverage"
     },
     "dependencies": {
+        "axios": "^1.7.7",
         "firebase": "^10.13.2",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
@@ -25,9 +26,8 @@
         "react-router-dom": "^6.26.2",
         "redux": "^5.0.1",
         "styled-components": "^6.1.13",
-        "yup": "^1.4.0",
         "uuid": "^10.0.0",
-        "axios": "^1.7.7"
+        "yup": "^1.4.0"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.25.4",
@@ -64,6 +64,7 @@
         "typescript": "^5.5.3",
         "typescript-eslint": "^8.7.0",
         "vite": "^5.4.1",
+        "vite-plugin-svgr": "^4.2.0",
         "vite-tsconfig-paths": "^5.0.1"
     }
 }

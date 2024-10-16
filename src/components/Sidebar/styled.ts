@@ -36,7 +36,7 @@ export const Wrap = styled.div`
                 left: 0;
                 top: 0;
                 z-index: ${theme.sidebarStyles.zIndex};
-                background: ${theme.palette.common.white};
+                background: ${theme.palette.bgColor};
             }
         `
     }}
@@ -141,6 +141,22 @@ export const TabletIcon = styled.img`
 export const SidebarButton = styled(Button)`
     ${({ theme }) => {
         return css`
+            background-color: ${theme.palette.blue};
+            color: ${theme.palette.common.white};
+
+            @media (${theme.media.md}) {
+                display: none;
+            }
+        `
+    }}
+`
+
+export const LogOutButton = styled(Button)`
+    ${({ theme }) => {
+        return css`
+            background-color: ${theme.palette.gray};
+            color: ${theme.palette.common.white};
+
             @media (${theme.media.md}) {
                 display: none;
             }

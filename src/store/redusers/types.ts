@@ -11,6 +11,7 @@ import {
     UpdateUserDate,
     UpdateUserFollowing,
     UpdateUserLiked,
+    UpdateUserTheme,
 } from '../actions/types'
 
 export type AllActionsType =
@@ -25,6 +26,7 @@ export type UserAction =
     | UpdateTotalUser
     | UpdateUserFollowing
     | UpdateUserLiked
+    | UpdateUserTheme
     | UpdateUserDate
 
 export type NotifyAction = UpdateNotifyText

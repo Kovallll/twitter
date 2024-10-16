@@ -8,12 +8,14 @@ export {
     defaultUser,
     images,
     notifyDefaultData,
+    themeStoragekey,
     searchDefaultData,
     sidebarLinks,
     totalDefaultData,
     tweetPath,
     userDefaultData,
     userPath,
+    Themes,
 } from './defaultValues'
 
 export enum Month {

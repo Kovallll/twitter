@@ -1,18 +1,33 @@
 import { useState } from 'react'
 
-import { Container } from './styled'
+import { ToggleButton } from './styled'
 
-export const ToggleButton = ({ ...props }) => {
-    const [isToggle, setIsToggle] = useState(false)
+import { Themes, themeStoragekey } from '@constants'
+import { useAppDispatch, useAppSelector } from '@hooks'
+import { updateUserTheme, userSelector } from '@store'
+import { LocalStorage } from '@utils'
+
+const localStorage = new LocalStorage()
+
+export const ToggleThemeButton = ({ ...props }) => {
+    const dispatch = useAppDispatch()
+    const { currentTheme } = useAppSelector(userSelector)
+
+    const [isDarkTheme, setIsDarkTheme] = useState(currentTheme === Themes.Dark)
+
+    const changedTheme =
+        currentTheme === Themes.Light ? Themes.Dark : Themes.Light
 
     const handleToggleTheme = () => {
-        setIsToggle((prev) => !prev)
+        setIsDarkTheme((prev) => !prev)
+        dispatch(updateUserTheme(changedTheme))
+        localStorage.setItem(themeStoragekey, currentTheme)
     }
 
     return (
-        <Container
+        <ToggleButton
             {...props}
-            $isToggle={isToggle}
+            $isDarkTheme={isDarkTheme}
             onClick={handleToggleTheme}
         />
     )

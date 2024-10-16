@@ -1,5 +1,5 @@
 import 'styled-components'
-import { Theme } from '@types'
+import { ColorTheme } from '@types'
 
 declare module '*.svg' {
     const content: string
@@ -7,5 +7,5 @@ declare module '*.svg' {
 }
 
 declare module 'styled-components' {
-    export interface DefaultTheme extends Theme {}
+    export interface DefaultTheme extends ColorTheme {}
 }

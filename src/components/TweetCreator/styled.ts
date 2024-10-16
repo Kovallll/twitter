@@ -41,8 +41,14 @@ export const TweetCreatorBlock = styled.div<TweetCreatorBlockProps>`
 
             position: relative;
             width: ${theme.fullSize + '%'};
-            border-top: ${$isModal ? '0' : '1px solid #d8d8d8'};
-            border-bottom: ${$isModal ? '0' : '1px solid #d8d8d8'};
+            border-top: ${$isModal
+                ? '0'
+                : theme.profileMainContentStyles.border +
+                  theme.palette.lineBoardColor};
+            border-bottom: ${$isModal
+                ? '0'
+                : theme.profileMainContentStyles.border +
+                  theme.palette.lineBoardColor};
             padding: ${theme.spaces.xl + 'px'};
 
             @media (${theme.media.md}) {

@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { AccountsProps } from './types'
 
-import { LinkStyle } from '@styles'
+import { mixins } from '@styles'
 
 export const AccountsSection = styled.section`
     ${({ theme }) => {
@@ -58,7 +58,8 @@ export const Title = styled.p`
 export const ShowMoreLink = styled.button`
     ${({ theme }) => {
         return css`
-            ${LinkStyle}
+            ${mixins.linkStyles(theme)};
+
             background: transparent;
             border: 0;
             margin-top: ${theme.spaces.md + 'px'};

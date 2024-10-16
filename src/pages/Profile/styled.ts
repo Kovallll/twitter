@@ -17,7 +17,7 @@ export const SearchTweetText = styled(Link)`
     ${({ theme }) => {
         return css`
             text-decoration: none;
-            color: ${theme.palette.common.black};
+            color: ${theme.palette.textColor};
             width: ${theme.fullSize + '%'};
             cursor: pointer;
             font-size: ${theme.fontSizes.md + 'px'};

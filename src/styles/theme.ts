@@ -1,4 +1,4 @@
-import { Theme } from '@types'
+import { ColorTheme, Theme } from '@types'
 
 export const theme: Theme = {
     palette: {
@@ -6,15 +6,6 @@ export const theme: Theme = {
             black: '#000',
             white: '#fff',
         },
-        blue: '#1D9BF0',
-        lightBlue: '#01C4F2',
-        gray: '#B3B8BB',
-        lightGray: '#e6e6e6',
-        red: '#ff0000',
-        green: '#6EC207',
-        accountsBgColor: '#f7f9f9',
-        searchBgColor: '#eff3f4',
-        lineBoardColor: '#d8d8d8',
     },
     fullSize: '100',
     boldFont: '700',
@@ -440,5 +431,43 @@ export const theme: Theme = {
         sm: 'max-width: 1000px',
         xs: 'max-width: 768px',
         xxs: 'max-width: 560px',
+    },
+}
+
+export const lightTheme: ColorTheme = {
+    ...theme,
+    palette: {
+        ...theme.palette,
+        textColor: '#000',
+        bgColor: '#fff',
+        blue: '#1D9BF0',
+        lightBlue: '#01C4F2',
+        gray: '#B3B8BB',
+        lightGray: '#e6e6e6',
+        red: '#ff0000',
+        green: '#6EC207',
+        accountsBgColor: '#f7f9f9',
+        searchBgColor: '#eff3f4',
+        inputBgColor: '#fff',
+        lineBoardColor: '#d8d8d8',
+    },
+}
+
+export const darkTheme: ColorTheme = {
+    ...theme,
+    palette: {
+        ...theme.palette,
+        textColor: '#fff',
+        bgColor: '#000',
+        blue: '#1D9BF0',
+        lightBlue: '#01C4F2',
+        gray: '#B3B8BB',
+        lightGray: '#e6e6e6',
+        red: '#ff0000',
+        green: '#6EC207',
+        accountsBgColor: '#2c292b',
+        searchBgColor: '#19171a',
+        inputBgColor: '#19171a',
+        lineBoardColor: '#2f3336',
     },
 }
