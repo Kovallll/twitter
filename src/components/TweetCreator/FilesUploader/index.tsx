@@ -91,8 +91,12 @@ const FileUploader = (props: FileUploaderProps) => {
                         value={tweetText}
                         maxLength={maxLengthTweetText}
                         onChange={handleChangeText}
+                        data-cy="tweet-text"
                     />
-                    <LettersCount $isModal={isModal}>
+                    <LettersCount
+                        $isModal={isModal}
+                        data-cy="tweet-text-letters"
+                    >
                         {letterCountText}
                     </LettersCount>
                     <TweetImages $isModal={isModal}>
@@ -108,7 +112,7 @@ const FileUploader = (props: FileUploaderProps) => {
                 </>
             )}
             {children ? (
-                <Label>
+                <Label data-cy="image-uploader">
                     {children}
                     <Input
                         type="file"
@@ -119,7 +123,7 @@ const FileUploader = (props: FileUploaderProps) => {
                 </Label>
             ) : (
                 <UploaderBlock>
-                    <Label>
+                    <Label data-cy="tweet-image-uploader">
                         <Image
                             src={images.uploadImage}
                             alt={uploadIconAtlText}

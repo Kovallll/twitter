@@ -114,6 +114,7 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
                             $color={theme.palette.common.white}
                             onClick={handleCreateTweet}
                             disabled={isTweetDisabled}
+                            data-cy="tweet-button"
                         >
                             {tweetButtonText}
                         </TweetButton>

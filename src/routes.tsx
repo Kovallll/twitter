@@ -43,11 +43,10 @@ const routes = [
     {
         path: Paths.Profile,
         element: (
-            <ProtectedRoute redirectTo="/login" >
+            <ProtectedRoute redirectTo="/login">
                 <Profile />
             </ProtectedRoute>
         ),
-        
     },
     {
         path: Paths.Tweet,

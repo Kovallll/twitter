@@ -91,7 +91,7 @@ export const Tweet = (props: TweetProps) => {
     const likeIcon = isLiked ? images.likeFill : images.likeOutline
     const timePostTweet = getTimePostTweet(timePost)
     return (
-        <TweetArticle>
+        <TweetArticle data-cy="tweet">
             <TweetInfoBlock>
                 <TweetIcon src={account.avatar.url} alt={avatarIconAltText} />
                 <InfoBlock>

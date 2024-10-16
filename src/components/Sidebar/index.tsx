@@ -105,7 +105,10 @@ export const Sidebar = () => {
                         >
                             {tweetText}
                         </SidebarButton>
-                        <IconWrap onClick={handleOpenModalTweet}>
+                        <IconWrap
+                            onClick={handleOpenModalTweet}
+                            data-cy="sidebar-tweet"
+                        >
                             <PostIconWrap>
                                 <TabletIcon
                                     src={images.postIcon}

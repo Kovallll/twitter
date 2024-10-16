@@ -33,3 +33,35 @@ export const getProfileDescription = () => {
 export const getProfileSocial = () => {
     return cy.get('p[data-cy="profile-social"]')
 }
+
+export const getModalSocial = () => {
+    return cy.get('input[data-cy="modal-social"]')
+}
+
+export const getModalDescription = () => {
+    return cy.get('input[data-cy="modal-description"]')
+}
+
+export const getModalName = () => {
+    return cy.get('input[data-cy="modal-name"]')
+}
+
+export const getModal = () => {
+    return cy.get('div[data-cy="modal"]')
+}
+
+export const getEditButton = () => {
+    return cy.get('button[data-cy="edit-button"]')
+}
+
+export const getEditInModalButton = () => {
+    return cy.get('button[data-cy="edit-button-in-modal"]')
+}
+
+export const getToggleThemeButton = () => {
+    return cy.get('div[data-cy="toggle-theme"]')
+}
+
+export const getTweetButton = () => {
+    return cy.get('button[data-cy="tweet-button"]')
+}

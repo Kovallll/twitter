@@ -14,6 +14,7 @@ export const ToggleButton = ({ ...props }) => {
             {...props}
             $isToggle={isToggle}
             onClick={handleToggleTheme}
+            data-cy='toggle-theme'
         />
     )
 }

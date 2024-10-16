@@ -96,15 +96,17 @@ export const updateTweets = (
     const docRef = doc(database, usersCollection, docId)
     updateDoc(docRef, {
         tweets: updatedTweets,
-    }).then(async () => {
-        const data = await getDoc(docRef)
-        const accData = data.data()
-        const userData = {
-            ...accData,
-        } as UserData
-        dispatch(updateTotalUser(userData))
-        dispatch(updateLoadingTweet(false))
     })
+        .then(async () => {
+            const data = await getDoc(docRef)
+            const accData = data.data()
+            const userData = {
+                ...accData,
+            } as UserData
+            dispatch(updateTotalUser(userData))
+            dispatch(updateLoadingTweet(false))
+        })
+        .catch((e) => console.error(e, 'error'))
 }
 
 export const uploadTweetsToStorage = (
@@ -124,7 +126,7 @@ export const uploadTweetsToStorage = (
     const updatedTweets = user.tweets
         ? [readyToUploadTweet, ...user.tweets]
         : [readyToUploadTweet]
-
+    console.log(updatedTweets, user.docId, 'asdasf')
     updateTweets(updatedTweets, user.docId, dispatch)
 }
 

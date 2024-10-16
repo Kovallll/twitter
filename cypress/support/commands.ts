@@ -13,7 +13,16 @@ import {
 } from 'firebase/firestore'
 import { connectStorageEmulator, getStorage } from 'firebase/storage'
 
-import { getEmailInput, getLoginButton, getPasswordInput } from '../e2e/helpers'
+import {
+    getEditButton,
+    getEditInModalButton,
+    getEmailInput,
+    getLoginButton,
+    getModalDescription,
+    getModalName,
+    getModalSocial,
+    getPasswordInput,
+} from '../e2e/helpers'
 import { userData } from '../fixtures'
 
 declare global {
@@ -29,6 +38,8 @@ declare global {
                 password: string
             }): void
             login(): void
+            clearModal(): void
+            hexToRgb(hex: string): string
         }
     }
 }
@@ -133,4 +144,32 @@ Cypress.Commands.add('login', () => {
         cy.url().should('equal', 'http://localhost:5173/#/profile')
     })
     cy.visit('/#/profile')
+})
+
+Cypress.Commands.add('clearModal', () => {
+    getEditButton().click()
+    getModalSocial().clear().should('have.value', '')
+    getModalDescription().clear().should('have.value', '')
+    getModalName()
+        .clear()
+        .type(userData.name)
+        .should('have.value', userData.name)
+    getEditInModalButton().click()
+})
+
+Cypress.Commands.add('hexToRgb', (hex: string) => {
+    let r = 0
+    let g = 0
+    let b = 0
+
+    if (hex.length === 4) {
+        r = parseInt(`${hex[1]}${hex[1]}`, 16)
+        g = parseInt(`${hex[2]}${hex[2]}`, 16)
+        b = parseInt(`${hex[3]}${hex[3]}`, 16)
+    } else if (hex.length === 7) {
+        r = parseInt(hex.slice(1, 3), 16)
+        g = parseInt(hex.slice(3, 5), 16)
+        b = parseInt(hex.slice(5, 7), 16)
+    }
+    return `rgb(${r}, ${g}, ${b})`
 })

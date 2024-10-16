@@ -65,7 +65,7 @@ export const ProfileMainContent = () => {
     const { isLoadingInitialData, isTweetModalOpen } = useAppSelector(
         booleanStatesSelector
     )
-
+    console.log(user, 'user')
     useEffect(() => {
         let timeout: NodeJS.Timeout
         if (text) {

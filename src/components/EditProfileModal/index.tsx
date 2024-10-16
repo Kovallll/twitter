@@ -89,6 +89,7 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
                         value={name}
                         onChangeInput={handleChangeName}
                         maxLength={maxLengthName}
+                        data-cy="modal-name"
                     />
                 </InfoBlock>
                 <InfoBlock>
@@ -97,6 +98,7 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
                         value={description ?? ''}
                         onChangeInput={handleChangeDescription}
                         maxLength={maxLengthDescription}
+                        data-cy="modal-description"
                     />
                 </InfoBlock>
                 <InfoBlock>
@@ -105,6 +107,7 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
                         value={social ?? ''}
                         onChangeInput={handleChangeSocial}
                         maxLength={maxLengthSocial}
+                        data-cy="modal-social"
                     />
                 </InfoBlock>
                 <ForgotPassword onClick={handleClickResetPassword}>
@@ -114,6 +117,7 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
                     $backgroundColor={theme.palette.blue}
                     $color={theme.palette.common.white}
                     onClick={handleClickEditButton}
+                    data-cy="edit-button-in-modal"
                 >
                     {editText}
                 </ModalButton>
