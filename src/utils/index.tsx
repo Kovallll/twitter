@@ -10,7 +10,6 @@ import {
     Month,
     months,
     seconds,
-    Themes,
     tweetPath,
 } from '@constants'
 import { SearchTweetText } from '@pages/Profile/styled'
@@ -180,10 +179,6 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
         })
         .filter((tweetText) => !!tweetText)
         .flat()
-}
-
-export const getIsLightTheme = (theme: Themes) => {
-    return theme === Themes.Light
 }
 
 export const isEditDataChanged = (

@@ -167,8 +167,6 @@ export const MoreBlock = styled.div`
     }}
 `
 
-export const MoreIcon = styled.img``
-
 export const TweetImage = styled.img`
     ${({ theme }) => {
         return css`

@@ -28,7 +28,7 @@ export const updateUserData = (state = userDefaultData, action: UserAction) => {
         case ActionTypes.UserLiked:
             return { ...state, liked: action.payload }
         case ActionTypes.UserTheme:
-            return { ...state, theme: action.payload }
+            return { ...state, currentTheme: action.payload }
         case ActionTypes.UserDate:
             return { ...state, date: action.payload }
         default:

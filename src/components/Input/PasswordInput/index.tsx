@@ -1,28 +1,27 @@
 import { useState } from 'react'
 
 import { eyeIconAltText } from './config'
-import { Container, EyeBlock, EyeIcon } from './styled'
+import { Container, EyeBlock, EyeIconWrap } from './styled'
 
 import { Input } from '@components/Input'
 import { InputProps } from '@components/Input/types'
-import { images } from '@constants'
+import { images, Themes } from '@constants'
 import { useAppSelector } from '@hooks'
-import { getIsLightTheme } from '@utils'
+import { userSelector } from '@store'
+import { theme } from '@styles'
 
 export const PasswordInput = (props: InputProps) => {
     const [isShowPassword, setIsShowPassword] = useState(false)
     const { value, error, onChangeInput, ...otherProps } = props
 
-    const { theme } = useAppSelector((state) => state.user)
+    const { currentTheme } = useAppSelector(userSelector)
+    const { EyeOpenIcon, EyeSlashIcon } = images
+    const iconColor =
+        currentTheme === Themes.Light
+            ? theme.palette.common.black
+            : theme.palette.common.white
 
-    const showIcon = getIsLightTheme(theme)
-        ? images.eyeOpenLightIcon
-        : images.eyeOpenDarkIcon
-    const hideIcon = getIsLightTheme(theme)
-        ? images.eyeSlashLightIcon
-        : images.eyeSlashDarkIcon
-
-    const eyeIcon = isShowPassword ? hideIcon : showIcon
+    const EyeIcon = isShowPassword ? EyeSlashIcon : EyeOpenIcon
     const type = isShowPassword ? 'text' : 'password'
 
     const handleEyeIconClick = () => {
@@ -39,7 +38,9 @@ export const PasswordInput = (props: InputProps) => {
                 error={error}
             />
             <EyeBlock onClick={handleEyeIconClick}>
-                <EyeIcon src={eyeIcon} alt={eyeIconAltText} />
+                <EyeIconWrap>
+                    <EyeIcon title={eyeIconAltText} stroke={iconColor} />
+                </EyeIconWrap>
             </EyeBlock>
         </Container>
     )

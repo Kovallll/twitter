@@ -4,15 +4,13 @@ import { AppThemeProviderProps } from './types'
 
 import { Themes } from '@constants'
 import { useAppSelector } from '@hooks'
+import { userSelector } from '@store'
 import { darkTheme, lightTheme } from '@styles'
 
 export const AppThemeProvider = ({ children }: AppThemeProviderProps) => {
-    const { theme } = useAppSelector((state) => state.user)
+    const { currentTheme } = useAppSelector(userSelector)
 
-    let providerTheme = lightTheme
-    if (theme === Themes.Dark) {
-        providerTheme = darkTheme
-    }
+    const theme = currentTheme === Themes.Dark ? darkTheme : lightTheme
 
-    return <ThemeProvider theme={providerTheme}>{children}</ThemeProvider>
+    return <ThemeProvider theme={theme}>{children}</ThemeProvider>
 }

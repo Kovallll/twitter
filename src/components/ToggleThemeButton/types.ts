@@ -1,3 +1,3 @@
-export interface ContainerProps {
-    $isToggle: boolean
+export interface ToggleButtonProps {
+    $isDarkTheme: boolean
 }

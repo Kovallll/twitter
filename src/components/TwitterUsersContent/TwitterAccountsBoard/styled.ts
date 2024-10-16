@@ -110,9 +110,6 @@ export const AccountName = styled.p`
             @media (${theme.media.lg}) {
                 font-size: ${theme.fontSizes.xs + 'px'};
             }
-
-            @media (${theme.media.md}) {
-            }
         `
     }}
 `

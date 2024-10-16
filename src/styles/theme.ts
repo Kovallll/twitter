@@ -436,8 +436,8 @@ export const lightTheme: ColorTheme = {
     ...theme,
     palette: {
         ...theme.palette,
-        textColor: 'black',
-        bgColor: 'white',
+        textColor: '#000',
+        bgColor: '#fff',
         blue: '#1D9BF0',
         lightBlue: '#01C4F2',
         gray: '#B3B8BB',
@@ -455,8 +455,8 @@ export const darkTheme: ColorTheme = {
     ...theme,
     palette: {
         ...theme.palette,
-        textColor: 'white',
-        bgColor: 'black',
+        textColor: '#fff',
+        bgColor: '#000',
         blue: '#1D9BF0',
         lightBlue: '#01C4F2',
         gray: '#B3B8BB',

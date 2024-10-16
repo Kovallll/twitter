@@ -31,8 +31,6 @@ export const NavLink = styled(Link)`
     }}
 `
 
-export const Icon = styled.img``
-
 export const Title = styled.p<TitleProps>`
     ${({ theme, $isActiveLink }) => {
         return css`

@@ -1,34 +1,21 @@
-import bookmarksDarkIcon from '@assets/icons/bookmarksDark.svg'
-import bookmarksLightIcon from '@assets/icons/bookmarksLight.svg'
+import BookmarksIcon from '@assets/icons/bookmarks.svg?react'
 import closeIcon from '@assets/icons/close.svg'
-import dotsDarkIcon from '@assets/icons/dotsDark.svg'
-import dotsLightIcon from '@assets/icons/dotsLight.svg'
-import exploreDarkIcon from '@assets/icons/exploreDark.svg'
-import exploreLightIcon from '@assets/icons/exploreLight.svg'
-import eyeOpenDarkIcon from '@assets/icons/eyeSeeDark.svg'
-import eyeOpenLightIcon from '@assets/icons/eyeSeeLight.svg'
-import eyeSlashDarkIcon from '@assets/icons/eyeSlashDark.svg'
-import eyeSlashLightIcon from '@assets/icons/eyeSlashLight.svg'
+import DotsIcon from '@assets/icons/dots.svg?react'
+import ExploreIcon from '@assets/icons/explore.svg?react'
+import EyeOpenIcon from '@assets/icons/eyeOpen.svg?react'
+import EyeSlashIcon from '@assets/icons/eyeSlash.svg?react'
 import googleIcon from '@assets/icons/googleIcon.svg'
-import homeActiveIcon from '@assets/icons/homeActive.svg'
-import homeOutlineDarkIcon from '@assets/icons/homeOutlineDark.svg'
-import homeOutlineLightIcon from '@assets/icons/homeOutlineLight.svg'
+import HomeIcon from '@assets/icons/home.svg?react'
 import uploadImage from '@assets/icons/image.svg'
 import likeFillIcon from '@assets/icons/likeFill.svg'
 import likeOutlineIcon from '@assets/icons/likeOutline.svg'
-import listsDarkIcon from '@assets/icons/listsDark.svg'
-import listsLightIcon from '@assets/icons/listsLight.svg'
+import ListsIcon from '@assets/icons/lists.svg?react'
 import logoutIcon from '@assets/icons/logout.svg'
-import messagesDarkIcon from '@assets/icons/messagesDark.svg'
-import messagesLightIcon from '@assets/icons/messagesLight.svg'
-import moreDarkIcon from '@assets/icons/moreDark.svg'
-import moreLightIcon from '@assets/icons/moreLight.svg'
-import notificationDarkIcon from '@assets/icons/notificationDark.svg'
-import notificationLightIcon from '@assets/icons/notificationLight.svg'
+import MessagesIcon from '@assets/icons/messages.svg?react'
+import MoreIcon from '@assets/icons/more.svg?react'
+import NotificationIcon from '@assets/icons/notification.svg?react'
 import postIcon from '@assets/icons/post.svg'
-import profileActiveIcon from '@assets/icons/profileActive.svg'
-import profileDarkIcon from '@assets/icons/profileOutlineDark.svg'
-import profileLightIcon from '@assets/icons/profileOutlineLight.svg'
+import ProfileIcon from '@assets/icons/profile.svg?react'
 import searchIcon from '@assets/icons/search.svg'
 import logoIcon from '@assets/icons/twitterLogo.svg'
 import profileBackground from '@assets/images/profileBackground.png'
@@ -58,12 +45,9 @@ export const images = {
     twitterImage,
     uploadImage,
     searchIcon,
-    dotsLightIcon,
-    dotsDarkIcon,
-    eyeOpenDarkIcon,
-    eyeOpenLightIcon,
-    eyeSlashDarkIcon,
-    eyeSlashLightIcon,
+    DotsIcon,
+    EyeOpenIcon,
+    EyeSlashIcon,
     likeFillIcon,
     likeOutlineIcon,
     postIcon,
@@ -84,7 +68,7 @@ export enum ActionTypes {
     TotalAccounts = 'total/accounts',
     SeacrhValue = 'search/value',
     SearchData = 'search/data',
-    UserTheme = 'user/theme',
+    UserTheme = 'user/currentTheme',
     LoadingTweet = 'boolean/tweet',
     LoadingInititalData = 'boolean/initialData',
     isSidebarOpen = 'boolean/sidebar',
@@ -123,7 +107,8 @@ export const userDefaultData = {
     user: defaultUser,
     following: [],
     liked: [],
-    theme: (localStorage.getItem(themeStoragekey) as Themes) || Themes.Light,
+    currentTheme:
+        (localStorage.getItem(themeStoragekey) as Themes) || Themes.Light,
 }
 
 export const notifyDefaultData = {
@@ -151,74 +136,42 @@ export const openedStatesDefaultData = {
 
 export const sidebarLinks = [
     {
-        icon: {
-            dark: homeOutlineDarkIcon,
-            light: homeOutlineLightIcon,
-            active: homeActiveIcon,
-        },
+        Icon: HomeIcon,
         title: 'Home',
         link: Paths.Home,
     },
     {
-        icon: {
-            dark: exploreDarkIcon,
-            light: exploreLightIcon,
-            active: exploreLightIcon,
-        },
+        Icon: ExploreIcon,
         title: 'Explore',
         link: '/',
     },
     {
-        icon: {
-            dark: notificationDarkIcon,
-            light: notificationLightIcon,
-            active: notificationLightIcon,
-        },
+        Icon: NotificationIcon,
         title: 'Notification',
         link: '/',
     },
     {
-        icon: {
-            dark: messagesDarkIcon,
-            light: messagesLightIcon,
-            active: messagesLightIcon,
-        },
+        Icon: MessagesIcon,
         title: 'Messages',
         link: '/',
     },
     {
-        icon: {
-            dark: bookmarksDarkIcon,
-            light: bookmarksLightIcon,
-            active: bookmarksLightIcon,
-        },
+        Icon: BookmarksIcon,
         title: 'Bookmarks',
         link: '/',
     },
     {
-        icon: {
-            dark: listsDarkIcon,
-            light: listsLightIcon,
-            active: listsLightIcon,
-        },
+        Icon: ListsIcon,
         title: 'Lists',
         link: '/',
     },
     {
-        icon: {
-            dark: profileDarkIcon,
-            light: profileLightIcon,
-            active: profileActiveIcon,
-        },
+        Icon: ProfileIcon,
         title: 'Profile',
         link: Paths.Profile,
     },
     {
-        icon: {
-            dark: moreDarkIcon,
-            light: moreLightIcon,
-            active: moreLightIcon,
-        },
+        Icon: MoreIcon,
         title: 'More',
         link: '/',
     },

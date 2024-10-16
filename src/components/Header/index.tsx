@@ -3,7 +3,7 @@ import { HeaderLoader } from './Loader'
 import { HeaderContentBlock, HeaderWrap } from './styled'
 import { HeaderProps } from './types'
 
-import { ToggleButton } from '@components/ToggleThemeButton'
+import { ToggleThemeButton } from '@components/ToggleThemeButton'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import { loaderStatesSelector, updateIsSidebarOpen, userSelector } from '@store'
 
@@ -29,7 +29,7 @@ export const Header = ({ title }: HeaderProps) => {
                     handleClickProfileIcon={handleClickProfileIcon}
                 />
             </HeaderContentBlock>
-            <ToggleButton />
+            <ToggleThemeButton />
         </HeaderWrap>
     )
 }

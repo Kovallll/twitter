@@ -86,12 +86,14 @@ export const SidebarLink = styled(Link)`
             @media (${theme.media.xl}) {
                 margin-bottom: ${theme.spaces.xl + 'px'};
             }
+
             @media (${theme.media.md}) {
                 ${mixins.flexRowCenter}
 
                 width: ${theme.fullSize + '%'};
                 margin-bottom: ${theme.spaces.lg + 'px'};
             }
+
             @media (${theme.media.sm}) {
                 margin-bottom: ${theme.spaces.md + 'px'};
             }
