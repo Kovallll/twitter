@@ -32,7 +32,7 @@ export const AccountCard = ({
                 alt={avatarIconAltText}
                 onClick={handleClickAccount}
             />
-            <AccountInfo>
+            <AccountInfo onClick={handleClickAccount}>
                 <AccountName>{name}</AccountName>
                 <AccountSocial>{social}</AccountSocial>
             </AccountInfo>

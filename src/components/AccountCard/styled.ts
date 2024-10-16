@@ -37,6 +37,7 @@ export const AccountInfo = styled.div`
         return css`
             min-width: ${theme.twitterAccountStyles.lg.infoWidth + 'px'};
             margin-right: ${theme.spaces.md + 'px'};
+            cursor: pointer;
 
             @media (${theme.media.xl}) {
                 margin-right: ${theme.spaces.sm + 'px'};
