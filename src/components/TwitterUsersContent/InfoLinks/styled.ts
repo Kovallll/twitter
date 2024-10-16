@@ -21,7 +21,7 @@ export const InfoLink = styled.a`
             color: ${theme.palette.gray};
 
             &:last-child {
-                color: ${theme.palette.common.black};
+                color: ${theme.palette.textColor};
             }
         `
     }}

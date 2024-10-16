@@ -6,3 +6,7 @@ export interface CreateTweetButtonProps {
     handleChangeCreatedTweetImages: (images: TweetImageType[] | null) => void
     handleChangeTweetText: (text: string) => void
 }
+
+export interface TweetButtonProps {
+    $isTweetDisabled: boolean
+}

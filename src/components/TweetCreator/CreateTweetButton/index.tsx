@@ -12,7 +12,6 @@ import {
     updateLoadingTweet,
     userSelector,
 } from '@store'
-import { theme } from '@styles'
 import { TweetStorageType } from '@types'
 
 export const CreateTweetButton = (props: CreateTweetButtonProps) => {
@@ -59,9 +58,6 @@ export const CreateTweetButton = (props: CreateTweetButtonProps) => {
     }
 
     const isTweetDisabled = tweetText === '' ? true : false
-    const tweetButtonBg = isTweetDisabled
-        ? theme.palette.gray
-        : theme.palette.lightBlue
     const tweetButtonText = isTweetDisabled ? tweetErrorText : tweetSuccesText
 
     if (isLoadingTweet) {
@@ -70,10 +66,9 @@ export const CreateTweetButton = (props: CreateTweetButtonProps) => {
     return (
         <ButtonWrap>
             <TweetButton
-                $backgroundColor={tweetButtonBg}
-                $color={theme.palette.common.white}
                 onClick={handleCreateTweet}
                 disabled={isTweetDisabled}
+                $isTweetDisabled={isTweetDisabled}
             >
                 {tweetButtonText}
             </TweetButton>

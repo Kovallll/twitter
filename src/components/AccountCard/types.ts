@@ -1,5 +1,6 @@
-import { UserData } from "@types";
+import { UserData } from '@types'
 
 export interface AccountCardProps {
     account: UserData
+    withButton?: boolean
 }

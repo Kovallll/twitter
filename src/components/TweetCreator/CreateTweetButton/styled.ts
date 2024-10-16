@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+import { TweetButtonProps } from './types'
+
 import { Button, Spinner } from '@styles'
 
 export const ButtonWrap = styled.div`
@@ -13,9 +15,14 @@ export const ButtonWrap = styled.div`
     }}
 `
 
-export const TweetButton = styled(Button)`
-    ${({ theme }) => {
+export const TweetButton = styled(Button)<TweetButtonProps>`
+    ${({ theme, $isTweetDisabled }) => {
         return css`
+            background-color: ${$isTweetDisabled
+                ? theme.palette.gray
+                : theme.palette.lightBlue};
+
+            color: ${theme.palette.common.white};
             margin-bottom: 0;
             padding: ${theme.spaces.md + 'px' + ' 0px'};
 

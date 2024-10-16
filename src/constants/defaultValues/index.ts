@@ -22,7 +22,6 @@ import profileBackground from '@assets/images/profileBackground.png'
 import profileImage from '@assets/images/profileImage.svg'
 import twitterImage from '@assets/images/signupTwitter.png'
 import { UserData } from '@types'
-import { LocalStorage } from '@utils'
 
 export const tweetPath = '/tweet'
 export const userPath = '/user'
@@ -79,8 +78,6 @@ export enum ActionTypes {
 
 export const defaultDate = { year: '', month: '', day: '' }
 
-export const basePhoneCode = '+375'
-
 export const themeStoragekey = 'theme'
 
 export const defaultUser = {
@@ -97,7 +94,6 @@ export const defaultUser = {
     description: null,
 } as UserData
 
-const localStorage = new LocalStorage()
 export const userDefaultData = {
     editData: {
         description: null,
@@ -110,8 +106,11 @@ export const userDefaultData = {
     following: [],
     liked: [],
     currentTheme:
-        (localStorage.getItem(themeStoragekey) as Themes) || Themes.Light,
+        (JSON.parse(
+            localStorage.getItem(themeStoragekey) ?? 'null'
+        ) as Themes) || Themes.Light,
 }
+export const basePhoneCode = '+375'
 
 export const notifyDefaultData = {
     text: '',

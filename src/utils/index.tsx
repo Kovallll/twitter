@@ -191,8 +191,16 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
 export const getUsersNames = (accounts: UserData[], searchValue: string) => {
     return accounts
         .map((account) => {
-            if (account.name.toLowerCase().includes(searchValue)) {
-                return <AccountCard account={account} key={account.userId} />
+            if (
+                account.name.toLowerCase().includes(searchValue.toLowerCase())
+            ) {
+                return (
+                    <AccountCard
+                        account={account}
+                        key={account.userId}
+                        withButton={false}
+                    />
+                )
             }
         })
         .filter((userName) => !!userName)

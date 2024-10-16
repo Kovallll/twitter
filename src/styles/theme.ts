@@ -40,7 +40,7 @@ export const theme: Theme = {
     },
     twitterAccountStyles: {
         showHeight: '600',
-        hideHeight: '200',
+        hideHeight: '210',
         transition: 'max-height 0.3s ease',
         cardWidth: '100',
         lg: {

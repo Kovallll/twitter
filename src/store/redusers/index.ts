@@ -1,8 +1,4 @@
 import {
-    loaderStatesDefaultData,
-    openedStatesDefaultData,
-} from 'src/constants/defaultValues'
-import {
     LoaderAction,
     NotifyAction,
     OpenedAction,
@@ -13,7 +9,9 @@ import {
 
 import {
     ActionTypes,
+    loaderStatesDefaultData,
     notifyDefaultData,
+    openedStatesDefaultData,
     searchDefaultData,
     totalDefaultData,
     userDefaultData,
