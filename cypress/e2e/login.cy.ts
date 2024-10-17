@@ -1,4 +1,4 @@
-import { errors } from '../fixtures'
+import { errors, userData } from '../fixtures'
 import { getLoginButton, getProfileName } from './helpers'
 
 describe('Test Login Page', () => {
@@ -14,7 +14,7 @@ describe('Test Login Page', () => {
     })
 
     it('test login', () => {
-        cy.login()
+        cy.login(userData)
         getProfileName().should('be.visible')
     })
 })

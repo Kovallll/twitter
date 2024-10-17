@@ -1,5 +1,7 @@
-import { userData } from '../fixtures'
+import { secondUserData, userData } from '../fixtures'
+import { hexToRgb } from '../support/commands'
 import {
+    getBody,
     getEditButton,
     getEditInModalButton,
     getModal,
@@ -9,26 +11,26 @@ import {
     getProfileDescription,
     getProfileName,
     getProfileSocial,
+    getSearch,
+    getSearchPopup,
     getToggleThemeButton,
     getTweetButton,
 } from './helpers'
 
 describe('Test Profile Page', () => {
-    beforeEach(() => {
-        cy.login()
-    })
+    before(() => {
+        cy.login(secondUserData)
+        getProfileName().should('have.text', secondUserData.name)
 
-    it('test create tweet', () => {
-        getProfileName().should('have.text', userData.name)
-
-        getTweetButton().should('have.text', 'Add text')
-        cy.get('textarea[data-cy="tweet-text"]').type('12345abcde')
-        cy.get('p[data-cy="tweet-text-letters"]').should(
-            'have.text',
-            '10 / 500'
-        )
+        cy.get('textarea[data-cy="tweet-text"]').type('12345')
         getTweetButton().should('have.text', 'Tweet').click()
         cy.get('article[data-cy="tweet"]').should('be.visible')
+        cy.get('button[data-cy="logout"]').click()
+        cy.get('button[data-cy="confirm-button"]').click()
+    })
+
+    beforeEach(() => {
+        cy.login(userData)
     })
 
     it('Check visible profile info', () => {
@@ -38,8 +40,6 @@ describe('Test Profile Page', () => {
     })
 
     it('test edit modal', () => {
-        cy.clearModal()
-
         getEditButton().click()
         getModal().should('be.visible')
 
@@ -63,8 +63,38 @@ describe('Test Profile Page', () => {
         cy.clearModal()
     })
 
-    it.only('test change theme', () => {
+    it('test create tweet', () => {
+        getProfileName().should('have.text', userData.name)
+
+        getTweetButton().should('have.text', 'Add text')
+        cy.get('textarea[data-cy="tweet-text"]').type('12345abcde')
+        cy.get('p[data-cy="tweet-text-letters"]').should(
+            'have.text',
+            '10 / 500'
+        )
+        getTweetButton().should('have.text', 'Tweet').click()
+        cy.get('article[data-cy="tweet"]').should('be.visible')
+    })
+
+    it('test change theme', () => {
+        getBody().should('have.css', 'color').and('eq', hexToRgb('#000'))
+        getBody()
+            .should('have.css', 'background-color')
+            .and('eq', hexToRgb('#fff'))
         getToggleThemeButton().click()
-        // getProfileName().should('have.css', 'color', cy.hexToRgb('#000'))
+        getBody().should('have.css', 'color').and('eq', hexToRgb('#fff'))
+        getBody()
+            .should('have.css', 'background-color')
+            .and('eq', hexToRgb('#000'))
+    })
+
+    it('test search tweet', () => {
+        getProfileName().should('have.text', userData.name)
+        getSearch().should('be.visible').type('123').trigger('input')
+
+        getSearchPopup().should('be.visible')
+        cy.get('a').contains('12345').first().click({ force: true })
+        cy.contains(secondUserData.name).should('be.visible')
+        cy.contains('Tweet').should('be.visible')
     })
 })

@@ -1,8 +1,18 @@
 export const userData = {
     name: 'Test name',
     phone: '{moveToEnd}253456789',
-    email: 'test001111@test.com',
+    email: 'test1@test.com',
     password: 'Aa1111',
+    day: '1',
+    month: 'February',
+    year: '2023',
+}
+
+export const secondUserData = {
+    name: 'Second User',
+    phone: '{moveToEnd}253456789',
+    email: 'test2@test.com',
+    password: 'Aa2222',
     day: '1',
     month: 'February',
     year: '2023',

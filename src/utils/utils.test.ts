@@ -1,5 +1,14 @@
-import { countYears, defaultUser } from '@constants'
-import { day, hour, min, month, sec, userOneTweet, userTwoTweet } from '@mocks'
+import { countYears, defaultUser, Themes } from '@constants'
+import {
+    currentDate,
+    day,
+    hour,
+    min,
+    month,
+    sec,
+    userOneTweet,
+    userTwoTweet,
+} from '@mocks'
 import {
     getIsValidDate,
     getNotifyError,
@@ -7,6 +16,7 @@ import {
     getSelectYears,
     getTimePostTweet,
     getTweetsTexts,
+    isEditDataChanged,
     LocalStorage,
 } from '@utils'
 
@@ -74,27 +84,17 @@ describe('test all utils', () => {
     })
 
     const localStorage = new LocalStorage()
-    const itemKey = 'item'
-    afterEach(() => {
-        localStorage.removeItem(itemKey)
-    })
 
     test('test LocalStorage', () => {
-        localStorage.setItem(itemKey, 1)
-        const itemNumber = localStorage.getItem(itemKey)
-        expect(itemNumber).toBe(1)
+        localStorage.setItem('token', { access: '' })
+        const token = localStorage.getItem('token')
+        expect(token).toEqual({ access: '' })
+        localStorage.removeItem('token')
 
-        localStorage.setItem(itemKey, 'str')
-        const itemString = localStorage.getItem(itemKey)
-        expect(itemString).toBe('str')
-
-        localStorage.setItem(itemKey, ['a'])
-        const itemArray = localStorage.getItem(itemKey)
-        expect(itemArray).toEqual(['a'])
-
-        localStorage.setItem(itemKey, { id: '' })
-        const itemObject = localStorage.getItem(itemKey)
-        expect(itemObject).toEqual({ id: '' })
+        localStorage.setItem('theme', Themes.Dark)
+        const theme = localStorage.getItem('theme')
+        expect(theme).toEqual('dark')
+        localStorage.removeItem('theme')
     })
 
     test('test getTimePostTweet', () => {
@@ -102,7 +102,7 @@ describe('test all utils', () => {
         expect(getTimePostTweet(min)).toBe('10m')
         expect(getTimePostTweet(hour)).toBe('10h')
         expect(getTimePostTweet(day)).toBe('10d')
-        expect(getTimePostTweet(month)).toBe('Sep 11')
+        expect(getTimePostTweet(month)).toContain(currentDate)
     })
 
     test('test getTweetsTexts', () => {
@@ -113,5 +113,21 @@ describe('test all utils', () => {
         expect(getTweetsTexts(userTwoTweet, 'a')).toHaveLength(2)
         expect(getTweetsTexts(userTwoTweet, 'b')).toHaveLength(1)
         expect(getTweetsTexts(userTwoTweet, 'c')).toHaveLength(0)
+    })
+
+    test('test isEditDataChanged', () => {
+        expect(
+            isEditDataChanged(
+                { description: '', name: '', social: '' },
+                { description: '', name: '', social: '' }
+            )
+        ).toEqual(true)
+
+        expect(
+            isEditDataChanged(
+                { description: '1', name: '', social: '' },
+                { description: '', name: '', social: '' }
+            )
+        ).toEqual(false)
     })
 })

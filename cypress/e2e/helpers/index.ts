@@ -65,3 +65,15 @@ export const getToggleThemeButton = () => {
 export const getTweetButton = () => {
     return cy.get('button[data-cy="tweet-button"]')
 }
+
+export const getBody = () => {
+    return cy.get('body')
+}
+
+export const getSearch = () => {
+    return cy.get('input[data-cy="search"]')
+}
+
+export const getSearchPopup = () => {
+    return cy.get('div[ data-cy="search-popup"]')
+}

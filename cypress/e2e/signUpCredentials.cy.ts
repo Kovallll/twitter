@@ -1,11 +1,5 @@
 import { errors, userData } from '../fixtures'
-import {
-    getConfirmPasswordInput,
-    getEmailInput,
-    getNameInput,
-    getPasswordInput,
-    getPhoneInput,
-} from './helpers'
+import { getPhoneInput } from './helpers'
 
 describe('Test Sing Up Credentials Page', () => {
     beforeEach(() => {
@@ -29,21 +23,6 @@ describe('Test Sing Up Credentials Page', () => {
     })
 
     it('test sign up', () => {
-        getNameInput().type(userData.name)
-        getPhoneInput().type(userData.phone)
-        getEmailInput().type(userData.email)
-        getPasswordInput().type(userData.password)
-        getConfirmPasswordInput().type(userData.password)
-        cy.get('select[data-cy="month"]').select(userData.month)
-        cy.get('select[data-cy="day"]').select(userData.day)
-        cy.get('select[data-cy="year"]').select(userData.year)
-        cy.contains('Next').click()
-        // cy.emailAndPasswordAuth({
-        //     email: userData.email,
-        //     name: userData.name,
-        //     phone: userData.phone,
-        //     password: userData.password,
-        // })
-        cy.url().should('include', '/profile')
+        cy.signUp(userData)
     })
 })

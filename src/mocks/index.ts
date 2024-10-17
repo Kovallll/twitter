@@ -4,6 +4,7 @@ import {
     hours,
     milliSeconds,
     minutes,
+    months,
     seconds,
 } from '@constants'
 
@@ -58,3 +59,5 @@ export const min = Date.now() - tenMin
 export const hour = Date.now() - tenHours
 export const day = Date.now() - tenDays
 export const month = Date.now() - monthTime
+
+export const currentDate = `${months[new Date().getMonth() - 1].slice(0, 3)} ${new Date().getDate()}`

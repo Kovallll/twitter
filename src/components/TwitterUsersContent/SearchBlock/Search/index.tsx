@@ -22,6 +22,7 @@ export const Search = ({ placeholder, ...props }: SearchProps) => {
                 placeholder={placeholder}
                 value={value}
                 onChange={handleChangeValue}
+                data-cy='search'
             />
         </Container>
     )

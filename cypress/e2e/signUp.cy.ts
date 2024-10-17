@@ -19,6 +19,6 @@ describe('Test Sing Up Page', () => {
     })
 
     it('contain google sign up button', () => {
-        cy.contains('Sign up with google')
+        cy.contains('Sign up with Google')
     })
 })

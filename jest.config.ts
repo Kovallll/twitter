@@ -4,6 +4,7 @@ import { defaults } from 'jest-config'
 const config: Config = {
     moduleFileExtensions: [...defaults.moduleFileExtensions, 'mts'],
     moduleNameMapper: {
+        '.+.svg?.+$': '<rootDir>/svgTransform.ts',
         '^@constants': '<rootDir>/src/constants',
         '^@assets/(.*)$': '<rootDir>/src/assets/$1',
         '^@types': '<rootDir>/src/types',
@@ -18,8 +19,8 @@ const config: Config = {
         '^.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$':
             '<rootDir>/fileTransformer.cjs',
         '^.+\\.(ts|tsx|js|jsx)$': 'ts-jest',
-        '^.+\\.svg$': '<rootDir>/svgTransform.ts',
     },
+    collectCoverageFrom: ['src/utils/!(index.ts)'],
     testEnvironment: 'jsdom',
 }
 

@@ -2,12 +2,11 @@
     "compilerOptions": {
         "target": "es5",
         "lib": ["dom", "dom.iterable", "es5"],
-        "types": ["cypress", "node", "vite/client", "jest"],
+        "types": ["cypress", "node"],
         "baseUrl": "http://localhost:5173",
         "jsx": "react-jsx",
         "module": "esnext",
         "moduleResolution": "node",
-        "outDir": "./dist",
         "allowJs": true,
         "skipLibCheck": true,
         "esModuleInterop": true,
@@ -21,18 +20,8 @@
         "allowUmdGlobalAccess": true,
         "downlevelIteration": true,
         "paths": {
-            "@types": ["src/types"],
-            "@components/*": ["src/components/*"],
-            "@assets/*": ["src/assets/*"],
-            "@constants": ["src/constants"],
-            "@styles": ["src/styles"],
-            "@utils": ["../src/utils"],
-            "@hooks": ["src/hooks"],
-            "@pages/*": ["src/pages/*"],
-            "@store": ["src/store"],
-            "@firebase": ["src/firebase"],
-            "@mocks": ["src/mocks"]
+            "@fixtures": ["../fixtures"]
         }
     },
-    "include": ["**/*.ts", "e2e/signUp.cy.ts"]
+    "include": ["**/*.ts", "e2e, support"]
 }

@@ -16,7 +16,7 @@ export const SearchPopup = ({ onClose }: SearchPopupProps) => {
     return (
         <>
             {value !== '' && (
-                <Container ref={popupRef}>
+                <Container ref={popupRef} data-cy='search-popup'>
                     {data.length !== 0 ? (
                         data.map((item) => item)
                     ) : (

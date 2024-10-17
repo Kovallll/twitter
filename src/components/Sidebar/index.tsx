@@ -89,7 +89,7 @@ export const Sidebar = () => {
     return (
         <>
             {isSidebarOpen && (
-                <Wrap ref={sidebarRef}>
+                <Wrap ref={sidebarRef} data-cy="sidebar">
                     <Container>
                         <LogoWrap>
                             <Logo src={images.logoIcon} alt={logoAltText} />
@@ -124,7 +124,10 @@ export const Sidebar = () => {
                                 </TextBlock>
                             </Profile>
                         )}
-                        <LogOutButton onClick={handleChangeIsLogOut}>
+                        <LogOutButton
+                            onClick={handleChangeIsLogOut}
+                            data-cy="logout"
+                        >
                             <DesktopText>{logOutText}</DesktopText>
                         </LogOutButton>
                         <IconWrap onClick={handleChangeIsLogOut}>

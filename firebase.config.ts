@@ -12,6 +12,7 @@ const {
     VITE_FIREBASE_STORAGEBUCKET,
     VITE_FIREBASE_MESSAGINGSENDERID,
     VITE_FIREBASE_APPID,
+    VITE_IS_TESTING,
 } = import.meta.env
 
 export const setupFirebase = () => {
@@ -42,7 +43,7 @@ async function setupAuthEmulator(auth: Auth) {
 export const getFirebaseAuth = () => {
     auth = getAuth(firebaseApp)
 
-    if (window.location.hostname === 'localhost' && !Cypress) {
+    if (window.location.hostname === 'localhost' && !VITE_IS_TESTING) {
         setupAuthEmulator(auth)
     }
     return auth
@@ -52,7 +53,7 @@ export const getFirebaseStore = () => {
     if (!firestore) {
         firestore = getFirestore()
 
-        if (window.location.hostname === 'localhost' && !Cypress) {
+        if (window.location.hostname === 'localhost' && !VITE_IS_TESTING) {
             connectFirestoreEmulator(firestore, 'localhost', 8090)
         }
     }
@@ -64,7 +65,7 @@ export const getFirebaseStorage = () => {
     if (!storage) {
         storage = getStorage(firebaseApp)
 
-        if (window.location.hostname === 'localhost' && !Cypress) {
+        if (window.location.hostname === 'localhost' && !VITE_IS_TESTING) {
             connectStorageEmulator(storage, 'localhost', 9199)
         }
     }
