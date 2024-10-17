@@ -6,3 +6,4 @@ export const totalSelector = (state: RootState) => state.total
 export const searchSelector = (state: RootState) => state.search
 export const loaderStatesSelector = (state: RootState) => state.loaderStates
 export const openedStatesSelector = (state: RootState) => state.openedStates
+export const homeDataSelector = (state: RootState) => state.homeData

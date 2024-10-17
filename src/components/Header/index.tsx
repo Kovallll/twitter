@@ -5,12 +5,11 @@ import { HeaderProps } from './types'
 
 import { ToggleThemeButton } from '@components/ToggleThemeButton'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { loaderStatesSelector, updateIsSidebarOpen, userSelector } from '@store'
+import { loaderStatesSelector, updateIsSidebarOpen } from '@store'
 
 export const Header = ({ title }: HeaderProps) => {
     const dispatch = useAppDispatch()
     const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
-    const { user } = useAppSelector(userSelector)
 
     const handleClickProfileIcon = () => {
         dispatch(updateIsSidebarOpen(true))
@@ -25,7 +24,6 @@ export const Header = ({ title }: HeaderProps) => {
             <HeaderContentBlock>
                 <HeaderContent
                     title={title}
-                    user={user}
                     handleClickProfileIcon={handleClickProfileIcon}
                 />
             </HeaderContentBlock>

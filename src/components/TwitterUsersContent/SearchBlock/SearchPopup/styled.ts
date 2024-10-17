@@ -7,6 +7,7 @@ export const Container = styled.div`
         return css`
             ${mixins.flexColumnStart}
 
+            justify-content: start;
             position: absolute;
             background-color: ${theme.palette.searchBgColor};
             border-radius: ${theme.spaces.lg + 'px'};

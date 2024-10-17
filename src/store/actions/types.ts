@@ -1,9 +1,14 @@
 import { ActionTypes, Themes } from '@constants'
-import { ActionInterface, SignUpDate, UserData } from '@types'
+import { ActionInterface, SignUpDate, SortedTweet, UserData } from '@types'
 
 export type UpdateUserDate = ActionInterface<
     typeof ActionTypes.UserDate,
     SignUpDate
+>
+
+export type UpdateCurrentUser = ActionInterface<
+    typeof ActionTypes.UserCurrent,
+    UserData
 >
 
 export type UpdateTotalUser = ActionInterface<
@@ -64,4 +69,9 @@ export type UpdateIsTweetModalOpen = ActionInterface<
 export type UpdateUserTheme = ActionInterface<
     typeof ActionTypes.UserTheme,
     Themes
+>
+
+export type UpdateHomeTweets = ActionInterface<
+    typeof ActionTypes.HomeTweets,
+    SortedTweet[] | SortedTweet
 >

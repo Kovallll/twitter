@@ -14,6 +14,7 @@ export const TweetImageBoard = () => {
     const [tweetsImages, setTweetsImages] = useState<
         CreatedTweetImageType[] | null
     >(null)
+
     const handleChangeTweetImages = (tweetImage: CreatedTweetImageType) => {
         setTweetsImages((prev) => (prev ? [...prev, tweetImage] : [tweetImage]))
     }
@@ -36,19 +37,18 @@ export const TweetImageBoard = () => {
         [tweetsImages]
     )
 
+    if (isLoadingInitialData) {
+        return <Loader />
+    }
     return (
         <>
-            {isLoadingInitialData ? (
-                <Loader />
-            ) : (
-                <ImagesSection>
-                    {tweetsBoardImages?.map(({ id, url }) => (
-                        <ImageWrap key={id}>
-                            <Image src={url} alt={imageAltText} />
-                        </ImageWrap>
-                    ))}
-                </ImagesSection>
-            )}
+            <ImagesSection>
+                {tweetsBoardImages?.map(({ id, url }) => (
+                    <ImageWrap key={id}>
+                        <Image src={url} alt={imageAltText} />
+                    </ImageWrap>
+                ))}
+            </ImagesSection>
         </>
     )
 }

@@ -1,5 +1,7 @@
 import {
     SetTotalAccounts,
+    UpdateCurrentUser,
+    UpdateHomeTweets,
     UpdateIsSidebarOpen,
     UpdateIsTweetModalOpen,
     UpdateLoadingInititalData,
@@ -15,11 +17,25 @@ import {
 } from './types'
 
 import { ActionTypes, Themes } from '@constants'
-import { SignUpDate, UserData } from '@types'
+import { SignUpDate, SortedTweet, UserData } from '@types'
 
 export const updateUserDate = (data: SignUpDate): UpdateUserDate => {
     return {
         type: ActionTypes.UserDate,
+        payload: data,
+    }
+}
+
+export const updateTotalUser = (data: UserData): UpdateTotalUser => {
+    return {
+        type: ActionTypes.UserTotal,
+        payload: data,
+    }
+}
+
+export const updateCurrentUser = (data: UserData): UpdateCurrentUser => {
+    return {
+        type: ActionTypes.UserCurrent,
         payload: data,
     }
 }
@@ -75,13 +91,6 @@ export const updateSearchData = (data: JSX.Element[]): UpdateSearchData => {
     }
 }
 
-export const updateTotalUser = (data: UserData): UpdateTotalUser => {
-    return {
-        type: ActionTypes.UserTotal,
-        payload: data,
-    }
-}
-
 export const updateLoadingTweet = (data: boolean): UpdateLoadingTweet => {
     return {
         type: ActionTypes.LoadingTweet,
@@ -110,6 +119,15 @@ export const updateIsTweetModalOpen = (
 ): UpdateIsTweetModalOpen => {
     return {
         type: ActionTypes.isTweetModalOpen,
+        payload: data,
+    }
+}
+
+export const updateHomeTweets = (
+    data: SortedTweet[] | SortedTweet
+): UpdateHomeTweets => {
+    return {
+        type: ActionTypes.HomeTweets,
         payload: data,
     }
 }

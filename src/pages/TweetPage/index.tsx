@@ -13,6 +13,7 @@ import { totalSelector } from '@store'
 
 const TweetPage = () => {
     const { tweetId } = useParams()
+
     const { accounts } = useAppSelector(totalSelector)
 
     const tweetData = useMemo(() => {

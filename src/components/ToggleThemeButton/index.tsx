@@ -21,7 +21,7 @@ export const ToggleThemeButton = ({ ...props }) => {
     const handleToggleTheme = () => {
         setIsDarkTheme((prev) => !prev)
         dispatch(updateUserTheme(changedTheme))
-        localStorage.setItem(themeStoragekey, currentTheme)
+        localStorage.setItem(themeStoragekey, changedTheme)
     }
 
     return (

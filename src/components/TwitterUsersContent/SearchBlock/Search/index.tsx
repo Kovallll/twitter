@@ -11,8 +11,7 @@ export const Search = ({ placeholder, ...props }: SearchProps) => {
     const { value } = useAppSelector(searchSelector)
 
     const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target
-        dispatch(updateSearchValue(value))
+        dispatch(updateSearchValue(e.target.value))
     }
 
     return (

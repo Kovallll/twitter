@@ -40,7 +40,7 @@ export const theme: Theme = {
     },
     twitterAccountStyles: {
         showHeight: '600',
-        hideHeight: '200',
+        hideHeight: '210',
         transition: 'max-height 0.3s ease',
         cardWidth: '100',
         lg: {
@@ -73,6 +73,7 @@ export const theme: Theme = {
             imageTop: '70',
             maxWidth: '1400',
             minWidth: '1040',
+            editHeight: '60',
         },
         md: {
             twitterHeaderWidth: '200',
@@ -80,6 +81,7 @@ export const theme: Theme = {
             imageSize: '100',
             imageTop: '60',
             minWidth: '800',
+            editHeight: '50',
         },
     },
     usersStyles: {
