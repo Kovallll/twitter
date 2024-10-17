@@ -7,17 +7,17 @@ import { useAppDispatch, useAppSelector } from '@hooks'
 import { loaderStatesSelector, userSelector } from '@store'
 
 export const ProfileTweets = ({ user }: ProfileTweetsProps) => {
-    const { tweets, docId } = user
+    const { tweets } = user
 
     const dispatch = useAppDispatch()
     const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
-    const { user: currentUser } = useAppSelector(userSelector)
+    const { user: activeUser } = useAppSelector(userSelector)
 
     const handleDeleteTweet = (tweetId: string) => {
-        deleteTweetFromStorage(tweets!, tweetId, docId, dispatch)
+        deleteTweetFromStorage(tweets!, tweetId, user, dispatch)
     }
 
-    const isUserTweet = currentUser.userId === user.userId
+    const isUserTweet = activeUser.userId === user.userId
 
     if (isLoadingInitialData) {
         return <TweetSpinner />
@@ -30,6 +30,7 @@ export const ProfileTweets = ({ user }: ProfileTweetsProps) => {
                     data={{ tweetData: data, account: user }}
                     handleDeleteTweet={handleDeleteTweet}
                     isUserTweet={isUserTweet}
+                    key={user.userId}
                 />
             ))}
         </>

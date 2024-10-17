@@ -1,4 +1,6 @@
+import { homePageDefaultData } from 'src/constants/defaultValues'
 import {
+    HomeAction,
     LoaderAction,
     NotifyAction,
     OpenedAction,
@@ -21,6 +23,8 @@ export const updateUserData = (state = userDefaultData, action: UserAction) => {
     switch (action.type) {
         case ActionTypes.UserTotal:
             return { ...state, user: action.payload }
+        case ActionTypes.UserCurrent:
+            return { ...state, currentUser: action.payload }
         case ActionTypes.UserFollowing:
             return { ...state, following: [...state.following, action.payload] }
         case ActionTypes.UserLiked:
@@ -100,6 +104,30 @@ export const updateOpenedStates = (
             return { ...state, isSidebarOpen: action.payload }
         case ActionTypes.isTweetModalOpen:
             return { ...state, isTweetModalOpen: action.payload }
+        default:
+            return state
+    }
+}
+
+export const updateHomePageData = (
+    state = homePageDefaultData,
+    action: HomeAction
+) => {
+    switch (action.type) {
+        case ActionTypes.HomeTweets: {
+            if (state.tweets && Array.isArray(action.payload)) {
+                return {
+                    ...state,
+                    tweets: [...state.tweets, ...action.payload],
+                }
+            } else if (!state.tweets && Array.isArray(action.payload)) {
+                return { ...state, tweets: [...action.payload] }
+            } else if (state.tweets && !Array.isArray(action.payload)) {
+                return { ...state, tweets: [action.payload, ...state.tweets] }
+            } else if (!state.tweets && !Array.isArray(action.payload)) {
+                return { ...state, tweets: [action.payload] }
+            } else return state
+        }
         default:
             return state
     }

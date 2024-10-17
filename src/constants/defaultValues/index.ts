@@ -1,41 +1,19 @@
-import BookmarksIcon from '@assets/icons/bookmarks.svg?react'
 import closeIcon from '@assets/icons/close.svg'
 import DotsIcon from '@assets/icons/dots.svg?react'
-import ExploreIcon from '@assets/icons/explore.svg?react'
 import EyeOpenIcon from '@assets/icons/eyeOpen.svg?react'
 import EyeSlashIcon from '@assets/icons/eyeSlash.svg?react'
 import googleIcon from '@assets/icons/googleIcon.svg'
-import HomeIcon from '@assets/icons/home.svg?react'
 import uploadImage from '@assets/icons/image.svg'
 import likeFillIcon from '@assets/icons/likeFill.svg'
 import likeOutlineIcon from '@assets/icons/likeOutline.svg'
-import ListsIcon from '@assets/icons/lists.svg?react'
 import logoutIcon from '@assets/icons/logout.svg'
-import MessagesIcon from '@assets/icons/messages.svg?react'
-import MoreIcon from '@assets/icons/more.svg?react'
-import NotificationIcon from '@assets/icons/notification.svg?react'
 import postIcon from '@assets/icons/post.svg'
-import ProfileIcon from '@assets/icons/profile.svg?react'
 import searchIcon from '@assets/icons/search.svg'
 import logoIcon from '@assets/icons/twitterLogo.svg'
 import profileBackground from '@assets/images/profileBackground.png'
 import profileImage from '@assets/images/profileImage.svg'
 import twitterImage from '@assets/images/signupTwitter.png'
 import { UserData } from '@types'
-
-export const tweetPath = '/tweet'
-export const userPath = '/user'
-
-export enum Paths {
-    SignUp = '/',
-    Login = '/login',
-    SingUpCredential = '/signup-credential',
-    Profile = '/profile',
-    Home = '/home',
-    Tweet = `${tweetPath}/:tweetId`,
-    User = `${userPath}/:userId`,
-    NotFound = '*',
-}
 
 export const images = {
     closeIcon,
@@ -63,6 +41,7 @@ export enum Themes {
 export enum ActionTypes {
     UserDate = 'user/date',
     UserTotal = 'user/total',
+    UserCurrent = 'user/current',
     UserFollowing = 'user/following',
     UserLiked = 'user/liked',
     NotifyText = 'notify/text',
@@ -74,6 +53,7 @@ export enum ActionTypes {
     LoadingInititalData = 'boolean/initialData',
     isSidebarOpen = 'boolean/sidebar',
     isTweetModalOpen = 'boolean/tweetModal',
+    HomeTweets = 'home/tweets',
 }
 
 export const defaultDate = { year: '', month: '', day: '' }
@@ -103,6 +83,7 @@ export const userDefaultData = {
     },
     date: defaultDate,
     user: defaultUser,
+    currentUser: defaultUser,
     following: [],
     liked: [],
     currentTheme:
@@ -135,45 +116,6 @@ export const openedStatesDefaultData = {
     isTweetModalOpen: false,
 }
 
-export const sidebarLinks = [
-    {
-        Icon: HomeIcon,
-        title: 'Home',
-        link: Paths.Home,
-    },
-    {
-        Icon: ExploreIcon,
-        title: 'Explore',
-        link: '/',
-    },
-    {
-        Icon: NotificationIcon,
-        title: 'Notification',
-        link: '/',
-    },
-    {
-        Icon: MessagesIcon,
-        title: 'Messages',
-        link: '/',
-    },
-    {
-        Icon: BookmarksIcon,
-        title: 'Bookmarks',
-        link: '/',
-    },
-    {
-        Icon: ListsIcon,
-        title: 'Lists',
-        link: '/',
-    },
-    {
-        Icon: ProfileIcon,
-        title: 'Profile',
-        link: Paths.Profile,
-    },
-    {
-        Icon: MoreIcon,
-        title: 'More',
-        link: '/',
-    },
-]
+export const homePageDefaultData = {
+    tweets: null
+}

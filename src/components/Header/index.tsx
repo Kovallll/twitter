@@ -7,7 +7,7 @@ import { ToggleThemeButton } from '@components/ToggleThemeButton'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import { loaderStatesSelector, updateIsSidebarOpen } from '@store'
 
-export const Header = ({ title, user }: HeaderProps) => {
+export const Header = ({ title }: HeaderProps) => {
     const dispatch = useAppDispatch()
     const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
 
@@ -23,7 +23,6 @@ export const Header = ({ title, user }: HeaderProps) => {
         <HeaderWrap>
             <HeaderContentBlock>
                 <HeaderContent
-                    user={user}
                     title={title}
                     handleClickProfileIcon={handleClickProfileIcon}
                 />

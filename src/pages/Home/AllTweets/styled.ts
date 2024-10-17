@@ -10,3 +10,7 @@ export const TweetsSpinner = styled(Spinner)`
         `
     }}
 `
+
+export const ObserveElement = styled.div`
+    height: 10px;
+`

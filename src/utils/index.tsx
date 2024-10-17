@@ -1,6 +1,6 @@
 import { LocalStorageSchema } from './types'
 
-import { AccountCard } from '@components/AccountCard'
+import AccountCard from '@components/AccountCard'
 import {
     countDays,
     countYears,
@@ -198,7 +198,7 @@ export const getUsersNames = (accounts: UserData[], searchValue: string) => {
                     <AccountCard
                         account={account}
                         key={account.userId}
-                        withButton={false}
+                        withFollowButton={false}
                     />
                 )
             }
@@ -223,7 +223,11 @@ export const isEditDataChanged = (
     )
 }
 
-export const getSortedTweetsByTimePost = (allAccounts: UserData[]) => {
+export const getSortedTweetsByTimePost = (
+    allAccounts: UserData[],
+    pageCounter: number
+) => {
+    const portionTweets = 10
     const allTweets = allAccounts
         .map((account) =>
             account.tweets?.reduce(
@@ -235,5 +239,7 @@ export const getSortedTweetsByTimePost = (allAccounts: UserData[]) => {
         .filter((tweet) => tweet !== undefined)
         .flat()
 
-    return allTweets.sort((a, b) => b.tweet.timePost - a.tweet.timePost)
+    return allTweets
+        .sort((a, b) => b.tweet.timePost - a.tweet.timePost)
+        .slice((pageCounter - 1) * portionTweets, pageCounter * portionTweets)
 }

@@ -1,6 +1,5 @@
 export {
     ActionTypes,
-    Paths,
     basePhoneCode,
     loaderStatesDefaultData,
     openedStatesDefaultData,
@@ -10,13 +9,11 @@ export {
     notifyDefaultData,
     themeStoragekey,
     searchDefaultData,
-    sidebarLinks,
     totalDefaultData,
-    tweetPath,
     userDefaultData,
-    userPath,
     Themes,
 } from './defaultValues'
+export { Paths, sidebarLinks, tweetPath, userPath } from './sidebarValues'
 
 export enum Month {
     January = 'January',

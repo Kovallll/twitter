@@ -1,4 +1,4 @@
-import { editText } from '../../config'
+import { editText } from '../config'
 import {
     EditBlock,
     EditButton,

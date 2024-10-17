@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { AllTweets } from './AllTweets'
 import { title } from './config'
 import { Container, HomeSection } from './styled'
@@ -13,13 +15,13 @@ const Home = () => {
     const { accounts } = useAppSelector(totalSelector)
     const { user } = useAppSelector(userSelector)
 
-    const allAccounts = [...accounts, user]
+    const allAccounts = useMemo(() => [...accounts, user], [accounts, user])
 
     return (
         <Container>
             <Sidebar />
             <HomeSection>
-                <Header title={title} user={user} />
+                <Header title={title} />
                 <TweetCreator />
                 <AllTweets allAccounts={allAccounts} />
             </HomeSection>

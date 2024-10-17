@@ -8,7 +8,7 @@ import {
     followingText,
     profileIconAltText,
     successText,
-} from '../config'
+} from './config'
 import { ProfileLoader } from './Loader'
 import {
     EditBlock,
@@ -25,7 +25,6 @@ import {
     ProfileSocial,
     ProfileTopInfo,
 } from './styled'
-import { ProfileInfoProps } from './types'
 
 import { EditProfileModal } from '@components/EditProfileModal'
 import { uploadUserDataToStorage } from '@firebase'
@@ -33,37 +32,48 @@ import { useAppDispatch, useAppSelector } from '@hooks'
 import { loaderStatesSelector, updateNotifyText, userSelector } from '@store'
 import { AvatarImage, EditModalData } from '@types'
 
-export const ProfileInfo = ({ user }: ProfileInfoProps) => {
+export const ProfileInfo = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
     const dispatch = useAppDispatch()
     const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
-    const { user: currentuUser } = useAppSelector(userSelector)
+    const { currentUser, user } = useAppSelector(userSelector)
+
+    const {
+        avatar,
+        docId,
+        description,
+        social,
+        userId,
+        followers,
+        following,
+        name,
+    } = currentUser
 
     const handleChangeIsOpenModal = () => {
         setIsEditModalOpen((prev) => !prev)
     }
 
     const uploadUserData = (data: EditModalData, image: AvatarImage) => {
-        uploadUserDataToStorage(data, user.docId, image, dispatch)
+        uploadUserDataToStorage(data, docId, image, dispatch)
     }
 
     const handleEditProfile = (data: EditModalData, file: File | null) => {
         handleChangeIsOpenModal()
         const image = {
-            id: user.avatar.id,
+            id: avatar.id,
             file,
         }
         uploadUserData(data, image)
         dispatch(updateNotifyText(successText))
     }
 
-    const isUserTweet = currentuUser.userId === user.userId
+    const isUserTweet = user.userId === userId
     const userSocial =
-        user.social && user.social !== '' ? user.social : defaultSocial
+        (social && social !== '') || !isUserTweet ? social : defaultSocial
     const userDescription =
-        user.description && user.description !== ''
-            ? user.description
+        (description && description !== '') || !isUserTweet
+            ? description
             : defaultDescription
 
     if (isLoadingInitialData) {
@@ -74,10 +84,7 @@ export const ProfileInfo = ({ user }: ProfileInfoProps) => {
         <InfoBlock>
             <ProfileTopInfo>
                 <ImageWrap>
-                    <ProfileImage
-                        src={user.avatar.url}
-                        alt={profileIconAltText}
-                    />
+                    <ProfileImage src={avatar.url} alt={profileIconAltText} />
                 </ImageWrap>
                 <EditBlock>
                     {isUserTweet && (
@@ -91,16 +98,16 @@ export const ProfileInfo = ({ user }: ProfileInfoProps) => {
                 </EditBlock>
             </ProfileTopInfo>
             <ProfileBottomInfo>
-                <ProfileName>{user.name}</ProfileName>
+                <ProfileName>{name}</ProfileName>
                 <ProfileSocial>{userSocial}</ProfileSocial>
                 <ProfileDescription>{userDescription}</ProfileDescription>
                 <ProfileFollowBlock>
                     <Follow>
-                        <FollowCount>{user.following.length}</FollowCount>
+                        <FollowCount>{following.length}</FollowCount>
                         {followingText}
                     </Follow>
                     <Follow>
-                        <FollowCount>{user.followers.length}</FollowCount>
+                        <FollowCount>{followers.length}</FollowCount>
                         {followersText}
                     </Follow>
                 </ProfileFollowBlock>

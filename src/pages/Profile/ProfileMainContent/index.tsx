@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from '@hooks'
 import {
     notifySelector,
     openedStatesSelector,
+    updateCurrentUser,
     updateIsTweetModalOpen,
     updateNotifyText,
     userSelector,
@@ -22,8 +23,8 @@ import {
 
 export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
     const dispatch = useAppDispatch()
-    const { user: currentUser } = useAppSelector(userSelector)
     const { text } = useAppSelector(notifySelector)
+    const { user: activeUser, currentUser } = useAppSelector(userSelector)
     const { isTweetModalOpen } = useAppSelector(openedStatesSelector)
 
     useEffect(() => {
@@ -33,27 +34,27 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
                 dispatch(updateNotifyText(''))
             }, notifyTimeout)
         }
-
+        dispatch(updateCurrentUser(user))
         return () => {
             clearTimeout(timeout)
         }
-    }, [dispatch, text])
+    }, [dispatch, text, user])
 
     const handleOpenModalTweet = () => {
         dispatch(updateIsTweetModalOpen(false))
     }
 
-    const isUserTweet = currentUser.userId === user.userId
+    const isUserTweet = currentUser.userId === activeUser.userId
     return (
         <>
             <ProfileContent>
-                <Header user={user} />
+                <Header />
                 <Image src={images.profileBackground} alt={imageAltText} />
-                <ProfileInfo user={user} />
+                <ProfileInfo />
                 {isUserTweet && <TweetCreator />}
                 <Tweets>
                     <TweetsHeader>{tweetsText}</TweetsHeader>
-                    <ProfileTweets user={user} />
+                    <ProfileTweets user={user}/>
                 </Tweets>
             </ProfileContent>
             {isTweetModalOpen && (
