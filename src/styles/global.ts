@@ -1,7 +1,6 @@
 import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { mixins } from './mixins'
-import { theme } from './theme'
 
 import { ButtonProps } from '@types'
 
@@ -15,25 +14,28 @@ ${({ theme }) => {
         }
         body {
             font-family: 'Arial', sans-serif;
+            color: ${theme.palette.textColor};
+            background-color: ${theme.palette.bgColor};
             ::-webkit-scrollbar {
                 cursor: pointer;
                 height: 10px;
                 width: 10px;
-                border: 1px solid ${theme.palette.gray};
+                border: 1px solid ${theme.palette.bgColor};
             }
             ::-webkit-scrollbar-track {
-                background: ${theme.palette.common.white};
+                background-color: ${theme.palette.bgColor};
                 cursor: pointer;
             }
             ::-webkit-scrollbar-thumb {
                 background-color: ${theme.palette.blue};
                 cursor: pointer;
                 border-radius: 20px;
-                border: 3px solid ${theme.palette.common.white};
+                border: 3px solid ${theme.palette.bgColor};
             }
         }
     `
 }}
+ 
   
 `
 
@@ -45,12 +47,6 @@ export const Logo = styled.img`
         `
     }}
 `
-
-export const LinkStyle = {
-    cursor: 'pointer',
-    color: `${theme.palette.blue}`,
-    textDecoration: `none`,
-}
 
 export const Form = styled.form`
     ${({ theme }) => {
@@ -83,19 +79,14 @@ export const ModalTitle = styled.h1`
 `
 
 export const Button = styled.button<ButtonProps>`
-    ${({
-        theme,
-        $withBorder = false,
-        $backgroundColor = theme.palette.common.white,
-        $color = theme.palette.common.black,
-    }) => {
+    ${({ theme, $withBorder = false }) => {
         return css`
             ${mixins.flexRowCenter}
 
+            background-color: ${theme.palette.common.white};
             border: ${$withBorder
                 ? theme.buttonStyles.border
                 : theme.noneBorder};
-            background-color: ${$backgroundColor};
             border-radius: ${theme.buttonStyles.borderRadius};
             cursor: pointer;
             width: ${theme.fullSize + '%'};
@@ -103,7 +94,6 @@ export const Button = styled.button<ButtonProps>`
             margin-bottom: ${theme.spaces.xl + 'px'};
             font-size: ${theme.fontSizes.md + 'px'};
             font-weight: ${theme.boldFont};
-            color: ${$color};
 
             @media (${theme.media.lg}) {
                 padding: ${theme.spaces.md + 'px' + ' 0px'};
@@ -137,7 +127,7 @@ export const Spinner = styled.div`
 
             height: ${theme.fullSize + 'vh'};
             width: ${theme.fullSize + '%'};
-            color: ${theme.palette.common.black};
+            color: ${theme.palette.textColor};
 
             &:after {
                 content: ' ';

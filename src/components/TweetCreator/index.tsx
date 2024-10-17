@@ -16,8 +16,7 @@ import { TweetCreatorProps } from './types'
 import FileUploader from '@components/TweetCreator/FilesUploader'
 import { uploadTweetsToStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { booleanStatesSelector, updateLoadingTweet, userSelector } from '@store'
-import { theme } from '@styles'
+import { loaderStatesSelector, updateLoadingTweet, userSelector } from '@store'
 import { TweetImageType, TweetStorageType } from '@types'
 
 export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
@@ -28,7 +27,7 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
 
     const dispatch = useAppDispatch()
     const { user } = useAppSelector(userSelector)
-    const { isLoadingTweet } = useAppSelector(booleanStatesSelector)
+    const { isLoadingTweet } = useAppSelector(loaderStatesSelector)
     const handleChangeTweetText = (value: string) => {
         setTweetText(value)
     }
@@ -86,9 +85,7 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
     }
 
     const isTweetDisabled = tweetText === '' ? true : false
-    const tweetButtonBg = isTweetDisabled
-        ? theme.palette.gray
-        : theme.palette.lightBlue
+
     const tweetButtonText = isTweetDisabled ? tweetErrorText : tweetSuccesText
     return (
         <TweetCreatorBlock $isModal={isModal}>
@@ -110,11 +107,10 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
                 ) : (
                     <ButtonWrap>
                         <TweetButton
-                            $backgroundColor={tweetButtonBg}
-                            $color={theme.palette.common.white}
                             onClick={handleCreateTweet}
                             disabled={isTweetDisabled}
                             data-cy="tweet-button"
+                            $isTweetDisabled={isTweetDisabled}
                         >
                             {tweetButtonText}
                         </TweetButton>

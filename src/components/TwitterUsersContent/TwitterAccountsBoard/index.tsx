@@ -17,7 +17,7 @@ import {
 
 import { followOrUnfollowAccount } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
-import { booleanStatesSelector, totalSelector, userSelector } from '@store'
+import { loaderStatesSelector, totalSelector, userSelector } from '@store'
 import { UserData } from '@types'
 
 export const TwitterAccountsBoard = () => {
@@ -26,7 +26,7 @@ export const TwitterAccountsBoard = () => {
     const dispatch = useAppDispatch()
     const { accounts } = useAppSelector(totalSelector)
     const { user } = useAppSelector(userSelector)
-    const { isLoadingInitialData } = useAppSelector(booleanStatesSelector)
+    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
 
     const handleFollowAccount = (account: UserData) => () => {
         followOrUnfollowAccount(user, account, dispatch)

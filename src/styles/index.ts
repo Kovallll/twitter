@@ -4,11 +4,10 @@ export {
     ErrorText,
     Form,
     GlobalStyle,
-    LinkStyle,
     Logo,
     ModalTitle,
     ProfileIcon,
     Spinner,
     MainPageContent,
 } from './global'
-export { theme } from './theme'
+export { theme, darkTheme, lightTheme } from './theme'

@@ -1,6 +1,10 @@
 export interface SidebarLinkProps {
     linkData: {
-        icon: { default: string; active: string }
+        Icon: React.FunctionComponent<
+            React.SVGProps<SVGSVGElement> & {
+                title?: string
+            }
+        >
         title: string
         link: string
     }

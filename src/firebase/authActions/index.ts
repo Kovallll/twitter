@@ -22,13 +22,8 @@ import {
     tokenLocalStorage,
     usersCollection,
 } from '@constants'
-import {
-    AllActionsType,
-    updateNotifyText,
-    updateTotalUser,
-    updateUserData,
-} from '@store'
-import { LoginFormInput, SignUpDate, SignUpFormInput, UserData } from '@types'
+import { AllActionsType, updateNotifyText, updateTotalUser } from '@store'
+import { LoginFormInput, SignUpDate, SignUpFormInput } from '@types'
 import { LocalStorage } from '@utils'
 
 const localStorage = new LocalStorage()
@@ -146,7 +141,6 @@ export const signOutFirebaseAccount = (
     dispatch: Dispatch<AllActionsType>
 ) => {
     auth.signOut()
-    dispatch(updateUserData({} as UserData))
     localStorage.setItem(tokenLocalStorage, null)
     navigate(Paths.SignUp)
 

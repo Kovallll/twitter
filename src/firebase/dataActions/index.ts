@@ -31,7 +31,6 @@ import {
     setTotalAccounts,
     updateLoadingTweet,
     updateTotalUser,
-    updateUserData,
     updateUserFollowing,
 } from '@store'
 import {
@@ -57,7 +56,7 @@ export const initUserData = async (
     const docsRef = collection(database, usersCollection)
     const token = localStorage.getItem(tokenLocalStorage)
 
-    const decodedToken = jwtDecode(token.access) as { user_id: string }
+    const decodedToken = jwtDecode(token?.access ?? '') as { user_id: string }
 
     const allDocs = await getDocs(docsRef)
     allDocs.forEach((userDoc) => {
@@ -76,14 +75,6 @@ export const initUserData = async (
             const docRef = doc(database, usersCollection, userDoc.id)
             updateDoc(docRef, userData)
             dispatch(updateTotalUser(userData))
-            const { name, description, social, avatar } = userData
-            const editData = {
-                name,
-                description,
-                social,
-                photoUrl: avatar.url,
-            }
-            dispatch(updateUserData(editData))
         }
     })
 }
@@ -153,6 +144,7 @@ export const deleteTweetFromStorage = (
 export const uploadUserDataToStorage = (
     data: EditModalData,
     docId: string,
+    image: AvatarImage,
     dispatch: Dispatch<AllActionsType>
 ) => {
     const docRef = doc(database, usersCollection, docId)
@@ -168,6 +160,7 @@ export const uploadUserDataToStorage = (
             docId: data.id,
         } as UserData
         dispatch(updateTotalUser(userData))
+        uploadProfileAvatar(image, userData, dispatch)
     })
 }
 
@@ -176,23 +169,25 @@ export const uploadProfileAvatar = (
     user: UserData,
     dispatch: Dispatch<AllActionsType>
 ) => {
-    const imagesRef = ref(storage, `images/${image.id}`)
-    uploadBytes(imagesRef, image.file).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((downloadURL) => {
-            const docRef = doc(database, usersCollection, user.docId)
-            const newAvatar = { id: user.userId ?? '', url: downloadURL }
-            updateDoc(docRef, {
-                avatar: newAvatar,
-            }).then(() => {
-                dispatch(
-                    updateTotalUser({
-                        ...user,
-                        avatar: newAvatar,
-                    })
-                )
+    if (image.file) {
+        const imagesRef = ref(storage, `images/${image.id}`)
+        uploadBytes(imagesRef, image.file).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((downloadURL) => {
+                const docRef = doc(database, usersCollection, user.docId)
+                const newAvatar = { id: user.userId, url: downloadURL }
+                updateDoc(docRef, {
+                    avatar: newAvatar,
+                }).then(() => {
+                    dispatch(
+                        updateTotalUser({
+                            ...user,
+                            avatar: newAvatar,
+                        })
+                    )
+                })
             })
         })
-    })
+    }
 }
 
 export const uploadTweetImagesFromStorage = async (

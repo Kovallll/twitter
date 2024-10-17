@@ -8,25 +8,18 @@ import {
     UpdateSearchData,
     UpdateSearchValue,
     UpdateTotalUser,
-    UpdateUserData,
     UpdateUserDate,
     UpdateUserFollowing,
     UpdateUserLiked,
+    UpdateUserTheme,
 } from './types'
 
-import { ActionTypes } from '@constants'
-import { EditModalData, SignUpDate, UserData } from '@types'
+import { ActionTypes, Themes } from '@constants'
+import { SignUpDate, UserData } from '@types'
 
 export const updateUserDate = (data: SignUpDate): UpdateUserDate => {
     return {
         type: ActionTypes.UserDate,
-        payload: data,
-    }
-}
-
-export const updateUserData = (data: EditModalData): UpdateUserData => {
-    return {
-        type: ActionTypes.UserData,
         payload: data,
     }
 }
@@ -41,6 +34,13 @@ export const updateUserFollowing = (data: string[]): UpdateUserFollowing => {
 export const updateUserTweetLiked = (data: string[]): UpdateUserLiked => {
     return {
         type: ActionTypes.UserLiked,
+        payload: data,
+    }
+}
+
+export const updateUserTheme = (data: Themes): UpdateUserTheme => {
+    return {
+        type: ActionTypes.UserTheme,
         payload: data,
     }
 }

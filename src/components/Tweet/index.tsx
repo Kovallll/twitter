@@ -13,7 +13,6 @@ import {
     LikeCount,
     LikeIcon,
     MoreBlock,
-    MoreIcon,
     TopInfoBlock,
     TweetArticle,
     TweetAuthor,
@@ -29,10 +28,11 @@ import {
 import { TweetProps } from './types'
 
 import { ConfirmModal } from '@components/Modal/ConfirmModal'
-import { images } from '@constants'
+import { images, Themes } from '@constants'
 import { clickLikeTweet, dowloadImagesFromStorage } from '@firebase'
 import { useAppSelector, useDebounce } from '@hooks'
 import { userSelector } from '@store'
+import { lightTheme } from '@styles'
 import { CreatedTweetImageType } from '@types'
 import { getTimePostTweet } from '@utils'
 
@@ -50,8 +50,7 @@ export const Tweet = (props: TweetProps) => {
     const [tweetImages, setTweetImages] = useState<
         CreatedTweetImageType[] | null
     >(null)
-
-    const { user } = useAppSelector(userSelector)
+    const { user, currentTheme } = useAppSelector(userSelector)
 
     useEffect(() => {
         dowloadImagesFromStorage(imagesData, handleChangeTweetImages)
@@ -88,8 +87,14 @@ export const Tweet = (props: TweetProps) => {
         clickLikeTweet(user, account, tweetId, isLiked, handleChangeCountLikes)
     }, 200)
 
-    const likeIcon = isLiked ? images.likeFill : images.likeOutline
+    const { DotsIcon } = images
+
+    const likeIcon = isLiked ? images.likeFillIcon : images.likeOutlineIcon
     const timePostTweet = getTimePostTweet(timePost)
+    const iconColor =
+        currentTheme === Themes.Light
+            ? lightTheme.palette.common.black
+            : lightTheme.palette.common.white
     return (
         <TweetArticle data-cy="tweet">
             <TweetInfoBlock>
@@ -104,7 +109,7 @@ export const Tweet = (props: TweetProps) => {
                 </InfoBlock>
                 {isUserTweet && (
                     <MoreBlock onClick={handleChangeIsMore}>
-                        <MoreIcon src={images.dotsIcon} alt={moreIconAltText} />
+                        <DotsIcon title={moreIconAltText} fill={iconColor} />
                         {isMoreOpen && (
                             <MorePopup
                                 onDelete={handleChangeIsDelete}

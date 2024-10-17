@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import { Button, mixins, theme } from '@styles'
+import { Button, mixins } from '@styles'
 
 export const Title = styled.h2`
     ${({ theme }) => {
@@ -20,16 +20,29 @@ export const ButtonsWrap = styled.div`
     }}
 `
 
-export const ConfirmButton = styled(Button)`
-    background-color: ${theme.palette.blue};
-    color: ${theme.palette.common.white};
-    width: ${theme.modalStyles.lg.buttonWidth + 'px'};
+export const CloseButton = styled(Button)`
+    ${({ theme }) => {
+        return css`
+            color: ${theme.palette.textColor};
+            background-color: ${theme.palette.bgColor};
+            width: ${theme.modalStyles.lg.buttonWidth + 'px'};
+            cursor: pointer;
 
-    @media (${theme.media.md}) {
-        width: ${theme.modalStyles.md.buttonWidth + 'px'};
-    }
+            @media (${theme.media.md}) {
+                width: ${theme.modalStyles.md.buttonWidth + 'px'};
+            }
 
-    @media (${theme.media.xs}) {
-        width: ${theme.modalStyles.sm.buttonWidth + 'px'};
-    }
+            @media (${theme.media.xs}) {
+                width: ${theme.modalStyles.sm.buttonWidth + 'px'};
+            }
+        `
+    }}
+`
+
+export const ConfirmButton = styled(CloseButton)`
+    ${({ theme }) => {
+        return css`
+            background-color: ${theme.palette.red};
+        `
+    }}
 `

@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { AccountsProps } from './types'
 
-import { Button, LinkStyle, mixins, ProfileIcon } from '@styles'
+import { Button, mixins, ProfileIcon } from '@styles'
 
 export const AccountsSection = styled.section`
     ${({ theme }) => {
@@ -110,9 +110,6 @@ export const AccountName = styled.p`
             @media (${theme.media.lg}) {
                 font-size: ${theme.fontSizes.xs + 'px'};
             }
-
-            @media (${theme.media.md}) {
-            }
         `
     }}
 `
@@ -153,7 +150,8 @@ export const FollowButton = styled(Button)`
 export const ShowMoreLink = styled.button`
     ${({ theme }) => {
         return css`
-            ${LinkStyle}
+            ${mixins.linkStyles(theme)};
+
             background: transparent;
             border: 0;
             margin-top: ${theme.spaces.md + 'px'};

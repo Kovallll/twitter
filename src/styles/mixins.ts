@@ -1,5 +1,7 @@
 import { css } from 'styled-components'
 
+import { ColorTheme } from '@types'
+
 export const mixins = {
     flexRowSE: () => css`
         display: flex;
@@ -50,6 +52,12 @@ export const mixins = {
         align-items: center;
         flex-direction: column;
     `,
+    linkStyles: (theme: ColorTheme) => css`
+        cursor: pointer;
+        color: ${theme.palette.blue};
+        text-decoration: none;
+    `,
+
     loadingAnimation: () => css`
         animation: skeleton-loading 1.2s linear infinite alternate;
 

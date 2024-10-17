@@ -2,8 +2,9 @@ import { combineReducers, createStore } from 'redux'
 
 import {
     setTotalData,
-    updateBooleanStates,
+    updateLoaderStates,
     updateNotifyData,
+    updateOpenedStates,
     updateSearch,
     updateUserData,
 } from './redusers'
@@ -13,7 +14,8 @@ const rootReduser = combineReducers({
     notify: updateNotifyData,
     total: setTotalData,
     search: updateSearch,
-    booleanStates: updateBooleanStates,
+    loaderStates: updateLoaderStates,
+    openedStates: updateOpenedStates,
 })
 
 export const store = createStore(rootReduser)
@@ -23,7 +25,6 @@ export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
 
 export {
-    updateUserData,
     updateNotifyText,
     updateTotalUser,
     setTotalAccounts,
@@ -35,12 +36,14 @@ export {
     updateLoadingInitialData,
     updateIsSidebarOpen,
     updateIsTweetModalOpen,
+    updateUserTheme,
     updateUserDate,
 } from './actions'
 
 export {
     userSelector,
-    booleanStatesSelector,
+    loaderStatesSelector,
+    openedStatesSelector,
     notifySelector,
     searchSelector,
     totalSelector,

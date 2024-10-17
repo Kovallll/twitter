@@ -35,6 +35,8 @@ export const SelectModule = styled.select`
             font-size: ${theme.fontSizes.lg + 'px'};
             border-radius: ${theme.selectStyles.borderRadius + 'px'};
             border: ${theme.selectStyles.border + theme.palette.gray};
+            background-color: ${theme.palette.bgColor};
+            color: ${theme.palette.textColor};
 
             @media (${theme.media.md}) {
                 padding: ${theme.selectStyles.md.padding + 'px'};

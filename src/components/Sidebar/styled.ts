@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { Button, mixins, ProfileIcon } from '@styles'
@@ -36,7 +37,7 @@ export const Wrap = styled.div`
                 left: 0;
                 top: 0;
                 z-index: ${theme.sidebarStyles.zIndex};
-                background: ${theme.palette.common.white};
+                background: ${theme.palette.bgColor};
             }
         `
     }}
@@ -69,6 +70,54 @@ export const LogoWrap = styled.div`
 
             @media (${theme.media.sm}) {
                 margin-bottom: ${theme.spaces.xl + 'px'};
+            }
+        `
+    }}
+`
+
+export const SidebarLink = styled(Link)`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexRowStart}
+
+            margin-bottom: ${theme.spaces.xxl + 'px'};
+            text-decoration: none;
+
+            @media (${theme.media.xl}) {
+                margin-bottom: ${theme.spaces.xl + 'px'};
+            }
+
+            @media (${theme.media.md}) {
+                ${mixins.flexRowCenter}
+
+                width: ${theme.fullSize + '%'};
+                margin-bottom: ${theme.spaces.lg + 'px'};
+            }
+
+            @media (${theme.media.sm}) {
+                margin-bottom: ${theme.spaces.md + 'px'};
+            }
+        `
+    }}
+`
+
+export const Icon = styled.img``
+
+export const Title = styled.p`
+    ${({ theme }) => {
+        return css`
+            margin-left: ${theme.spaces.lg + 'px'};
+            color: ${theme.palette.textColor};
+            font-size: ${theme.fontSizes.sm + 'px'};
+            font-weight: ${theme.boldFont};
+
+            @media (${theme.media.xl}) {
+                margin-left: ${theme.spaces.md + 'px'};
+                font-size: ${theme.fontSizes.xs + 'px'};
+            }
+
+            @media (${theme.media.md}) {
+                display: none;
             }
         `
     }}
@@ -233,6 +282,22 @@ export const TabletIcon = styled.img`
 export const SidebarButton = styled(Button)`
     ${({ theme }) => {
         return css`
+            background-color: ${theme.palette.blue};
+            color: ${theme.palette.common.white};
+
+            @media (${theme.media.md}) {
+                display: none;
+            }
+        `
+    }}
+`
+
+export const LogOutButton = styled(Button)`
+    ${({ theme }) => {
+        return css`
+            background-color: ${theme.palette.gray};
+            color: ${theme.palette.common.white};
+
             @media (${theme.media.md}) {
                 display: none;
             }

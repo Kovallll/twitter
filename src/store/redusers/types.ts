@@ -8,10 +8,10 @@ import {
     UpdateSearchData,
     UpdateSearchValue,
     UpdateTotalUser,
-    UpdateUserData,
     UpdateUserDate,
     UpdateUserFollowing,
     UpdateUserLiked,
+    UpdateUserTheme,
 } from '../actions/types'
 
 export type AllActionsType =
@@ -19,13 +19,14 @@ export type AllActionsType =
     | NotifyAction
     | TotalDataAction
     | SearchAction
-    | BooleanAction
+    | LoaderAction
+    | OpenedAction
 
 export type UserAction =
-    | UpdateUserData
     | UpdateTotalUser
     | UpdateUserFollowing
     | UpdateUserLiked
+    | UpdateUserTheme
     | UpdateUserDate
 
 export type NotifyAction = UpdateNotifyText
@@ -34,8 +35,6 @@ export type TotalDataAction = SetTotalAccounts
 
 export type SearchAction = UpdateSearchData | UpdateSearchValue
 
-export type BooleanAction =
-    | UpdateLoadingTweet
-    | UpdateLoadingInititalData
-    | UpdateIsSidebarOpen
-    | UpdateIsTweetModalOpen
+export type LoaderAction = UpdateLoadingTweet | UpdateLoadingInititalData
+
+export type OpenedAction = UpdateIsSidebarOpen | UpdateIsTweetModalOpen
