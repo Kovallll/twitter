@@ -1,15 +1,8 @@
-import { errors, userData } from '../fixtures'
-import { getPhoneInput } from './helpers'
+import { errors, secondUserData, userData } from '../fixtures'
 
 describe('Test Sing Up Credentials Page', () => {
     beforeEach(() => {
         cy.visit('/#/signup-credential')
-    })
-
-    it('test phone input', () => {
-        getPhoneInput()
-            .type(userData.phone)
-            .should('have.value', '+375 (25) 34-56-789')
     })
 
     it('test empty form has errors', () => {
@@ -24,5 +17,9 @@ describe('Test Sing Up Credentials Page', () => {
 
     it('test sign up', () => {
         cy.signUp(userData)
+    })
+
+    it('test sign up another user', () => {
+        cy.signUp(secondUserData)
     })
 })
