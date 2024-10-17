@@ -6,11 +6,10 @@ import {
     logOutIconAltText,
     logOutText,
     postIconAltText,
-    profileImageAltText,
     tweetText,
 } from './config'
 import { SidebarLink } from './SidebarLink'
-import { SidebarProfileLoader } from './SidebarProfileLoader'
+import { SidebarProfile } from './SidebarProfile'
 import {
     Container,
     DesktopText,
@@ -18,14 +17,9 @@ import {
     LogOutButton,
     LogOutIconWrap,
     LogoWrap,
-    NameText,
     PostIconWrap,
-    Profile,
     SidebarButton,
-    SidebarImage,
-    SocialText,
     TabletIcon,
-    TextBlock,
     Wrap,
 } from './styled'
 
@@ -39,7 +33,6 @@ import {
     useWindowSize,
 } from '@hooks'
 import {
-    loaderStatesSelector,
     openedStatesSelector,
     updateIsSidebarOpen,
     updateIsTweetModalOpen,
@@ -55,12 +48,9 @@ export const Sidebar = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { user } = useAppSelector(userSelector)
-    const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
     const { isSidebarOpen } = useAppSelector(openedStatesSelector)
 
     const { width } = useWindowSize()
-
-    const { name, avatar, social } = user
 
     if (width >= hiddenSidebarWidth && !isSidebarOpen) {
         dispatch(updateIsSidebarOpen(true))
@@ -110,20 +100,11 @@ export const Sidebar = () => {
                                 />
                             </PostIconWrap>
                         </IconWrap>
-                        {isLoadingInitialData ? (
-                            <SidebarProfileLoader />
-                        ) : (
-                            <Profile>
-                                <SidebarImage
-                                    src={avatar.url}
-                                    alt={profileImageAltText}
-                                />
-                                <TextBlock>
-                                    <NameText>{name}</NameText>
-                                    <SocialText>{social}</SocialText>
-                                </TextBlock>
-                            </Profile>
-                        )}
+                        <SidebarProfile
+                            avatarUrl={user.avatar.url}
+                            name={user.name}
+                            social={user.social}
+                        />
                         <LogOutButton
                             onClick={handleChangeIsLogOut}
                             data-cy="logout"

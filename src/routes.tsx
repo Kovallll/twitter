@@ -6,6 +6,7 @@ import {
 
 import { ProtectedRoute, UnauthorizedRoute } from '@components/ProtectedPaths'
 import { Paths } from '@constants'
+import Home from '@pages/Home'
 import Login from '@pages/Login'
 import NotFound from '@pages/NotFound'
 import Profile from '@pages/Profile'
@@ -13,6 +14,7 @@ import Root from '@pages/Root'
 import SignUp from '@pages/SignUp'
 import SingUpCredential from '@pages/SingUpCredential'
 import TweetPage from '@pages/TweetPage'
+import UserPage from '@pages/UserPage'
 
 const routes = [
     { path: Paths.NotFound, element: <NotFound /> },
@@ -53,6 +55,22 @@ const routes = [
         element: (
             <ProtectedRoute redirectTo="/login">
                 <TweetPage />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: Paths.Home,
+        element: (
+            <ProtectedRoute redirectTo="/login">
+                <Home />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: Paths.User,
+        element: (
+            <ProtectedRoute redirectTo="/login">
+                <UserPage />
             </ProtectedRoute>
         ),
     },

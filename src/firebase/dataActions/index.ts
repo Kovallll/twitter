@@ -29,6 +29,7 @@ import {
 import {
     AllActionsType,
     setTotalAccounts,
+    updateHomeTweets,
     updateLoadingTweet,
     updateTotalUser,
     updateUserFollowing,
@@ -81,12 +82,21 @@ export const initUserData = async (
 
 export const updateTweets = (
     updatedTweets: ReadyToTweetStorageType[],
-    docId: string,
+    user: UserData,
     dispatch: Dispatch<AllActionsType>
 ) => {
-    const docRef = doc(database, usersCollection, docId)
+    const docRef = doc(database, usersCollection, user.docId)
     updateDoc(docRef, {
         tweets: updatedTweets,
+    }).then(async () => {
+        const data = await getDoc(docRef)
+        const accData = data.data()
+        const userData = {
+            ...accData,
+        } as UserData
+        dispatch(updateTotalUser(userData))
+        dispatch(updateLoadingTweet(false))
+        dispatch(updateHomeTweets({ tweet: updatedTweets[0], account: user }))
     })
         .then(async () => {
             const data = await getDoc(docRef)
@@ -117,14 +127,14 @@ export const uploadTweetsToStorage = (
     const updatedTweets = user.tweets
         ? [readyToUploadTweet, ...user.tweets]
         : [readyToUploadTweet]
-    console.log(updatedTweets, user.docId, 'asdasf')
-    updateTweets(updatedTweets, user.docId, dispatch)
+
+    updateTweets(updatedTweets, user, dispatch)
 }
 
 export const deleteTweetFromStorage = (
     tweets: ReadyToTweetStorageType[],
     tweetId: string,
-    docId: string,
+    user: UserData,
     dispatch: Dispatch<AllActionsType>
 ) => {
     const filtredTweets = tweets?.filter((tweet) => {
@@ -138,7 +148,7 @@ export const deleteTweetFromStorage = (
             return true
         }
     })
-    updateTweets(filtredTweets, docId, dispatch)
+    updateTweets(filtredTweets, user, dispatch)
 }
 
 export const uploadUserDataToStorage = (

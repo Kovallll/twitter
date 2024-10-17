@@ -45,6 +45,7 @@ export interface Theme {
             imageTop: string
             minWidth: string
             maxWidth: string
+            editHeight: string
         }
         md: {
             twitterHeaderWidth: string
@@ -52,6 +53,7 @@ export interface Theme {
             imageSize: string
             imageTop: string
             minWidth: string
+            editHeight: string
         }
     }
     twitterAccountStyles: {

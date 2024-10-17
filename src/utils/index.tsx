@@ -1,5 +1,6 @@
 import { LocalStorageSchema } from './types'
 
+import AccountCard from '@components/AccountCard'
 import {
     countDays,
     countYears,
@@ -13,7 +14,13 @@ import {
     tweetPath,
 } from '@constants'
 import { SearchTweetText } from '@pages/Profile/styled'
-import { EditModalData, SignUpDate, UserData } from '@types'
+import {
+    EditModalData,
+    ReadyToTweetStorageType,
+    SignUpDate,
+    SortedTweet,
+    UserData,
+} from '@types'
 
 export const getSelectYears = () => {
     const currentYear = new Date().getFullYear()
@@ -187,6 +194,24 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
         .flat()
 }
 
+export const getUsersNames = (accounts: UserData[], searchValue: string) => {
+    return accounts
+        .map((account) => {
+            if (
+                account.name.toLowerCase().includes(searchValue.toLowerCase())
+            ) {
+                return (
+                    <AccountCard
+                        account={account}
+                        key={account.userId}
+                        withFollowButton={false}
+                    />
+                )
+            }
+        })
+        .filter((userName) => !!userName)
+}
+
 export const isEditDataChanged = (
     initialData: EditModalData,
     newData: EditModalData
@@ -202,4 +227,25 @@ export const isEditDataChanged = (
         isPhotoChanged &&
         isNameChanged
     )
+}
+
+export const getSortedTweetsByTimePost = (
+    allAccounts: UserData[],
+    pageCounter: number
+) => {
+    const portionTweets = 10
+    const allTweets = allAccounts
+        .map((account) =>
+            account.tweets?.reduce(
+                (acc: SortedTweet[], cur: ReadyToTweetStorageType) =>
+                    (acc = [...acc, { tweet: cur, account }]),
+                []
+            )
+        )
+        .filter((tweet) => tweet !== undefined)
+        .flat()
+
+    return allTweets
+        .sort((a, b) => b.tweet.timePost - a.tweet.timePost)
+        .slice((pageCounter - 1) * portionTweets, pageCounter * portionTweets)
 }
