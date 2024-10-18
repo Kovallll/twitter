@@ -1,14 +1,10 @@
-import { follow, showMore, title } from '../config'
-import {
-    AccountCard,
-    AccountInfo,
-    Accounts,
-    AccountsSection,
-    FollowButton,
-    ShowMoreLink,
-    Title,
-} from '../styled'
+import { showMore, title } from '../config'
+import { Accounts, AccountsSection, ShowMoreLink, Title } from '../styled'
 import { SkeletonAvatar, SkeletonName, SkeletonSocial } from './styled'
+
+import { FollowButton } from '@components/FollowButton'
+import { Card, UserInfo } from '@components/UserCard/styled'
+import { defaultUser } from '@constants'
 
 export const Loader = () => {
     return (
@@ -16,22 +12,22 @@ export const Loader = () => {
             <>
                 <Title>{title}</Title>
                 <Accounts>
-                    <AccountCard>
+                    <Card>
                         <SkeletonAvatar />
-                        <AccountInfo>
+                        <UserInfo>
                             <SkeletonName />
                             <SkeletonSocial />
-                        </AccountInfo>
-                        <FollowButton>{follow}</FollowButton>
-                    </AccountCard>
-                    <AccountCard>
+                        </UserInfo>
+                        <FollowButton account={defaultUser} />
+                    </Card>
+                    <Card>
                         <SkeletonAvatar />
-                        <AccountInfo>
+                        <UserInfo>
                             <SkeletonName />
                             <SkeletonSocial />
-                        </AccountInfo>
-                        <FollowButton>{follow}</FollowButton>
-                    </AccountCard>
+                        </UserInfo>
+                        <FollowButton account={defaultUser} />
+                    </Card>
                 </Accounts>
                 <ShowMoreLink>{showMore}</ShowMoreLink>
             </>

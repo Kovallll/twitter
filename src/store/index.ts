@@ -2,6 +2,7 @@ import { combineReducers, createStore } from 'redux'
 
 import {
     setTotalData,
+    updateHomePageData,
     updateLoaderStates,
     updateNotifyData,
     updateOpenedStates,
@@ -16,6 +17,7 @@ const rootReduser = combineReducers({
     search: updateSearch,
     loaderStates: updateLoaderStates,
     openedStates: updateOpenedStates,
+    homeData: updateHomePageData,
 })
 
 export const store = createStore(rootReduser)
@@ -38,6 +40,9 @@ export {
     updateIsTweetModalOpen,
     updateUserTheme,
     updateUserDate,
+    updateCurrentUser,
+    updateHomeTweets,
+    updateHomePageCount,
 } from './actions'
 
 export {
@@ -47,6 +52,7 @@ export {
     notifySelector,
     searchSelector,
     totalSelector,
+    homeDataSelector,
 } from './selectors'
 
 export { type AllActionsType } from './redusers/types'

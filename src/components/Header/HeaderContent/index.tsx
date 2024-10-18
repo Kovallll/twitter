@@ -9,15 +9,20 @@ import {
 } from '../styled'
 import { HeaderContentProps } from './types'
 
+import { useAppSelector } from '@hooks'
+import { userSelector } from '@store'
+
 export const HeaderContent = (props: HeaderContentProps) => {
-    const { user, title, handleClickProfileIcon } = props
-    const avatar = user.avatar.url
+    const { title, handleClickProfileIcon } = props
+
+    const { currentUser } = useAppSelector(userSelector)
+    const { avatar, name, tweets } = currentUser
 
     if (title) {
         return (
             <>
                 <IconWrap onClick={handleClickProfileIcon}>
-                    <AvatarIcon src={avatar} alt={avatarIconAltText} />
+                    <AvatarIcon src={avatar.url} alt={avatarIconAltText} />
                 </IconWrap>
                 <Title>{title}</Title>
             </>
@@ -27,12 +32,12 @@ export const HeaderContent = (props: HeaderContentProps) => {
     return (
         <>
             <IconWrap onClick={handleClickProfileIcon}>
-                <AvatarIcon src={avatar} alt={avatarIconAltText} />
+                <AvatarIcon src={avatar.url} alt={avatarIconAltText} />
             </IconWrap>
             <HeaderTextBlock>
-                <HeaderTitle>{user?.name}</HeaderTitle>
+                <HeaderTitle>{name}</HeaderTitle>
                 <HeaderSubtitle>
-                    {user?.tweets?.length ?? 0} {subtitleText}
+                    {tweets?.length ?? 0} {subtitleText}
                 </HeaderSubtitle>
             </HeaderTextBlock>
         </>
