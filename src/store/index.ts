@@ -42,6 +42,7 @@ export {
     updateUserDate,
     updateCurrentUser,
     updateHomeTweets,
+    updateHomePageCount,
 } from './actions'
 
 export {
@@ -51,6 +52,7 @@ export {
     notifySelector,
     searchSelector,
     totalSelector,
+    homeDataSelector,
 } from './selectors'
 
 export { type AllActionsType } from './redusers/types'

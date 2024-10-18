@@ -2,13 +2,7 @@ import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { avatarIconAltText } from './config'
-import {
-    AccountAvatar,
-    AccountInfo,
-    AccountName,
-    AccountSocial,
-    Card,
-} from './styled'
+import { Card, UserAvatar, UserInfo, UserName, UserSocial } from './styled'
 import { AccountCardProps } from './types'
 
 import { FollowButton } from '@components/FollowButton'
@@ -28,15 +22,15 @@ const AccountCard = ({
 
     return (
         <Card>
-            <AccountAvatar
+            <UserAvatar
                 src={avatar.url}
                 alt={avatarIconAltText}
                 onClick={handleClickAccount}
             />
-            <AccountInfo onClick={handleClickAccount}>
-                <AccountName>{name}</AccountName>
-                <AccountSocial>{social}</AccountSocial>
-            </AccountInfo>
+            <UserInfo onClick={handleClickAccount}>
+                <UserName>{name}</UserName>
+                <UserSocial>{social}</UserSocial>
+            </UserInfo>
             {withFollowButton && <FollowButton account={account} />}
         </Card>
     )

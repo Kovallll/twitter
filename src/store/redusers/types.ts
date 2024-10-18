@@ -1,6 +1,7 @@
 import {
     SetTotalAccounts,
     UpdateCurrentUser,
+    UpdateHomePageCount,
     UpdateHomeTweets,
     UpdateIsSidebarOpen,
     UpdateIsTweetModalOpen,
@@ -43,4 +44,4 @@ export type LoaderAction = UpdateLoadingTweet | UpdateLoadingInititalData
 
 export type OpenedAction = UpdateIsSidebarOpen | UpdateIsTweetModalOpen
 
-export type HomeAction = UpdateHomeTweets
+export type HomeAction = UpdateHomeTweets | UpdateHomePageCount

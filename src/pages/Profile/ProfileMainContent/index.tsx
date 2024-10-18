@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { imageAltText, tweetsText } from './config'
 import { ProfileInfo } from './ProfileInfo'
 import { ProfileTweets } from './ProfileTweets'
 import { Image, ProfileContent, Tweets, TweetsHeader } from './styled'
-import { ProfileMainContentProps } from './types'
 
 import { Header } from '@components/Header'
 import Modal from '@components/Modal'
@@ -15,17 +15,25 @@ import { useAppDispatch, useAppSelector } from '@hooks'
 import {
     notifySelector,
     openedStatesSelector,
+    totalSelector,
     updateCurrentUser,
     updateIsTweetModalOpen,
     updateNotifyText,
     userSelector,
 } from '@store'
 
-export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
+export const ProfileMainContent = () => {
+    const { userId } = useParams()
+
     const dispatch = useAppDispatch()
     const { text } = useAppSelector(notifySelector)
-    const { user: activeUser, currentUser } = useAppSelector(userSelector)
+    const { user: activeUser } = useAppSelector(userSelector)
     const { isTweetModalOpen } = useAppSelector(openedStatesSelector)
+    const { accounts } = useAppSelector(totalSelector)
+
+    const user = userId
+        ? accounts.find((user) => user.userId === userId)!
+        : activeUser
 
     useEffect(() => {
         let timeout: NodeJS.Timeout
@@ -44,7 +52,7 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
         dispatch(updateIsTweetModalOpen(false))
     }
 
-    const isUserTweet = currentUser.userId === activeUser.userId
+    const isUserTweet = user.userId === activeUser.userId
     return (
         <>
             <ProfileContent>
@@ -54,7 +62,7 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
                 {isUserTweet && <TweetCreator />}
                 <Tweets>
                     <TweetsHeader>{tweetsText}</TweetsHeader>
-                    <ProfileTweets user={user}/>
+                    <ProfileTweets user={user} />
                 </Tweets>
             </ProfileContent>
             {isTweetModalOpen && (
