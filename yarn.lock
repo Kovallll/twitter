@@ -1215,6 +1215,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@castlenine/vite-remove-attribute@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@castlenine/vite-remove-attribute/-/vite-remove-attribute-1.0.2.tgz#765de080637421d19880556d2cbd93fb9dc8250f"
+  integrity sha512-VlfhuOlduCCRyhP7fvVen/nOwETTISOsMhhCeiGMTs2OnHrFyw/hHgq9qby4YDo946RQdEW6TrGABtOYg7+Y7g==
+
 "@colors/colors@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
