@@ -17,7 +17,7 @@ const {
 export const setupFirebase = () => {
     try {
         firebaseApp = initializeApp({
-            apiKey: VITE_FIREBASE_APIKEY,
+            apiKey: VITE_FIREBASE_APIKEY || 'mock_key',
             authDomain: VITE_FIREBASE_AUTHDOMAIN,
             projectId: VITE_FIREBASE_PROJECTID,
             storageBucket: VITE_FIREBASE_STORAGEBUCKET,
