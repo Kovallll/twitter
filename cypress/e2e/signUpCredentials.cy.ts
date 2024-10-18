@@ -18,6 +18,7 @@ describe('Test Sing Up Credentials Page', () => {
     it('test sign up', () => {
         cy.signUp(userData)
         getProfileName().should('have.text', userData.name)
+        cy.wait(200)
     })
 
     it('test sign up another user', () => {
