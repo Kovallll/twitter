@@ -27,6 +27,6 @@ jobs:
             - name: Cypress run
               uses: cypress-io/github-action@v6
               with:
-                  start: yarn dev
+                  start: yarn cy:ci
                   wait-on: 'http://localhost:5173'
                   browser: chrome
