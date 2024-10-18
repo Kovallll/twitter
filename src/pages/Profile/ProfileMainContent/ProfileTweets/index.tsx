@@ -1,23 +1,25 @@
 import { TweetSpinner } from './styled'
-import { ProfileTweetsProps } from './types'
 
 import { Tweet } from '@components/Tweet'
 import { deleteTweetFromStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
 import { loaderStatesSelector, userSelector } from '@store'
 
-export const ProfileTweets = ({ user }: ProfileTweetsProps) => {
-    const { tweets } = user
-
+export const ProfileTweets = () => {
     const dispatch = useAppDispatch()
     const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
-    const { user: activeUser } = useAppSelector(userSelector)
+    const { user: activeUser, currentUser } = useAppSelector(userSelector)
 
     const handleDeleteTweet = (tweetId: string) => {
-        deleteTweetFromStorage(tweets!, tweetId, user, dispatch)
+        deleteTweetFromStorage(
+            currentUser.tweets!,
+            tweetId,
+            currentUser,
+            dispatch
+        )
     }
 
-    const isUserTweet = activeUser.userId === user.userId
+    const isUserTweet = activeUser.userId === currentUser.userId
 
     if (isLoadingInitialData) {
         return <TweetSpinner />
@@ -25,12 +27,12 @@ export const ProfileTweets = ({ user }: ProfileTweetsProps) => {
 
     return (
         <>
-            {tweets?.map((data) => (
+            {currentUser.tweets?.map((data) => (
                 <Tweet
-                    data={{ tweetData: data, account: user }}
+                    data={{ tweetData: data, account: currentUser }}
                     handleDeleteTweet={handleDeleteTweet}
                     isUserTweet={isUserTweet}
-                    key={user.userId}
+                    key={currentUser.userId}
                 />
             ))}
         </>

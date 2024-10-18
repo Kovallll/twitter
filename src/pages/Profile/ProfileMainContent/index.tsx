@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { imageAltText, tweetsText } from './config'
 import { ProfileInfo } from './ProfileInfo'
@@ -15,25 +14,16 @@ import { useAppDispatch, useAppSelector } from '@hooks'
 import {
     notifySelector,
     openedStatesSelector,
-    totalSelector,
-    updateCurrentUser,
     updateIsTweetModalOpen,
     updateNotifyText,
     userSelector,
 } from '@store'
 
 export const ProfileMainContent = () => {
-    const { userId } = useParams()
-
     const dispatch = useAppDispatch()
     const { text } = useAppSelector(notifySelector)
-    const { user: activeUser } = useAppSelector(userSelector)
+    const { user: activeUser, currentUser } = useAppSelector(userSelector)
     const { isTweetModalOpen } = useAppSelector(openedStatesSelector)
-    const { accounts } = useAppSelector(totalSelector)
-
-    const user = userId
-        ? accounts.find((user) => user.userId === userId)!
-        : activeUser
 
     useEffect(() => {
         let timeout: NodeJS.Timeout
@@ -42,17 +32,16 @@ export const ProfileMainContent = () => {
                 dispatch(updateNotifyText(''))
             }, notifyTimeout)
         }
-        dispatch(updateCurrentUser(user))
         return () => {
             clearTimeout(timeout)
         }
-    }, [dispatch, text, user])
+    }, [dispatch, text])
 
     const handleOpenModalTweet = () => {
         dispatch(updateIsTweetModalOpen(false))
     }
 
-    const isUserTweet = user.userId === activeUser.userId
+    const isUserTweet = currentUser.userId === activeUser.userId
     return (
         <>
             <ProfileContent>
@@ -62,7 +51,7 @@ export const ProfileMainContent = () => {
                 {isUserTweet && <TweetCreator />}
                 <Tweets>
                     <TweetsHeader>{tweetsText}</TweetsHeader>
-                    <ProfileTweets user={user} />
+                    <ProfileTweets />
                 </Tweets>
             </ProfileContent>
             {isTweetModalOpen && (
