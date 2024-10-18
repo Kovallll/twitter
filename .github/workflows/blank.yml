@@ -24,9 +24,20 @@ jobs:
               run: yarn lint
             - name: check unit tests
               run: yarn test --runInBand
+
+    cypress-run:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: cypress-io/github-action@v6
+
+            - name: Start Firebase emulators
+              run: yarn firebase emulators:start
+
             - name: Cypress run
               uses: cypress-io/github-action@v6
               with:
-                  start: yarn cy:ci
+                  build: yarn build
+                  start: yarn dev
                   wait-on: 'http://localhost:5173'
                   browser: chrome
