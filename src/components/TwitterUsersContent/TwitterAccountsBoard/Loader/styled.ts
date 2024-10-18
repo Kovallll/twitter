@@ -1,13 +1,9 @@
 import styled, { css } from 'styled-components'
 
-import {
-    AccountAvatar,
-    AccountName,
-    AccountSocial,
-} from '@components/AccountCard/styled'
+import { UserAvatar, UserName, UserSocial } from '@components/UserCard/styled'
 import { mixins } from '@styles'
 
-export const SkeletonAvatar = styled(AccountAvatar)`
+export const SkeletonAvatar = styled(UserAvatar)`
     ${({ theme }) => {
         return css`
             ${mixins.loadingAnimation};
@@ -21,7 +17,7 @@ export const SkeletonAvatar = styled(AccountAvatar)`
     }}
 `
 
-export const SkeletonName = styled(AccountName)`
+export const SkeletonName = styled(UserName)`
     ${({ theme }) => {
         return css`
             ${mixins.loadingAnimation}
@@ -33,7 +29,7 @@ export const SkeletonName = styled(AccountName)`
     }}
 `
 
-export const SkeletonSocial = styled(AccountSocial)`
+export const SkeletonSocial = styled(UserSocial)`
     ${({ theme }) => {
         return css`
             ${mixins.loadingAnimation}

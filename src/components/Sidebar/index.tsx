@@ -85,7 +85,10 @@ export const Sidebar = () => {
                             <Logo src={images.logoIcon} alt={logoAltText} />
                         </LogoWrap>
                         {sidebarLinks.map((linkData) => (
-                            <SidebarLink linkData={linkData} />
+                            <SidebarLink
+                                linkData={linkData}
+                                key={linkData.title}
+                            />
                         ))}
                         {isProfilePage && (
                             <SidebarButton onClick={handleOpenModalTweet} data-cy="sidebar-tweet">

@@ -29,6 +29,7 @@ import {
 import {
     AllActionsType,
     setTotalAccounts,
+    updateCurrentUser,
     updateHomeTweets,
     updateLoadingTweet,
     updateTotalUser,
@@ -94,6 +95,7 @@ export const updateTweets = (
         const userData = {
             ...accData,
         } as UserData
+        dispatch(updateCurrentUser(userData))
         dispatch(updateTotalUser(userData))
         dispatch(updateLoadingTweet(false))
         dispatch(updateHomeTweets({ tweet: updatedTweets[0], account: user }))
@@ -169,7 +171,7 @@ export const uploadUserDataToStorage = (
             ...accData,
             docId: data.id,
         } as UserData
-        dispatch(updateTotalUser(userData))
+        dispatch(updateCurrentUser(userData))
         uploadProfileAvatar(image, userData, dispatch)
     })
 }

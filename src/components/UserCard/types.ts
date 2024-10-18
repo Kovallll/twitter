@@ -1,6 +1,6 @@
 import { UserData } from '@types'
 
-export interface AccountCardProps {
-    account: UserData
+export interface UserCardProps {
+    user: UserData
     withFollowButton?: boolean
 }

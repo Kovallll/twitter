@@ -23,10 +23,10 @@ describe('Test Home Page', () => {
         getSearch().should('be.visible').type('Second')
 
         getSearchPopup().should('be.visible')
-        cy.get('div[data-cy="account-card"]').should('be.visible')
+        cy.get('div[data-cy="user-card"]').should('be.visible')
         cy.get('div[ data-cy="search-popup"]')
-            .children('div[data-cy="account-card"]')
-            .children('img[data-cy="account-avatar"]')
+            .children('div[data-cy="user-card"]')
+            .children('img[data-cy="user-avatar"]')
             .should('be.visible')
             .click()
         cy.url().should('include', '/user')

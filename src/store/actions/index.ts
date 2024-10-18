@@ -1,6 +1,7 @@
 import {
     SetTotalAccounts,
     UpdateCurrentUser,
+    UpdateHomePageCount,
     UpdateHomeTweets,
     UpdateIsSidebarOpen,
     UpdateIsTweetModalOpen,
@@ -128,6 +129,13 @@ export const updateHomeTweets = (
 ): UpdateHomeTweets => {
     return {
         type: ActionTypes.HomeTweets,
+        payload: data,
+    }
+}
+
+export const updateHomePageCount = (data: number): UpdateHomePageCount => {
+    return {
+        type: ActionTypes.HomePageCount,
         payload: data,
     }
 }

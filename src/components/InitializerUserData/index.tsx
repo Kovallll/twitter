@@ -44,35 +44,35 @@ export const InitializerUserData = ({ children }: InitializerUserDataProps) => {
     const isProfilePage = location.pathname === Paths.Profile
 
     const dispatch = useAppDispatch()
-    const { user } = useAppSelector(userSelector)
-    const { accounts } = useAppSelector(totalSelector)
+    const { user: currentUser } = useAppSelector(userSelector)
+    const { accounts: users } = useAppSelector(totalSelector)
     const { value: searchValue } = useAppSelector(searchSelector)
     const { isLoadingInitialData } = useAppSelector(loaderStatesSelector)
 
     useEffect(() => {
-        initUserData(user.userId, dispatch)
-        setTotalAccountsFromStorage(user.userId, dispatch)
+        initUserData(currentUser.userId, dispatch)
+        setTotalAccountsFromStorage(currentUser.userId, dispatch)
 
         return () => {
             dispatch(setTotalAccounts([]))
         }
-    }, [dispatch, user.userId])
+    }, [dispatch, currentUser.userId])
 
-    if (user.userId === '' && !isLoadingInitialData) {
+    if (currentUser.userId === '' && !isLoadingInitialData) {
         dispatch(updateLoadingInitialData(true))
     }
 
-    if (user.userId !== '' && isLoadingInitialData) {
+    if (currentUser.userId !== '' && isLoadingInitialData) {
         dispatch(updateLoadingInitialData(false))
     }
 
     if (prevSearchValue !== searchValue && isProfilePage) {
-        const tweetsTexts = getTweetsTexts(accounts, searchValue)
+        const tweetsTexts = getTweetsTexts(users, searchValue)
         dispatch(updateSearchData(tweetsTexts))
         setPrevSearchValue(searchValue)
     }
     if (prevSearchValue !== searchValue && !isProfilePage) {
-        const usersNames = getUsersNames(accounts, searchValue)
+        const usersNames = getUsersNames(users, searchValue)
         dispatch(updateSearchData(usersNames))
         setPrevSearchValue(searchValue)
     }

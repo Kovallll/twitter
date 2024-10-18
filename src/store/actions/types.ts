@@ -75,3 +75,8 @@ export type UpdateHomeTweets = ActionInterface<
     typeof ActionTypes.HomeTweets,
     SortedTweet[] | SortedTweet
 >
+
+export type UpdateHomePageCount = ActionInterface<
+    typeof ActionTypes.HomePageCount,
+    number
+>

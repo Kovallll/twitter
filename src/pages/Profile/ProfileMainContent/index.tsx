@@ -4,7 +4,6 @@ import { imageAltText, tweetsText } from './config'
 import { ProfileInfo } from './ProfileInfo'
 import { ProfileTweets } from './ProfileTweets'
 import { Image, ProfileContent, Tweets, TweetsHeader } from './styled'
-import { ProfileMainContentProps } from './types'
 
 import { Header } from '@components/Header'
 import Modal from '@components/Modal'
@@ -15,13 +14,12 @@ import { useAppDispatch, useAppSelector } from '@hooks'
 import {
     notifySelector,
     openedStatesSelector,
-    updateCurrentUser,
     updateIsTweetModalOpen,
     updateNotifyText,
     userSelector,
 } from '@store'
 
-export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
+export const ProfileMainContent = () => {
     const dispatch = useAppDispatch()
     const { text } = useAppSelector(notifySelector)
     const { user: activeUser, currentUser } = useAppSelector(userSelector)
@@ -34,11 +32,10 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
                 dispatch(updateNotifyText(''))
             }, notifyTimeout)
         }
-        dispatch(updateCurrentUser(user))
         return () => {
             clearTimeout(timeout)
         }
-    }, [dispatch, text, user])
+    }, [dispatch, text])
 
     const handleOpenModalTweet = () => {
         dispatch(updateIsTweetModalOpen(false))
@@ -54,7 +51,7 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
                 {isUserTweet && <TweetCreator />}
                 <Tweets>
                     <TweetsHeader>{tweetsText}</TweetsHeader>
-                    <ProfileTweets user={user} />
+                    <ProfileTweets />
                 </Tweets>
             </ProfileContent>
             {isTweetModalOpen && (

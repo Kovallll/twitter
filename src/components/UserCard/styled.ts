@@ -13,7 +13,7 @@ export const Card = styled.div`
     }}
 `
 
-export const AccountAvatar = styled(ProfileIcon)`
+export const UserAvatar = styled(ProfileIcon)`
     ${({ theme }) => {
         return css`
             margin-right: ${theme.spaces.md + 'px'};
@@ -32,7 +32,7 @@ export const AccountAvatar = styled(ProfileIcon)`
     }}
 `
 
-export const AccountInfo = styled.div`
+export const UserInfo = styled.div`
     ${({ theme }) => {
         return css`
             min-width: ${theme.twitterAccountStyles.lg.infoWidth + 'px'};
@@ -51,7 +51,7 @@ export const AccountInfo = styled.div`
     }}
 `
 
-export const AccountName = styled.p`
+export const UserName = styled.p`
     ${({ theme }) => {
         return css`
             font-size: ${theme.fontSizes.sm + 'px'};
@@ -67,7 +67,7 @@ export const AccountName = styled.p`
     }}
 `
 
-export const AccountSocial = styled.p`
+export const UserSocial = styled.p`
     ${({ theme }) => {
         return css`
             word-wrap: break-word;

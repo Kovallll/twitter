@@ -54,6 +54,7 @@ export enum ActionTypes {
     isSidebarOpen = 'boolean/sidebar',
     isTweetModalOpen = 'boolean/tweetModal',
     HomeTweets = 'home/tweets',
+    HomePageCount = 'home/pageCount',
 }
 
 export const defaultDate = { year: '', month: '', day: '' }
@@ -118,4 +119,5 @@ export const openedStatesDefaultData = {
 
 export const homePageDefaultData = {
     tweets: null,
+    pageCount: 1,
 }

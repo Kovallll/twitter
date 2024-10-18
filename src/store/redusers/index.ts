@@ -128,6 +128,8 @@ export const updateHomePageData = (
                 return { ...state, tweets: [action.payload] }
             } else return state
         }
+        case ActionTypes.HomePageCount:
+            return { ...state, pageCount: action.payload }
         default:
             return state
     }
