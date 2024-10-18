@@ -4,11 +4,11 @@ export default defineConfig({
     e2e: {
         baseUrl: 'http://localhost:5173',
         specPattern: [
-            'signUp.cy.ts',
-            'signUpCredentials.cy.ts',
-            'login.cy.ts',
-            'profile.cy.ts',
-            'home.cy.ts',
+            '/cypress/e2e/signUp.cy.ts',
+            '/cypress/e2e/signUpCredentials.cy.ts',
+            '/cypress/e2e/login.cy.ts',
+            '/cypress/e2e/profile.cy.ts',
+            '/cypress/e2e/home.cy.ts',
         ],
     },
     viewportWidth: 1440,
