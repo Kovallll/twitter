@@ -29,6 +29,7 @@ import {
 import {
     AllActionsType,
     setTotalAccounts,
+    updateCurrentUser,
     updateHomeTweets,
     updateLoadingTweet,
     updateTotalUser,
@@ -94,7 +95,7 @@ export const updateTweets = (
         const userData = {
             ...accData,
         } as UserData
-        dispatch(updateTotalUser(userData))
+        dispatch(updateCurrentUser(userData))
         dispatch(updateLoadingTweet(false))
         dispatch(updateHomeTweets({ tweet: updatedTweets[0], account: user }))
     })
