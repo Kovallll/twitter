@@ -1,6 +1,6 @@
 import { LocalStorageSchema } from './types'
 
-import AccountCard from '@components/AccountCard'
+import UserCard from '@components/UserCard'
 import {
     countDays,
     countYears,
@@ -190,14 +190,12 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
 
 export const getUsersNames = (accounts: UserData[], searchValue: string) => {
     return accounts
-        .map((account) => {
-            if (
-                account.name.toLowerCase().includes(searchValue.toLowerCase())
-            ) {
+        .map((user) => {
+            if (user.name.toLowerCase().includes(searchValue.toLowerCase())) {
                 return (
-                    <AccountCard
-                        account={account}
-                        key={account.userId}
+                    <UserCard
+                        user={user}
+                        key={user.userId}
                         withFollowButton={false}
                     />
                 )

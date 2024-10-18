@@ -1,10 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import {
-    UserAvatar,
-    UserName,
-    UserSocial,
-} from '@components/AccountCard/styled'
+import { UserAvatar, UserName, UserSocial } from '@components/UserCard/styled'
 import { mixins } from '@styles'
 
 export const SkeletonAvatar = styled(UserAvatar)`

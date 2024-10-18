@@ -3,21 +3,18 @@ import { useNavigate } from 'react-router-dom'
 
 import { avatarIconAltText } from './config'
 import { Card, UserAvatar, UserInfo, UserName, UserSocial } from './styled'
-import { AccountCardProps } from './types'
+import { UserCardProps } from './types'
 
 import { FollowButton } from '@components/FollowButton'
 import { userPath } from '@constants'
 
-const AccountCard = ({
-    account,
-    withFollowButton = true,
-}: AccountCardProps) => {
-    const { avatar, name, social } = account
+const UserCard = ({ user, withFollowButton = true }: UserCardProps) => {
+    const { avatar, name, social } = user
 
     const navigate = useNavigate()
 
-    const handleClickAccount = () => {
-        navigate(`${userPath}/${account.userId}`)
+    const handleClickUser = () => {
+        navigate(`${userPath}/${user.userId}`)
     }
 
     return (
@@ -25,15 +22,15 @@ const AccountCard = ({
             <UserAvatar
                 src={avatar.url}
                 alt={avatarIconAltText}
-                onClick={handleClickAccount}
+                onClick={handleClickUser}
             />
-            <UserInfo onClick={handleClickAccount}>
+            <UserInfo onClick={handleClickUser}>
                 <UserName>{name}</UserName>
                 <UserSocial>{social}</UserSocial>
             </UserInfo>
-            {withFollowButton && <FollowButton account={account} />}
+            {withFollowButton && <FollowButton account={user} />}
         </Card>
     )
 }
 
-export default memo(AccountCard)
+export default memo(UserCard)

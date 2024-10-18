@@ -2,8 +2,8 @@ import { showMore, title } from '../config'
 import { Accounts, AccountsSection, ShowMoreLink, Title } from '../styled'
 import { SkeletonAvatar, SkeletonName, SkeletonSocial } from './styled'
 
-import { Card, UserInfo } from '@components/AccountCard/styled'
 import { FollowButton } from '@components/FollowButton'
+import { Card, UserInfo } from '@components/UserCard/styled'
 import { defaultUser } from '@constants'
 
 export const Loader = () => {
