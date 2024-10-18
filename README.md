@@ -1,150 +1,58 @@
-# Tестовое задание приложение Modsen Twitter
+# Twitter
 
-## Содержание
+Twitter — это приложение-клон популярной социальной сети X
 
--   [Техническое задание](#Техническое-задание)
--   [Необходимый функционал](#Необходимый-функционал)
--   [Пример графического представления](#Пример-графического-представления)
--   [Используемые технологии](#Используемые-технологии)
--   [Тестирование](#Тестирование)
--   [Полезные ссылки](#Полезные-ссылки)
+## Установка
 
-## Техническое задание
+У вас должны быть установлены [зависимости проекта](#зависимости)
 
-Реализовать приложение, схожее по своей функциональности с платформой Twitter.
+1. Клонирование репозитория
+   `git clone https://github.com/Kovallll/twitter`
 
-## Необходимый функционал:
+2. Загрузка зависимостей `yarn install`
 
--   авторизация пользователя;
--   регистрация пользователя;
--   возможность создания нового твита;
--   поиск других твитов;
--   валидация введенных данных;
--   изменение данных пользователя;
--   смена темы приложения.
+3. Запуск приложения `yarn start`
 
-### Дополнительные указания
+## О приложении
 
--   Реализация Loader для отображения запасного UI при подгрузке данных;
--   Использование библиотек для стилей запрещены;
--   Все данные о пользователе, твиты хранятся в firebase.
+### React
 
-## Пример графического представления:
+В качестве основной библиотеки использовался [React](https://react.dev/)
 
-Ссылка на макет: [Макет "Modsen Twitter"](https://www.figma.com/file/KaCuGri1cQKxx4FMIfBZ6T/Modsen-Twitter?node-id=0%3A1&t=T3Vik0PUWZKXqlCN-0).
+### Типизация
 
-### Также проект предполагает:
+В приложении в качестве типизации использовался [Typescript](https://www.typescriptlang.org/)
 
--   Организацию файловой структуры react приложения. Ссылка на структуру: [Cтруктура проекта](https://github.com/mkrivel/structure);
--   Придерживаться требований по написанию и организации кода react приложения. Ссылка на требования: [Требования к тестовому заданию](https://github.com/annaprystavka/requirements);
--   Деплой приложения на платформу GitHub Pages или иные другие (Netlify, ...);
--   Настроить конфигурации **_babel_**, **_eslint_**;
--   Использование TypeScript для типизирования и уменьшения количества потенциальных багов;
--   Обработку ошибок через паттерн **_Error Boundaries_**;
--   Использование алиасов для импортирования файлов;
--   Оптимизацию дизайна под мобильные устройства;
--   Покрытие тестами всего приложения (cypress, unit);
--   Обязательную анимацию при наведения, нажатии на кнопки, прокрутки карусели и слайдеров, появлении элементов на странице при рендере и скролле.
+Для типизации props используется interface.
 
-## Описание экранов
+### Стилизация
 
-1. Страница [Sign Up](https://www.figma.com/file/KaCuGri1cQKxx4FMIfBZ6T/Modsen-Twitter?node-id=1%3A368&t=T3Vik0PUWZKXqlCN-0)
+Стилизация с помощью styled-components [StyledComponents](https://styled-components.com/)
 
-На данной странице пользователь может ввести свое имя и номер телефона, дату рождения для того, чтобы зарегистрироваться. Все поля должны быть обязательными.
-При нажатии на "Use email" пользователя переходит на страницу [авторизации](https://www.figma.com/file/KaCuGri1cQKxx4FMIfBZ6T/Modsen-Twitter?node-id=1%3A869&t=T3Vik0PUWZKXqlCN-0).
-На этой странице пользователь может зарегистрироваться с помощью google-аккаунта или перейти на страницу [регистрации](https://www.figma.com/file/KaCuGri1cQKxx4FMIfBZ6T/Modsen-Twitter?node-id=1%3A350&t=T3Vik0PUWZKXqlCN-0)
+### Тестирование
 
-2. Страница [Log In](https://www.figma.com/file/KaCuGri1cQKxx4FMIfBZ6T/Twitter?node-id=1%3A350&t=V0ikbnKD4YdfNcCd-0)
+Unit тестирование реализованно с использованием [Jest](https://jestjs.io/), e2e тестирование с помошью [Cypress](https://www.cypress.io/)
 
-На данной странице пользователь может зайти в аккаунт введя свой логин или телефон. В случае того, если аккаунта не существует, оповестить об этом пользователя.
-При нажатии на "Sign up to Twitter" пользователь переходит на страницу [авторизации](https://www.figma.com/file/KaCuGri1cQKxx4FMIfBZ6T/Modsen-Twitter?node-id=1%3A869&t=T3Vik0PUWZKXqlCN-0).
+### Транспилер
 
-3. Страница [Profile](https://www.figma.вom/file/KaвuGri1cQKxx4FMIfBZ6T/Modsen-Twitter?node-id=1%3A58&t=T3Vik0PUWZKXqlCN-0)
+Преобразование современного кода JavaScript в пердыдущие стандарты было осуществленно с помощью [Babel](https://babeljs.io/)
 
-На странице профиля отображается информация о пользователе. При нажатии на edit profile открывается модальное окно в котором можно добавить/изменить данные о пользователе:
-имя, фамилия, пароль, пол, ссылка на телеграмм.
-В категории "What’s happening" можно создать новый пост, также есть возможность добавить картинку, поставить лайк и удалить созданный tweet.
-В категории Tweets отображаются созданные пользователем посты.
-В поле ввода Search Input можно ввести название tweet и в списке должен появиться tweet, при нажатии на который он открывается в новом окне.
-При нажатии на Tweet(в сайдбаре) открывается модальное окно, в котором можно также создать новый tweet(также с добавление картинки).
-Также предусмотрена возможность выхода из аккаунта.
+### Сборщик
 
-4. Страница [Feed](https://www.figma.com/file/KaCuGri1cQKxx4FMIfBZ6T/Modsen-Twitter?node-id=1%3A465&t=T3Vik0PUWZKXqlCN-0)
+В качестве сборщика проекта выступает [Vite](https://vitejs.dev/)
 
-В шапке страницы есть возможность сменить общую тему приложения.
-На странице есть возможность создать новый твит, который добавится на текущей странице и на странице самого пользователя, а также отображаются посты других пользователей.
-В поиске Search Twitter происходит список пользователей Twitter(поиск должен происходить на стороне firebase и была возможность у твитов поставить лайк).
+### Линтеры
 
-5. Страница [icons](https://www.figma.com/file/KaCuGri1cQKxx4FMIfBZ6T/Modsen-Twitter?node-id=6%3A279&t=T3Vik0PUWZKXqlCN-0) содержит вспомогательные иконки для приложения.
+Для анализа JS кода использовался [Eslint](https://eslint.org/), для его форматирования [Prettier](https://prettier.io/)
 
-## Используемые технологии
+### Деплой
 
-### Для react
+Деплой приложения находится на [Vercel](https://vercel.com)
 
--   **_node.js_** - программная платформа, основанная на движке V8 (транслирующем JavaScript в машинный код);
--   **_babel_** - транспайлер, преобразующий код из одного стандарта в другой;
--   **_eslint_** - линтер для JavaScript кода;
--   **_prettier_** - инструмент для автоформатирования кода;
--   **_commitlint_** - инструмент, который проверяет сообщения commit-ов на соответствие общепринятым стандартам их описаний;
--   **_firebase_** - платформа для разработки приложений, предоставляет облачное хранилище, аналитику и многое другое;
--   **_yarn_** - менеджер пакетов;
--   **_react-hook-forms_** - библиотека для обработки элементов ввода формы;
--   **_styled-components_** - система стилизации react компонентов;
--   **_react_** - JavaScript-библиотека для создания пользовательских интерфейсов;
--   **_typescript_** - строго типизированный язык для уменьшения количества потенциальных багов;
--   **_vite_** - сборщик модулей, который позволяет скомпилировать JavaScript-модули в единый JS-файл;
--   **_cypress_** — e2e тестирование для web-приложений;
--   **_jest_** — unit-тестирование.
+## Зависимости
 
-## Тестирование
+Node >= 18v
 
-Реализовать unit и e2e тестирование c полным покрытием функционала приложения:
+## Ссылки
 
--   Модуль авторизации;
--   Модуль регистрации;
--   Модуль смены темы;
--   Модуль поиска пользователей и твитов;
--   Модуль создания нового твита;
--   Модуль данных о пользователе.
-
-### Для react native
-
-Will be soon...
-
-## Полезные ссылки
-
-[React](https://react.dev/reference/react)
-
-[React hooks](https://react.dev/reference/react/hooks)
-
-[React router dom](https://reactrouter.com/en/main)
-
-[Vite](https://vitejs.dev/)
-
-[Firebase](https://firebase.google.com/docs/reference/js?hl=ru)
-
-[Firebase emulator](https://firebase.google.com/docs/emulator-suite?hl=ru)
-
-[Yup](https://www.npmjs.com/package/yup)
-
-[Eslint](https://eslint.org/docs/user-guide/configuring)
-
-[Babel](https://babeljs.io/docs/en/configuration)
-
-[Тестирование Cypress](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell)
-
-[Тестирование Jest](https://jestjs.io/ru/docs/getting-started)
-
-[Styled-components](https://www.styled-components.com/docs)
-
-[Redux-persist](https://github.com/rt2zz/redux-persist)
-
-[Redux-saga](https://redux-saga.js.org/)
-
-[GitHub Actions](https://github.com/features/actions)
-
-[Heroku](https://devcenter.heroku.com/articles/heroku-cli)
-
-[Husky](https://dev.to/ivadyhabimana/setup-eslint-prettier-and-husky-in-a-node-project-a-step-by-step-guide-946)
-
-[Commitlint](https://github.com/conventional-changelog/commitlint)
+Мой [gitHub](https://github.com/Kovallll)

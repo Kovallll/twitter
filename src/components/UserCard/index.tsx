@@ -18,11 +18,12 @@ const UserCard = ({ user, withFollowButton = true }: UserCardProps) => {
     }
 
     return (
-        <Card>
+        <Card data-cy="user-card">
             <UserAvatar
                 src={avatar.url}
                 alt={avatarIconAltText}
                 onClick={handleClickUser}
+                data-cy="user-avatar"
             />
             <UserInfo onClick={handleClickUser}>
                 <UserName>{name}</UserName>

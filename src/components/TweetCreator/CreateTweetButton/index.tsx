@@ -69,6 +69,7 @@ export const CreateTweetButton = (props: CreateTweetButtonProps) => {
                 onClick={handleCreateTweet}
                 disabled={isTweetDisabled}
                 $isTweetDisabled={isTweetDisabled}
+                data-cy="tweet-button"
             >
                 {tweetButtonText}
             </TweetButton>

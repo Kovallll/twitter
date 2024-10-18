@@ -1,4 +1,3 @@
-import { homePageDefaultData } from 'src/constants/defaultValues'
 import {
     HomeAction,
     LoaderAction,
@@ -11,6 +10,7 @@ import {
 
 import {
     ActionTypes,
+    homePageDefaultData,
     loaderStatesDefaultData,
     notifyDefaultData,
     openedStatesDefaultData,
