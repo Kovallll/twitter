@@ -1,6 +1,5 @@
 import { LocalStorageSchema } from './types'
 
-import AccountCard from '@components/AccountCard'
 import {
     countDays,
     countYears,
@@ -192,24 +191,6 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
         })
         .filter((tweetText) => !!tweetText)
         .flat()
-}
-
-export const getUsersNames = (accounts: UserData[], searchValue: string) => {
-    return accounts
-        .map((account) => {
-            if (
-                account.name.toLowerCase().includes(searchValue.toLowerCase())
-            ) {
-                return (
-                    <AccountCard
-                        account={account}
-                        key={account.userId}
-                        withFollowButton={false}
-                    />
-                )
-            }
-        })
-        .filter((userName) => !!userName)
 }
 
 export const isEditDataChanged = (

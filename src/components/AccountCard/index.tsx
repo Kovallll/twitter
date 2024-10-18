@@ -27,11 +27,12 @@ const AccountCard = ({
     }
 
     return (
-        <Card>
+        <Card data-cy="account-card">
             <AccountAvatar
                 src={avatar.url}
                 alt={avatarIconAltText}
                 onClick={handleClickAccount}
+                data-cy="account-avatar"
             />
             <AccountInfo onClick={handleClickAccount}>
                 <AccountName>{name}</AccountName>

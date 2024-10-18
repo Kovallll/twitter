@@ -1,4 +1,5 @@
 import { errors, secondUserData, userData } from '../fixtures'
+import { getProfileName } from './helpers'
 
 describe('Test Sing Up Credentials Page', () => {
     beforeEach(() => {
@@ -8,7 +9,6 @@ describe('Test Sing Up Credentials Page', () => {
     it('test empty form has errors', () => {
         cy.contains('Next').click()
         for (const error in errors) {
-            cy.log(error)
             cy.contains(errors[error as keyof typeof errors]).should(
                 'be.visible'
             )
@@ -17,9 +17,11 @@ describe('Test Sing Up Credentials Page', () => {
 
     it('test sign up', () => {
         cy.signUp(userData)
+        getProfileName().should('have.text', userData.name)
     })
 
     it('test sign up another user', () => {
         cy.signUp(secondUserData)
+        getProfileName().should('have.text', secondUserData.name)
     })
 })

@@ -77,3 +77,7 @@ export const getSearch = () => {
 export const getSearchPopup = () => {
     return cy.get('div[ data-cy="search-popup"]')
 }
+
+export const getTweetCreator = () => {
+    return cy.get('div[data-cy="tweet-creator"]')
+}

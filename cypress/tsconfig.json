@@ -19,9 +19,6 @@
         "noEmit": false,
         "allowUmdGlobalAccess": true,
         "downlevelIteration": true,
-        "paths": {
-            "@fixtures": ["../fixtures"]
-        }
     },
     "include": ["**/*.ts", "e2e, support"]
 }

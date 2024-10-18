@@ -24,7 +24,7 @@ export const HeaderContent = (props: HeaderContentProps) => {
                 <IconWrap onClick={handleClickProfileIcon}>
                     <AvatarIcon src={avatar.url} alt={avatarIconAltText} />
                 </IconWrap>
-                <Title>{title}</Title>
+                <Title data-cy='title'>{title}</Title>
             </>
         )
     }

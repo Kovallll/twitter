@@ -108,7 +108,7 @@ export const Tweet = (props: TweetProps) => {
                     <TweetText>{text}</TweetText>
                 </InfoBlock>
                 {isUserTweet && (
-                    <MoreBlock onClick={handleChangeIsMore}>
+                    <MoreBlock onClick={handleChangeIsMore} data-cy="more-tweet">
                         <DotsIcon title={moreIconAltText} fill={iconColor} />
                         {isMoreOpen && (
                             <MorePopup

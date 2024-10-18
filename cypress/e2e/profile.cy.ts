@@ -90,7 +90,7 @@ describe('Test Profile Page', () => {
 
     it('test search tweet', () => {
         getProfileName().should('have.text', userData.name)
-        getSearch().should('be.visible').type('123').trigger('input')
+        getSearch().should('be.visible').type('123')
 
         getSearchPopup().should('be.visible')
         cy.get('a').contains('12345').first().click({ force: true })

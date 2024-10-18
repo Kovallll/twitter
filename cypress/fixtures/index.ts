@@ -1,7 +1,7 @@
 export const userData = {
     name: 'Test name',
     phone: '{moveToEnd}253456789',
-    email: 'test3@test.com',
+    email: 'test1@test.com',
     password: 'Aa1111',
     day: '1',
     month: 'February',

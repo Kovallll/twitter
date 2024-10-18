@@ -26,7 +26,7 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
     const { text } = useAppSelector(notifySelector)
     const { user: activeUser, currentUser } = useAppSelector(userSelector)
     const { isTweetModalOpen } = useAppSelector(openedStatesSelector)
-
+    console.log(currentUser, 'currentUser')
     useEffect(() => {
         let timeout: NodeJS.Timeout
         if (text) {
@@ -54,7 +54,7 @@ export const ProfileMainContent = ({ user }: ProfileMainContentProps) => {
                 {isUserTweet && <TweetCreator />}
                 <Tweets>
                     <TweetsHeader>{tweetsText}</TweetsHeader>
-                    <ProfileTweets user={user}/>
+                    <ProfileTweets user={user} />
                 </Tweets>
             </ProfileContent>
             {isTweetModalOpen && (

@@ -1,8 +1,14 @@
 {
     "compilerOptions": {
         "outDir": "./dist",
-        "target": "es5",
-        "types": ["vite/client", "node", "jest", "cypress"],
+        "target": "ESNext",
+        "types": [
+            "vite/client",
+            "node",
+            "jest",
+            "cypress",
+            "vite-plugin-svgr/client"
+        ],
         "lib": ["dom", "dom.iterable", "es5"],
         "allowJs": true,
         "skipLibCheck": true,
@@ -11,8 +17,8 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
-        "module": "esnext",
-        "moduleResolution": "node",
+        "module": "ESNext",
+        "moduleResolution": "Node",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": false,
@@ -31,7 +37,7 @@
             "@pages/*": ["src/pages/*"],
             "@store": ["src/store"],
             "@firebase": ["src/firebase"],
-            "@mocks": ["src/mocks"]
+            "@mocks": ["src/__mocks__"]
         }
     },
     "include": ["src", "src/types/declare.d.ts", "firebase.config.ts"]

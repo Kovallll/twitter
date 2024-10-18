@@ -99,8 +99,8 @@ export const ProfileInfo = () => {
                 </EditBlock>
             </ProfileTopInfo>
             <ProfileBottomInfo>
-                <ProfileName data-cy="edit-button">{name}</ProfileName>
-                <ProfileSocial data-cy="edit-button">
+                <ProfileName data-cy="profile-name">{name}</ProfileName>
+                <ProfileSocial data-cy="profile-social">
                     {userSocial}
                 </ProfileSocial>
                 <ProfileDescription data-cy="profile-description">

@@ -6,7 +6,9 @@ import {
     min,
     month,
     sec,
+    sortedTweets,
     userOneTweet,
+    userToTenTweet,
     userTwoTweet,
 } from '@mocks'
 import {
@@ -14,6 +16,7 @@ import {
     getNotifyError,
     getSelectDays,
     getSelectYears,
+    getSortedTweetsByTimePost,
     getTimePostTweet,
     getTweetsTexts,
     isEditDataChanged,
@@ -129,5 +132,14 @@ describe('test all utils', () => {
                 { description: '', name: '', social: '' }
             )
         ).toEqual(false)
+    })
+
+    test('test getSortedTweetsByTimePost', () => {
+        expect(
+            getSortedTweetsByTimePost(
+                [...userToTenTweet, ...userOneTweet, ...userTwoTweet],
+                1
+            )
+        ).toEqual(sortedTweets.reverse())
     })
 })

@@ -16,7 +16,7 @@
         "prepare": "husky",
         "test:cov": "jest --passWithNoTests --coverage",
         "fire:emtr": " firebase emulators:start",
-        "cy": "cypress open VITE_IS_TESTING=true"
+        "cy": "firebase emulators:start | cypress open"
     },
     "dependencies": {
         "axios": "^1.7.7",

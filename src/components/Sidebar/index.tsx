@@ -88,7 +88,7 @@ export const Sidebar = () => {
                             <SidebarLink linkData={linkData} />
                         ))}
                         {isProfilePage && (
-                            <SidebarButton onClick={handleOpenModalTweet}>
+                            <SidebarButton onClick={handleOpenModalTweet} data-cy="sidebar-tweet">
                                 {tweetText}
                             </SidebarButton>
                         )}
