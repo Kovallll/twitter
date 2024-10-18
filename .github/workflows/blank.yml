@@ -22,5 +22,11 @@ jobs:
               run: yarn install
             - name: lint code
               run: yarn lint
-            - name: check tests
+            - name: check unit tests
               run: yarn test --runInBand
+            - name: Cypress run
+              uses: cypress-io/github-action@v6
+              with:
+                  start: yarn dev
+                  wait-on: 'http://localhost:5173'
+                  browser: chrome
