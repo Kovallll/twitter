@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 import { InitializerUserDataProps } from './types'
 
-import AccountCard from '@components/AccountCard'
+import UserCard from '@components/UserCard'
 import { Paths } from '@constants'
 import { initUserData, setTotalAccountsFromStorage } from '@firebase'
 import { useAppDispatch, useAppSelector } from '@hooks'
@@ -21,14 +21,12 @@ import { getTweetsTexts } from '@utils'
 
 export const getUsersNames = (accounts: UserData[], searchValue: string) => {
     return accounts
-        .map((account) => {
-            if (
-                account.name.toLowerCase().includes(searchValue.toLowerCase())
-            ) {
+        .map((user) => {
+            if (user.name.toLowerCase().includes(searchValue.toLowerCase())) {
                 return (
-                    <AccountCard
-                        account={account}
-                        key={account.userId}
+                    <UserCard
+                        user={user}
+                        key={user.userId}
                         withFollowButton={false}
                     />
                 )
