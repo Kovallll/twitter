@@ -54,7 +54,7 @@ export const TweetCreator = ({ isModal = false }: TweetCreatorProps) => {
     }
 
     return (
-        <TweetCreatorBlock $isModal={isModal}>
+        <TweetCreatorBlock $isModal={isModal} data-cy="tweet-creator">
             <ImageWrap>
                 <TweetIcon src={user.avatar.url} alt={avtarIconAltText} />
             </ImageWrap>

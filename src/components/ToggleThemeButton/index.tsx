@@ -29,6 +29,7 @@ export const ToggleThemeButton = ({ ...props }) => {
             {...props}
             $isDarkTheme={isDarkTheme}
             onClick={handleToggleTheme}
+            data-cy='toggle-theme'
         />
     )
 }

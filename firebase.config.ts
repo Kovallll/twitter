@@ -17,7 +17,7 @@ const {
 export const setupFirebase = () => {
     try {
         firebaseApp = initializeApp({
-            apiKey: VITE_FIREBASE_APIKEY,
+            apiKey: VITE_FIREBASE_APIKEY || 'mock_key',
             authDomain: VITE_FIREBASE_AUTHDOMAIN,
             projectId: VITE_FIREBASE_PROJECTID,
             storageBucket: VITE_FIREBASE_STORAGEBUCKET,
@@ -34,9 +34,9 @@ let firestore: ReturnType<typeof getFirestore>
 let storage: ReturnType<typeof getStorage>
 
 async function setupAuthEmulator(auth: Auth) {
-    const authUrl = 'http://localhost:9099'
+    const authUrl = 'http://127.0.0.1:9099/'
     await fetch(authUrl)
-    connectAuthEmulator(auth, 'http://localhost:9099')
+    connectAuthEmulator(auth, authUrl)
 }
 
 export const getFirebaseAuth = () => {
@@ -53,7 +53,7 @@ export const getFirebaseStore = () => {
         firestore = getFirestore()
 
         if (window.location.hostname === 'localhost') {
-            connectFirestoreEmulator(firestore, 'localhost', 8080)
+            connectFirestoreEmulator(firestore, '127.0.0.1', 8090)
         }
     }
 
@@ -65,7 +65,7 @@ export const getFirebaseStorage = () => {
         storage = getStorage(firebaseApp)
 
         if (window.location.hostname === 'localhost') {
-            connectStorageEmulator(storage, 'localhost', 9199)
+            connectStorageEmulator(storage, '127.0.0.1', 9199)
         }
     }
 

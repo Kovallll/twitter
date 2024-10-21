@@ -73,7 +73,7 @@ export const defaultUser = {
     tweets: null,
     social: null,
     description: null,
-} as UserData
+} as unknown as UserData
 
 export const userDefaultData = {
     editData: {

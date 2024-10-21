@@ -100,6 +100,7 @@ export const emailAndPasswordAuth = (
                 social: null,
                 tweets: null,
             }
+            handleChangeIsLoading(false)
             handleResetForm()
             const docsRef = collection(database, usersCollection)
             addDoc(docsRef, userInfo)
@@ -107,7 +108,6 @@ export const emailAndPasswordAuth = (
         })
         .catch((error) => {
             const errorCode = error.code
-            handleChangeIsLoading(false)
             dispatch(updateNotifyText(errorCode))
             console.error(error.code + error.message)
         })
