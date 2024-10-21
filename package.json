@@ -17,8 +17,8 @@
         "test:cov": "jest --passWithNoTests --coverage",
         "fire:emtr": " firebase emulators:start",
         "cy": "cypress open",
-        "build:emulator": "firebase emulators:exec | yarn build",
-        "start:emulator": "firebase emulators:exec | yarn dev"
+        "build:emulator": "firebase emulators:exec 'yarn build'",
+        "start:emulator": "firebase emulators:exec 'yarn dev'"
     },
     "dependencies": {
         "axios": "^1.7.7",
