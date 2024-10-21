@@ -31,5 +31,5 @@ jobs:
               uses: cypress-io/github-action@v6
               with:
                   start: yarn cy:ci
-                  wait-on: 'http://127.0.0.1:4000'
+                  wait-on: 'http://127.0.0.1:9099'
                   browser: chrome

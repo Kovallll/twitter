@@ -24,7 +24,7 @@ export const ProfileMainContent = () => {
     const { text } = useAppSelector(notifySelector)
     const { user: activeUser, currentUser } = useAppSelector(userSelector)
     const { isTweetModalOpen } = useAppSelector(openedStatesSelector)
-    console.log(currentUser, 'currentUser')
+
     useEffect(() => {
         let timeout: NodeJS.Timeout
         if (text) {
