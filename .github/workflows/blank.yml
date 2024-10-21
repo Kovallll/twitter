@@ -30,7 +30,7 @@ jobs:
             - name: Cypress run
               uses: cypress-io/github-action@v6
               with:
-                  build: build:emulator
-                  start: start:emulator
+                  build: yarn build:emulator
+                  start: yarn start:emulator
                   wait-on: 'http://localhost:5173'
                   browser: chrome
