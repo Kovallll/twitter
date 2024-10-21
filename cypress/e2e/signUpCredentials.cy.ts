@@ -18,11 +18,12 @@ describe('Test Sing Up Credentials Page', () => {
     it('test sign up', () => {
         cy.signUp(userData)
         getProfileName().should('have.text', userData.name)
-        cy.wait(200)
+        cy.wait(200) // небольшая задержка для добавления пользователя в бд, иначе не всегда добавляется
     })
 
     it('test sign up another user', () => {
         cy.signUp(secondUserData)
         getProfileName().should('have.text', secondUserData.name)
+        cy.wait(200) // небольшая задержка для добавления пользователя в бд, иначе не всегда добавляется
     })
 })

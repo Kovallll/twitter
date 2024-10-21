@@ -5,15 +5,18 @@ import viteTsconfigPaths from 'vite-tsconfig-paths'
 import removeAttribute from '@castlenine/vite-remove-attribute'
 import react from '@vitejs/plugin-react'
 
+const IS_PRODUCTION = process.env.NODE_ENV == 'production'
+
 export default defineConfig({
     build: { sourcemap: true },
     plugins: [
         react(),
         viteTsconfigPaths(),
-        removeAttribute({
-            extensions: ['tsx'],
-            attributes: ['data-cy'],
-        }),
+        IS_PRODUCTION &&
+            removeAttribute({
+                extensions: ['tsx'],
+                attributes: ['data-cy'],
+            }),
         svgr(),
     ],
 })
