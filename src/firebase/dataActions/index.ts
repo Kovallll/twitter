@@ -32,6 +32,7 @@ import {
     updateCurrentUser,
     updateHomeTweets,
     updateLoadingTweet,
+    updateNotifyText,
     updateTotalUser,
     updateUserFollowing,
 } from '@store'
@@ -112,7 +113,10 @@ export const updateTweets = (
             dispatch(updateTotalUser(userData))
             dispatch(updateLoadingTweet(false))
         })
-        .catch((e) => console.error(e, 'error'))
+        .catch((e) => {
+            dispatch(updateNotifyText('Error upload tweet'))
+            console.error(e, 'error')
+        })
 }
 
 export const uploadTweetsToStorage = (

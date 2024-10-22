@@ -35,8 +35,6 @@ jobs:
                   wait-on: 'http://localhost:5173'
                   browser: chrome
               env:
-                VITE_FIREBASE_APIKEY: ${{ secrets.VITE_FIREBASE_APIKEY }}
-                VITE_FIREBASE_PROJECTID: ${{ secrets.VITE_FIREBASE_PROJECTID }}
-                VITE_FIREBASE_APPID: ${{ secrets.VITE_FIREBASE_APPID }}
-
-                
+                  VITE_FIREBASE_APIKEY: ${{ secrets.VITE_FIREBASE_APIKEY }}
+                  VITE_FIREBASE_PROJECTID: ${{ secrets.VITE_FIREBASE_PROJECTID }}
+                  VITE_FIREBASE_APPID: ${{ secrets.VITE_FIREBASE_APPID }}

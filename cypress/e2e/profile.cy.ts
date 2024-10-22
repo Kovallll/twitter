@@ -74,6 +74,11 @@ describe('Test Profile Page', () => {
         )
         getTweetButton().should('have.text', 'Tweet').click()
         cy.get('article[data-cy="tweet"]').should('be.visible')
+
+        cy.get('div[data-cy="more-tweet"]').should('be.visible').click()
+        cy.contains('Delete').click()
+        cy.get('button[data-cy="confirm-button"]').should('be.visible').click()
+        cy.get('article[data-cy="tweet"]').should('not.exist')
     })
 
     it('test change theme', () => {
@@ -81,11 +86,23 @@ describe('Test Profile Page', () => {
         getBody()
             .should('have.css', 'background-color')
             .and('eq', hexToRgb('#fff'))
+        getSearch()
+            .should('have.css', 'background-color')
+            .and('eq', hexToRgb('#eff3f4'))
+        cy.get('section[data-cy="accout-board"]')
+            .should('have.css', 'background-color')
+            .and('eq', hexToRgb('#f7f9f9'))
         getToggleThemeButton().click()
         getBody().should('have.css', 'color').and('eq', hexToRgb('#fff'))
         getBody()
             .should('have.css', 'background-color')
             .and('eq', hexToRgb('#000'))
+        getSearch()
+            .should('have.css', 'background-color')
+            .and('eq', hexToRgb('#19171a'))
+        cy.get('section[data-cy="accout-board"]')
+            .should('have.css', 'background-color')
+            .and('eq', hexToRgb('#2c292b'))
     })
 
     it('test search tweet', () => {

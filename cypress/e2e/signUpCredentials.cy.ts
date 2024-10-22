@@ -2,11 +2,8 @@ import { errors, secondUserData, userData } from '../fixtures'
 import { getProfileName } from './helpers'
 
 describe('Test Sing Up Credentials Page', () => {
-    beforeEach(() => {
-        cy.visit('/#/signup-credential')
-    })
-
     it('test empty form has errors', () => {
+        cy.visit('/#/signup-credential')
         cy.contains('Next').click()
         for (const error in errors) {
             cy.contains(errors[error as keyof typeof errors]).should(

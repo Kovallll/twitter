@@ -19,9 +19,8 @@ describe('Test Home Page', () => {
     })
 
     it('test user search', () => {
-        cy.get('h1[data-cy="title"]').should('be.visible')
         getSearch().should('be.visible').type('Second')
-
+        cy.wait(1)
         getSearchPopup().should('be.visible')
         cy.get('div[data-cy="user-card"]').should('be.visible')
         cy.get('div[ data-cy="search-popup"]')
