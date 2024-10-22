@@ -10,7 +10,7 @@ export const ConfirmModal = (props: ConfirmModalProps) => {
         <Modal onCloseModal={onClose}>
             <Title>{checkTitleText}</Title>
             <ButtonsWrap>
-                <ConfirmButton onClick={onConfirm}>{confirmText}</ConfirmButton>
+                <ConfirmButton onClick={onConfirm} data-cy='confirm-button'>{confirmText}</ConfirmButton>
                 <CloseButton onClick={onClose}>{cancelText}</CloseButton>
             </ButtonsWrap>
         </Modal>

@@ -1,6 +1,5 @@
 import { LocalStorageSchema } from './types'
 
-import UserCard from '@components/UserCard'
 import {
     countDays,
     countYears,
@@ -25,7 +24,7 @@ import {
 export const getSelectYears = () => {
     const currentYear = new Date().getFullYear()
     const yearsArray = []
-    for (let i = currentYear - 1; i > currentYear - countYears; i--) {
+    for (let i = currentYear - 1; i >= currentYear - countYears; i--) {
         yearsArray.push(i.toString())
     }
 
@@ -134,6 +133,12 @@ export class LocalStorage {
             window.localStorage.setItem(key, JSON.stringify(value))
         }
     }
+
+    removeItem = (key: string) => {
+        if (this.checkIsLocalStorageAvailable()) {
+            window.localStorage.removeItem(key)
+        }
+    }
 }
 
 export function getTimePostTweet(createdTimeMs: number) {
@@ -186,22 +191,6 @@ export const getTweetsTexts = (accounts: UserData[], searchValue: string) => {
         })
         .filter((tweetText) => !!tweetText)
         .flat()
-}
-
-export const getUsersNames = (accounts: UserData[], searchValue: string) => {
-    return accounts
-        .map((user) => {
-            if (user.name.toLowerCase().includes(searchValue.toLowerCase())) {
-                return (
-                    <UserCard
-                        user={user}
-                        key={user.userId}
-                        withFollowButton={false}
-                    />
-                )
-            }
-        })
-        .filter((userName) => !!userName)
 }
 
 export const isEditDataChanged = (

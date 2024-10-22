@@ -11,6 +11,7 @@ export {
     searchDefaultData,
     totalDefaultData,
     userDefaultData,
+    homePageDefaultData,
     Themes,
 } from './defaultValues'
 export { Paths, sidebarLinks, tweetPath, userPath } from './sidebarValues'

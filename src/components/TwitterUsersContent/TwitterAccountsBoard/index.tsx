@@ -23,7 +23,7 @@ export const TwitterAccountsBoard = () => {
     }
     return (
         <>
-            <AccountsSection>
+            <AccountsSection data-cy="accout-board">
                 <Title>{title}</Title>
                 <Accounts $isShow={isShow}>
                     {accounts.map((user) => (

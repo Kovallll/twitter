@@ -47,7 +47,7 @@ const Select = (props: SelectProps) => {
     return (
         <Wrap>
             <ErrorText>{error}</ErrorText>
-            <SelectModule value={value} onChange={handleChange}>
+            <SelectModule value={value} onChange={handleChange} data-cy={type}>
                 <Placeholder disabled selected hidden>
                     {placeholder}
                 </Placeholder>

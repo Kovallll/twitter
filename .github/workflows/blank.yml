@@ -20,7 +20,21 @@ jobs:
 
             - name: install modules
               run: yarn install
+
             - name: lint code
               run: yarn lint
-            - name: check tests
+
+            - name: check unit tests
               run: yarn test --runInBand
+
+            - name: Cypress run
+              uses: cypress-io/github-action@v6
+              with:
+                  build: yarn build:emulator
+                  start: yarn start:emulator
+                  wait-on: 'http://localhost:5173'
+                  browser: chrome
+              env:
+                  VITE_FIREBASE_APIKEY: ${{ secrets.VITE_FIREBASE_APIKEY }}
+                  VITE_FIREBASE_PROJECTID: ${{ secrets.VITE_FIREBASE_PROJECTID }}
+                  VITE_FIREBASE_APPID: ${{ secrets.VITE_FIREBASE_APPID }}

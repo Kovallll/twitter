@@ -111,7 +111,9 @@ const Login = () => {
                             />
                         )}
                     />
-                    <SubmitButton type="submit">{loginButtonText}</SubmitButton>
+                    <SubmitButton type="submit" data-cy="login">
+                        {loginButtonText}
+                    </SubmitButton>
                 </Form>
                 <SignUpLinkWrap>
                     <SignUpLink to={Paths.SignUp}>{signUpText}</SignUpLink>

@@ -32,6 +32,7 @@ import {
     updateCurrentUser,
     updateHomeTweets,
     updateLoadingTweet,
+    updateNotifyText,
     updateTotalUser,
     updateUserFollowing,
 } from '@store'
@@ -89,17 +90,33 @@ export const updateTweets = (
     const docRef = doc(database, usersCollection, user.docId)
     updateDoc(docRef, {
         tweets: updatedTweets,
-    }).then(async () => {
-        const data = await getDoc(docRef)
-        const accData = data.data()
-        const userData = {
-            ...accData,
-        } as UserData
-        dispatch(updateCurrentUser(userData))
-        dispatch(updateTotalUser(userData))
-        dispatch(updateLoadingTweet(false))
-        dispatch(updateHomeTweets({ tweet: updatedTweets[0], account: user }))
     })
+        .then(async () => {
+            const data = await getDoc(docRef)
+            const accData = data.data()
+            const userData = {
+                ...accData,
+            } as UserData
+            dispatch(updateCurrentUser(userData))
+            dispatch(updateTotalUser(userData))
+            dispatch(updateLoadingTweet(false))
+            dispatch(
+                updateHomeTweets({ tweet: updatedTweets[0], account: user })
+            )
+        })
+        .then(async () => {
+            const data = await getDoc(docRef)
+            const accData = data.data()
+            const userData = {
+                ...accData,
+            } as UserData
+            dispatch(updateTotalUser(userData))
+            dispatch(updateLoadingTweet(false))
+        })
+        .catch((e) => {
+            dispatch(updateNotifyText('Error upload tweet'))
+            console.error(e, 'error')
+        })
 }
 
 export const uploadTweetsToStorage = (
@@ -162,6 +179,7 @@ export const uploadUserDataToStorage = (
             docId: data.id,
         } as UserData
         dispatch(updateCurrentUser(userData))
+        dispatch(updateTotalUser(userData))
         uploadProfileAvatar(image, userData, dispatch)
     })
 }
